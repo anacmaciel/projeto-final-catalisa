@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+
 @NoArgsConstructor
 @Getter
 public class UserRequestDto {
@@ -28,9 +29,9 @@ public class UserRequestDto {
     @NotNull(message = "Error, the profile field was not informed")
     private ProfileEnum profileEnum;
 
-private StatusUser statusUser;
+    private StatusUser statusUser;
 
-public User convertToUserRequestDto() {
-    return new User(name, email, birthDate, hiringDate, profileEnum, statusUser);
-}
+    public User convertToUserRequestDto() {
+        return new User(name, email, birthDate, hiringDate, profileEnum, statusUser);
+    }
 }

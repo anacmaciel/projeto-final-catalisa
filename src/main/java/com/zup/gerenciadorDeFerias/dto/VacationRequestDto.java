@@ -1,6 +1,7 @@
 package com.zup.gerenciadorDeFerias.dto;
 
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
+import com.zup.gerenciadorDeFerias.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 public class VacationRequestDto {
 
     @NotNull(message = "Error: the 'user' field was not informed")
-    private Long userId;
+    private Long casa;
 
     @NotNull(message = "Error: the field 'vacation days' was not informed")
     private Integer vacationDays;

@@ -23,7 +23,7 @@ public class VacationRequest implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private Long userId;
+    private Long casa;
 
     @Column(nullable = false)
     private Integer vacationDays;

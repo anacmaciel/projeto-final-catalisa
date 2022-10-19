@@ -1,6 +1,7 @@
 package com.zup.gerenciadorDeFerias.dto;
 
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
+import com.zup.gerenciadorDeFerias.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 public class VacationResponseDto {
 
 
-    private Long userId;
+    private Long casa;
 
     private Integer vacationDays;
 
