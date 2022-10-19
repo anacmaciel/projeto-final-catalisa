@@ -18,7 +18,7 @@ import java.time.LocalDate;
 public class VacationRequestDto {
 
     @NotNull(message = "Error: the 'user' field was not informed")
-    private Long casa;
+    private Long usersId;
 
     @NotNull(message = "Error: the field 'vacation days' was not informed")
     private Integer vacationDays;

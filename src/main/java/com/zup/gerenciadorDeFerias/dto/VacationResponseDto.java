@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class VacationResponseDto {
 
 
-    private Long casa;
+    private Long usersId;
 
     private Integer vacationDays;
 

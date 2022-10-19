@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "user")
+@Table(name = "usuarios")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
