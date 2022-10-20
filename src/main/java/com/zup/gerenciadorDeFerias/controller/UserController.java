@@ -40,5 +40,11 @@ public class UserController {
     }
 
 
+    @PutMapping(path = "/userstatus/{id}")
+    public ResponseEntity<User> userInactiveStatus(@Valid @RequestBody User user, @PathVariable Long id ){
+        return ResponseEntity.ok(userService.updateStatusUser(user, id));
+    }
+
+
 
 }
