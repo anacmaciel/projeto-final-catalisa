@@ -22,9 +22,11 @@ public class UserController {
     UserService userService;
 
 
+
     @PostMapping
-    public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(userService.registerUser(user));
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return ResponseEntity.ok().body(userService.registerUser(userRequestDto));
     }
 
     @GetMapping
