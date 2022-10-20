@@ -25,17 +25,17 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> displayRegisteredUsers() {
-        return ResponseEntity.ok(userService.displayRegisteredUser());
+        return ResponseEntity.ok(userService.displayRegisteredUsers());
     }
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<User>> displayUsersById(@PathVariable Long id) {
+    public ResponseEntity<Optional<User>> displayUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.displayUserById(id));
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<User> updateRegisteredUsers(@Valid @RequestBody User user, @PathVariable Long id) {
+    public ResponseEntity<User> updateRegisteredUser(@Valid @RequestBody User user, @PathVariable Long id) {
         return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
