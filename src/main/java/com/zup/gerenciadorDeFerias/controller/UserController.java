@@ -39,14 +39,10 @@ public class UserController {
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<User> changeRegisteredUsers(@RequestBody User user) {
-        return ResponseEntity.ok(userService.changeRegisteredUsers(user));
+    public ResponseEntity<User> updateRegisteredUsers(@Valid @RequestBody User user, @PathVariable Long id) {
+        return ResponseEntity.ok(userService.changeRegisteredUsers(user, id));
     }
 
-//    @PatchMapping(path = "/{id}")
-//    public ResponseEntity<User> changeCharacter(@PathVariable Long id){
-//        return ResponseEntity.ok(userService.changeCharacter(id));
-//    }
 
 
 }
