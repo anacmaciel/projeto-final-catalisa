@@ -1,12 +1,8 @@
 package com.zup.gerenciadorDeFerias.controller;
 
-import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
-import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.service.UserService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,18 +25,18 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> displayRegisteredUsers() {
-        return ResponseEntity.ok(userService.displayRegisteredUsers());
+        return ResponseEntity.ok(userService.displayRegisteredUser());
     }
 
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Optional<User>> displayUsersById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.displayUsersById(id));
+        return ResponseEntity.ok(userService.displayUserById(id));
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<User> updateRegisteredUsers(@Valid @RequestBody User user, @PathVariable Long id) {
-        return ResponseEntity.ok(userService.changeRegisteredUsers(user, id));
+        return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
 
