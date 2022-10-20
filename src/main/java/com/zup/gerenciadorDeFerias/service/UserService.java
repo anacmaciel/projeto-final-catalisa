@@ -20,18 +20,18 @@ public class UserService {
 
     }
 
-    public List<User> displayRegisteredUsers() {
-        return userRepository.findAll();
+    public List<User> displayRegisteredUser() {
+        return userRepository.findAllStatusUser();
     }
 
 
-    public Optional<User> displayUsersById(Long id) {
+    public Optional<User> displayUserById(Long id) {
         return userRepository.findById(id);
     }
 
 
 
-    public User changeRegisteredUsers(User user, Long id) {
+    public User changeRegisteredUser(User user, Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("The informed user was not found in the system");
