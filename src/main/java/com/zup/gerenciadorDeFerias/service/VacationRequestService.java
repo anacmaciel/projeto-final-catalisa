@@ -19,7 +19,7 @@ public class VacationRequestService {
     }
 
     public List<VacationRequest> viewRegisteredVacations() {
-        return vacationRequestRepository.findAll();
+        return vacationRequestRepository.findAllStatusVacationRequest();
     }
 
     public Optional<VacationRequest> displayVacationRequestById(Long id) {

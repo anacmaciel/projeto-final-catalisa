@@ -23,13 +23,10 @@ public class VacationRequest implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private Long usersId;
-
-    @Column(nullable = false)
     private Integer vacationDays;
 
     @Column(nullable = false)
-    private LocalDate starTat;
+    private LocalDate startAt;
 
     @Column(nullable = false)
     private LocalDate endAt;
