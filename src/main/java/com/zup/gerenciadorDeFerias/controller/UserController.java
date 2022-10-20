@@ -1,8 +1,10 @@
 package com.zup.gerenciadorDeFerias.controller;
 
+import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +22,9 @@ public class UserController {
 
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-        return ResponseEntity.ok().body(userService.registerUser(userRequestDto));
+    public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
+        return new  ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping

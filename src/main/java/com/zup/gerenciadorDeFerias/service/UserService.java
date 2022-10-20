@@ -1,5 +1,6 @@
 package com.zup.gerenciadorDeFerias.service;
 
+import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
@@ -7,6 +8,7 @@ import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -18,60 +20,63 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    public boolean checkAge18(User user){
-        LocalDate date = user.getBirthDate().plusYears(18);
+    private boolean checkAge18(LocalDate birthDate) {
+     LocalDate localDate=  birthDate.plusYears(18);
         LocalDate now = LocalDate.now();
-        return date.isBefore(now);
+        return localDate.isBefore(now);
     }
 
 
-    public UserResponseDto registerUser(User user) {
+    public UserResponseDto registerUser(UserRequestDto userRequestDto) {
 
-        Boolean validationAge = checkAge18(user);
+        Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
 
-        if (validationAge){
-            userRepository.save(user);
+        if (validationAge) {
 
-        UserResponseDto userResponseDto =new UserResponseDto(user.getName(),user.getEmail(),user.getBirthDate(),
-                user.getHiringDate(), user.getDaysBalance(),
-                user.getProfileEnum(),user.setStatusUser(StatusUser.ACTIVE));
-        return userResponseDto;
-        }else {
+
+            User user = userRequestDto.convertToUserRequestDto();
+            user.setStatusUser(StatusUser.ACTIVE);
+            User userModel = userRepository.save(user);
+
+            return UserResponseDto.convertToUser(userModel);
+        } else {
             return null;
         }
 
-    public List<User> displayRegisteredUsers() {
-        return userRepository.findAllStatusUser();
-    }
-
-
-    public Optional<User> displayUserById(Long id) {
-        return userRepository.findById(id);
-    }
-
-
-    public User changeRegisteredUser(User user, Long id) {
-
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) {
-            throw new ObjectNotFoundException("The informed user was not found in the system");
         }
-        return userRepository.save(user);
-    }
 
-    public User updateStatusUser(User user, Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        User user1 = userOptional.get();
-        if (user1.getStatusUser() == StatusUser.ACTIVE) {
-            throw new ObjectNotFoundException("Unable to deliver this action");
-        } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
-            throw new ObjectNotFoundException("Unable to deliver this action");
+        public List<User> displayRegisteredUsers() {
+            return userRepository.findAllStatusUser();
         }
-        return userRepository.save(user);
-    }
+
+
+        public Optional<User> displayUserById (Long id){
+            return userRepository.findById(id);
+        }
+
+
+        public User changeRegisteredUser (User user, Long id){
+
+            Optional<User> optionalUser = userRepository.findById(id);
+            if (optionalUser.isEmpty()) {
+                throw new ObjectNotFoundException("The informed user was not found in the system");
+            }
+            return userRepository.save(user);
+        }
+
+        public User updateStatusUser (User user, Long id){
+            Optional<User> userOptional = userRepository.findById(id);
+            User user1 = userOptional.get();
+            if (user1.getStatusUser() == StatusUser.ACTIVE) {
+                throw new ObjectNotFoundException("Unable to deliver this action");
+            } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
+                throw new ObjectNotFoundException("Unable to deliver this action");
+            }
+            return userRepository.save(user);
+        }
 
 
 //    public Optional<User> changeCharacter(Long id) {
 //        return userRepository.findById(id);
 //    }
-}
+    }
