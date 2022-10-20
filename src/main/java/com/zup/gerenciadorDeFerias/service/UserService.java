@@ -1,5 +1,6 @@
 package com.zup.gerenciadorDeFerias.service;
 
+import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,13 @@ public class UserService {
 
 
 
-    public User changeRegisteredUsers(User user) {
+    public User changeRegisteredUsers(User user, Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("The informed user was not found in the system");
+        }
         return userRepository.save(user);
     }
-
 
 
 //    public Optional<User> changeCharacter(Long id) {
