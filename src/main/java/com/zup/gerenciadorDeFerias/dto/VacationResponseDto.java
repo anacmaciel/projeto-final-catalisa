@@ -23,5 +23,5 @@ public class VacationResponseDto {
     private LocalDate endAt;
 
     private StatusVacationRequest statusVacationRequest;
-
+    private User user;
 }

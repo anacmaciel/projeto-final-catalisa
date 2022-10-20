@@ -24,7 +24,7 @@ public class VacationRequestDto {
     private Integer vacationDays;
 
     @NotNull(message = "Error: the 'holiday start' field was not informed")
-    private LocalDate starTat;
+    private LocalDate startAt;
 
     @NotNull(message = "Error: the field 'back from vacation' was not informed")
     private LocalDate endAt;
@@ -33,4 +33,5 @@ public class VacationRequestDto {
     private StatusVacationRequest statusVacationRequest;
 
 
+    private User user;
 }
