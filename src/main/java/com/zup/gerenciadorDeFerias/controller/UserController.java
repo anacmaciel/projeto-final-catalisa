@@ -1,12 +1,8 @@
 package com.zup.gerenciadorDeFerias.controller;
 
-import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
-import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.service.UserService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

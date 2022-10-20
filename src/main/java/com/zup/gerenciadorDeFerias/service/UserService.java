@@ -1,5 +1,6 @@
 package com.zup.gerenciadorDeFerias.service;
 
+import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ public class UserService {
     }
 
     public List<User> displayRegisteredUsers() {
-        return userRepository.findAll();
+
+        return userRepository.findAllSTATUSUSER();
+
+
     }
 
 
@@ -29,11 +33,9 @@ public class UserService {
     }
 
 
-
     public User changeRegisteredUsers(User user) {
         return userRepository.save(user);
     }
-
 
 
 //    public Optional<User> changeCharacter(Long id) {
