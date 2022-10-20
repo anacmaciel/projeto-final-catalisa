@@ -1,16 +1,13 @@
 package com.zup.gerenciadorDeFerias.service;
 
-import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
+import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,20 +41,34 @@ public class UserService {
         }
 
     public List<User> displayRegisteredUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllStatusUser();
     }
 
 
-    public Optional<User> displayUsersById(Long id) {
+    public Optional<User> displayUserById(Long id) {
         return userRepository.findById(id);
     }
 
 
+    public User changeRegisteredUser(User user, Long id) {
 
-    public User changeRegisteredUsers(User user) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("The informed user was not found in the system");
+        }
         return userRepository.save(user);
     }
 
+    public User updateStatusUser(User user, Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        User user1 = userOptional.get();
+        if (user1.getStatusUser() == StatusUser.ACTIVE) {
+            throw new ObjectNotFoundException("Unable to deliver this action");
+        } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
+            throw new ObjectNotFoundException("Unable to deliver this action");
+        }
+        return userRepository.save(user);
+    }
 
 
 //    public Optional<User> changeCharacter(Long id) {
