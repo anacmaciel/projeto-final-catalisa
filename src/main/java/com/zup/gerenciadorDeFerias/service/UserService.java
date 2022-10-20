@@ -1,6 +1,5 @@
 package com.zup.gerenciadorDeFerias.service;
 
-import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
@@ -18,21 +17,21 @@ public class UserService {
 
     public User registerUser(User user) {
         return userRepository.save(user);
+
     }
 
     public List<User> displayRegisteredUsers() {
-
-        return userRepository.findAllSTATUSUSER();
+        return userRepository.findAll();
     }
 
 
-    public Optional<User> displayUserById(Long id) {
+    public Optional<User> displayUsersById(Long id) {
         return userRepository.findById(id);
     }
 
 
 
-    public User changeRegisteredUser(User user, Long id) {
+    public User changeRegisteredUsers(User user, Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("The informed user was not found in the system");
