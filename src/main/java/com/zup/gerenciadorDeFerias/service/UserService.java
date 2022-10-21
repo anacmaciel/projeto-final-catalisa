@@ -1,5 +1,9 @@
 package com.zup.gerenciadorDeFerias.service;
 
+
+import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
+import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
+
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,19 +24,32 @@ public class UserService {
     }
 
     public List<User> displayRegisteredUsers() {
-
-        return userRepository.findAllSTATUSUSER();
-
-
+        return userRepository.findAllStatusUser();
     }
 
 
-    public Optional<User> displayUsersById(Long id) {
+    public Optional<User> displayUserById(Long id) {
         return userRepository.findById(id);
     }
 
 
-    public User changeRegisteredUsers(User user) {
+    public User changeRegisteredUser(User user, Long id) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("The informed user was not found in the system");
+        }
+        return userRepository.save(user);
+    }
+
+    public User updateStatusUser(User user, Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        User user1 = userOptional.get();
+        if (user1.getStatusUser() == StatusUser.ACTIVE) {
+            throw new ObjectNotFoundException("Unable to deliver this action");
+        } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
+            throw new ObjectNotFoundException("Unable to deliver this action");
+        }
         return userRepository.save(user);
     }
 

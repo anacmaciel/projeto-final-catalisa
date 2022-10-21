@@ -30,19 +30,21 @@ public class UserController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<User>> displayUsersById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.displayUsersById(id));
+    public ResponseEntity<Optional<User>> displayUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.displayUserById(id));
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<User> changeRegisteredUsers(@RequestBody User user) {
-        return ResponseEntity.ok(userService.changeRegisteredUsers(user));
+    public ResponseEntity<User> updateRegisteredUser(@Valid @RequestBody User user, @PathVariable Long id) {
+        return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
-//    @PatchMapping(path = "/{id}")
-//    public ResponseEntity<User> changeCharacter(@PathVariable Long id){
-//        return ResponseEntity.ok(userService.changeCharacter(id));
-//    }
+
+    @PutMapping(path = "/userstatus/{id}")
+    public ResponseEntity<User> userInactiveStatus(@Valid @RequestBody User user, @PathVariable Long id ){
+        return ResponseEntity.ok(userService.updateStatusUser(user, id));
+    }
+
 
 
 }
