@@ -21,7 +21,7 @@ public class UserService {
     }
 
     public List<User> displayRegisteredUsers() {
-        return userRepository.findAll();
+        return userRepository.findAllstatusUserNotInactive();
     }
 
 
