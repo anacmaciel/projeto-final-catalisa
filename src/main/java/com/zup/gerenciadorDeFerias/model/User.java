@@ -38,19 +38,18 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private ProfileEnum profileEnum;
-
+@Enumerated(EnumType.STRING)
     private StatusUser statusUser;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<VacationRequest> vacationRequests;
 
-    public User(String name, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum, StatusUser statusUser) {
+    public User(String name, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum) {
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
         this.hiringDate = hiringDate;
         this.profileEnum = profileEnum;
-        this.statusUser = statusUser;
     }
 
 }

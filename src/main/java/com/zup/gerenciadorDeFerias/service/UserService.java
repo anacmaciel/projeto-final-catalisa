@@ -20,8 +20,21 @@ public class UserService {
     private UserRepository userRepository;
 
 
+    public List<User> displayRegisteredUsers() {
+        return userRepository.findAllStatusActiveOrOnVacation();
+    }
+
+
+    public User displayUserById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("objeto não existe");
+        }
+        return optionalUser.get();
+    }
+
     private boolean checkAge18(LocalDate birthDate) {
-     LocalDate localDate=  birthDate.plusYears(18);
+        LocalDate localDate = birthDate.plusYears(18);
         LocalDate now = LocalDate.now();
         return localDate.isBefore(now);
     }
@@ -34,7 +47,7 @@ public class UserService {
         if (validationAge) {
 
 
-            User user = userRequestDto.convertToUserRequestDto();
+            User  user = userRequestDto.convertToUserRequestDto();
             user.setStatusUser(StatusUser.ACTIVE);
             User userModel = userRepository.save(user);
 
@@ -42,41 +55,33 @@ public class UserService {
         } else {
             return null;
         }
+    }
 
+
+    public User changeRegisteredUser(User user, Long id) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("The informed user was not found in the system");
         }
+ optionalUser.get();
 
-        public List<User> displayRegisteredUsers() {
-            return userRepository.findAllStatusUser();
+        return userRepository.save(user);
+    }
+
+    public User updateStatusUser(User user, Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        User user1 = userOptional.get();
+        if (user1.getStatusUser() == StatusUser.ACTIVE) {
+            throw new ObjectNotFoundException("Unable to deliver this action");
+        } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
+            throw new ObjectNotFoundException("Unable to deliver this action");
         }
-
-
-        public Optional<User> displayUserById (Long id){
-            return userRepository.findById(id);
-        }
-
-
-        public User changeRegisteredUser (User user, Long id){
-
-            Optional<User> optionalUser = userRepository.findById(id);
-            if (optionalUser.isEmpty()) {
-                throw new ObjectNotFoundException("The informed user was not found in the system");
-            }
-            return userRepository.save(user);
-        }
-
-        public User updateStatusUser (User user, Long id){
-            Optional<User> userOptional = userRepository.findById(id);
-            User user1 = userOptional.get();
-            if (user1.getStatusUser() == StatusUser.ACTIVE) {
-                throw new ObjectNotFoundException("Unable to deliver this action");
-            } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
-                throw new ObjectNotFoundException("Unable to deliver this action");
-            }
-            return userRepository.save(user);
-        }
+        return userRepository.save(user);
+    }
 
 
 //    public Optional<User> changeCharacter(Long id) {
 //        return userRepository.findById(id);
 //    }
-    }
+}
