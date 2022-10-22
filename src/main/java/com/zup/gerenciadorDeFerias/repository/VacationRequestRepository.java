@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface VacationRequestRepository extends JpaRepository<VacationRequest, Long> {
-@Query(value = "SELECT * FROM  VACATION_REQUEST vr WHERE vr.status_vacation_request= CREATED, ONGOING, CONCLUDED", nativeQuery = true)
+@Query(value = "select * from vacation_request where status_vacation_request in ('CREATED', 'ONGOING', 'CONCLUDED'", nativeQuery = true)
 List<VacationRequest> findAllStatusVacationRequest();
 
 }

@@ -21,12 +21,16 @@ public class UserService {
     }
 
     public List<User> displayRegisteredUsers() {
-        return userRepository.findAllstatusUserNotInactive();
+        return userRepository.findAllStatusActiveOrOnVacation();
     }
 
 
-    public Optional<User> displayUsersById(Long id) {
-        return userRepository.findById(id);
+    public User displayUsersById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("objeto não existe");
+        }
+        return optionalUser.get();
     }
 
 
