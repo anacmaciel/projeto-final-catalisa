@@ -1,5 +1,6 @@
 package com.zup.gerenciadorDeFerias.controller;
 
+import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.service.UserService;
@@ -22,7 +23,11 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestDto userRequestDto){
+        if(userService.existsByEmail(userRequestDto.getEmail())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: this email already exists");
+        }
+
         UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
         return new  ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }

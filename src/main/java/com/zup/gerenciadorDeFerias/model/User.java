@@ -53,4 +53,13 @@ public class User implements Serializable {
         this.statusUser = statusUser;
     }
 
+    public User(String name, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.hiringDate = hiringDate;
+        this.profileEnum = profileEnum;
+
+    }
+
 }

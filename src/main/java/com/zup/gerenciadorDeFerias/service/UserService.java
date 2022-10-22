@@ -26,21 +26,30 @@ public class UserService {
         return localDate.isBefore(now);
     }
 
+    public boolean existsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
 
-    public UserResponseDto registerUser(UserRequestDto userRequestDto) {
+
+    public UserResponseDto registerUser(UserRequestDto userRequestDto){
+
+       if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
+           throw new ObjectNotFoundException("Data de contratação é maior que data de hoje");
+       }
+
 
         Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
-
         if (validationAge) {
-
 
             User user = userRequestDto.convertToUserRequestDto();
             user.setStatusUser(StatusUser.ACTIVE);
-            User userModel = userRepository.save(user);
+            user.setDaysBalance(0);
 
+            User userModel = userRepository.save(user);
             return UserResponseDto.convertToUser(userModel);
+
         } else {
-            return null;
+            throw new ObjectNotFoundException("Idade menor que 18 anos não é permitido");
         }
 
         }
@@ -59,7 +68,7 @@ public class UserService {
 
             Optional<User> optionalUser = userRepository.findById(id);
             if (optionalUser.isEmpty()) {
-                throw new ObjectNotFoundException("The informed user was not found in the system");
+                throw new RuntimeException("The informed user was not found in the system");
             }
             return userRepository.save(user);
         }
@@ -79,4 +88,11 @@ public class UserService {
 //    public Optional<User> changeCharacter(Long id) {
 //        return userRepository.findById(id);
 //    }
+
+    //Boolean validationHiring = isDatefuture(userRequestDto.getHiringDate());
+
+//    /    private boolean isDatefuture(LocalDate hiringDate){return hiringDate.isAfter(LocalDate.now());
+//    }
+
+
     }

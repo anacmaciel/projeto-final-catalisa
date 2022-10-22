@@ -5,6 +5,7 @@ import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -12,9 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 public class UserRequestDto {
-    @NotBlank(message = "Name not informed error")
-    @Min(value = 5, message = "Error, the number of characters informed must be greater than 5 characters")
-    @Max(value = 60, message = "Error, the number of characters informed must be less than or equal to 60 characters")
+    @Length(min = 5, message = "Error, the number of characters informed must be greater than 5 characters")
+    @Length(max = 60, message = "Error, the number of characters informed must be less than or equal to 60 characters")
     private String name;
 
     @Email(message = "Error, invalid email")
@@ -29,9 +29,7 @@ public class UserRequestDto {
     @NotNull(message = "Error, the profile field was not informed")
     private ProfileEnum profileEnum;
 
-    private StatusUser statusUser;
-
     public User convertToUserRequestDto() {
-        return new User(name, email, birthDate, hiringDate, profileEnum, statusUser);
+        return new User(name,email,birthDate,hiringDate,profileEnum);
     }
 }
