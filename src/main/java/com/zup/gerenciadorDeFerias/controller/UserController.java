@@ -1,14 +1,16 @@
 package com.zup.gerenciadorDeFerias.controller;
 
+import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
+import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -19,8 +21,9 @@ public class UserController {
 
 
     @PostMapping
-    public ResponseEntity<User> registerUser(@Valid @RequestBody User user) {
-        return ResponseEntity.ok(userService.registerUser(user));
+    public ResponseEntity<UserResponseDto> registerUser(@RequestBody @Valid UserRequestDto userRequestDto) {
+        UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
+        return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -30,15 +33,17 @@ public class UserController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<User> displayUsersById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.displayUsersById(id));
+    public ResponseEntity<User> displayUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.displayUserById(id));
     }
 
-    @PutMapping(path = "/{id}")
-    public ResponseEntity<User> updateRegisteredUsers(@Valid @RequestBody User user, @PathVariable Long id) {
-        return ResponseEntity.ok(userService.changeRegisteredUsers(user, id));
+    @PutMapping(path = "{id}")
+    public ResponseEntity<User> updateRegisteredUser(@RequestBody User user, @PathVariable Long id) {
+        return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
-
-
+    @PutMapping(path = "/userstatus/{id}")
+    public ResponseEntity<User> userInactiveStatus(@Valid @RequestBody User user, @PathVariable Long id) {
+        return ResponseEntity.ok(userService.updateStatusUser(user, id));
+    }
 }

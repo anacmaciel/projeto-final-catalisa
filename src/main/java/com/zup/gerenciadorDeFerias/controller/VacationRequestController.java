@@ -22,7 +22,7 @@ public class VacationRequestController {
     @PostMapping
     public ResponseEntity<VacationRequest> registerVacationRequest(@Valid @RequestBody VacationRequestDto vacationRequestDto) {
         VacationRequest vacationRequest = vacationRequestService.registerVacationRequest(vacationRequestDto);
-        return  new ResponseEntity<>(vacationRequest, HttpStatus.CREATED);
+        return new ResponseEntity<>(vacationRequest, HttpStatus.CREATED);
     }
 
     @GetMapping

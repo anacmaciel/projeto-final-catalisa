@@ -20,7 +20,6 @@ import java.time.LocalDate;
 
 public class VacationRequestDto {
 
-
     @NotNull(message = "Error: the field 'vacation days' was not informed")
     @Min(value = 5, message = "error, it is not possible to request less than five days of vacation")
     @Max(value = 30, message = "error, it is not possible to request more than thirty days of vacation")
@@ -38,7 +37,7 @@ public class VacationRequestDto {
     private User user;
 
 
-public VacationRequest convertToVacationRequest() {
-    return new VacationRequest(vacationDays, startAt, endAt, statusVacationRequest, user);
-}
+    public VacationRequest convertToVacationRequest() {
+        return new VacationRequest(vacationDays, startAt, endAt, statusVacationRequest, user);
+    }
 }
