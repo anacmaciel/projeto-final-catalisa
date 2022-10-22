@@ -4,6 +4,7 @@ import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
+import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,14 @@ public class UserService {
     public User displayUserById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
-            throw new ObjectNotFoundException("objeto não existe");
+            throw new ObjectNotFoundException("no user with the id {id} was found in the system");
         }
-        return optionalUser.get();
+
+       User userFound = optionalUser.get();
+if (userFound.getStatusUser().equals(StatusUser.INACTIVE)) {
+throw new UnprocessableEntityException("Error, cannot access this user's data");
+}
+return userFound;
     }
 
     private boolean checkAge18(LocalDate birthDate) {
