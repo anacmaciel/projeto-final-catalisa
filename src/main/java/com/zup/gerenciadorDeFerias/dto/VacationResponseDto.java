@@ -14,14 +14,15 @@ import java.time.LocalDate;
 public class VacationResponseDto {
 
 
-    private Long usersId;
+    private Long Id;
 
     private Integer vacationDays;
 
-    private LocalDate starTat;
+    private LocalDate startAt;
 
     private LocalDate endAt;
 
     private StatusVacationRequest statusVacationRequest;
-    private User user;
+
+    //private User user;
 }
