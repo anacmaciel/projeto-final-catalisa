@@ -3,11 +3,13 @@ package com.zup.gerenciadorDeFerias.service;
 import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
+import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -34,7 +36,7 @@ public class UserService {
     public UserResponseDto registerUser(UserRequestDto userRequestDto){
 
        if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
-           throw new ObjectNotFoundException("Data de contratação é maior que data de hoje");
+           throw new BadRequest("Data de contratação é maior que data de hoje");
        }
 
 
@@ -49,7 +51,7 @@ public class UserService {
             return UserResponseDto.convertToUser(userModel);
 
         } else {
-            throw new ObjectNotFoundException("Idade menor que 18 anos não é permitido");
+            throw new BadRequest("Idade menor que 18 anos não é permitido");
         }
 
         }
