@@ -1,6 +1,7 @@
 package com.zup.gerenciadorDeFerias.service;
 
 import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
+import com.zup.gerenciadorDeFerias.dto.VacationResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
@@ -64,7 +65,7 @@ public class VacationRequestService {
         return userRepository.save(user);
     }
 
-    public VacationRequest registerVacationRequest(VacationRequestDto vacationRequestDto) {
+    public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) {
         User userFound = checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
@@ -78,7 +79,9 @@ public class VacationRequestService {
             vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
             User user = vacationRequest.getUser();
             updateDaysBalance(user, vacationRequest);
-            return vacationRequestRepository.save(vacationRequest);
+            VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
+
+            return VacationResponseDto.convertToVacationRequestResponse(vacation);
         } else {
             throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
         }
