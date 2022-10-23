@@ -1,0 +1,223 @@
+[33mcommit 2199b754e357bde9d245ac2e55d122cfb785c08f[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/pedro/userpost[m[33m)[m
+Merge: 01b1bfb 1624a59
+Author: AI-QA-paiva <pedropaiva.62124@gmail.com>
+Date:   Thu Oct 20 18:36:17 2022 -0300
+
+    resolução de conflitos
+
+[33mcommit 01b1bfb91f48de3e8d9fd14d391ef36ef8b204a6[m
+Author: AI-QA-paiva <pedropaiva.62124@gmail.com>
+Date:   Thu Oct 20 18:17:50 2022 -0300
+
+    implementar metodo post e service para cadadastro usuario
+
+[33mcommit 1624a596eea57fa8f8b4c3e6c56da55350977e59[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: anacmaciel <casmaciel96@gmail.com>
+Date:   Thu Oct 20 18:10:01 2022 -0300
+
+    introducing improvements in the semantics of method names
+
+[33mcommit 333376809102c6b677b1bd21ab731572daa88af5[m
+Merge: 9dbb463 cf806bd
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Thu Oct 20 18:02:17 2022 -0300
+
+    Merge pull request #4 from anacmaciel/feature-kevin-userputstatus
+    
+    Inserindo feature de implementação 'userputstatus'
+
+[33mcommit cf806bd4bf5853ce998cd5f42bcbe5bf0d5bfb39[m[33m ([m[1;31morigin/feature-kevin-userputstatus[m[33m)[m
+Merge: 600b8ba 9dbb463
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Thu Oct 20 17:54:17 2022 -0300
+
+    Inserindo resolução de conflito
+
+[33mcommit 9dbb4633fe188d801443bbb54bd04ee710ff3813[m
+Author: anacmaciel <casmaciel96@gmail.com>
+Date:   Thu Oct 20 17:33:43 2022 -0300
+
+    rising merged classes
+    
+    Signed-off-by: anacmaciel <casmaciel96@gmail.com>
+
+[33mcommit 9bede389418fc92e98b3cf67b1ceeff6b03b6cc7[m
+Merge: f2bf43a e4ec67e
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Thu Oct 20 17:18:22 2022 -0300
+
+    Merge pull request #5 from anacmaciel/revert-3-feature-jhonatan-userget
+    
+    Revert " Implementação de feature 'getUser'"
+
+[33mcommit e4ec67e1eb45fb8fb11c8bef0e693948311143f6[m[33m ([m[1;31morigin/revert-3-feature-jhonatan-userget[m[33m)[m
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Thu Oct 20 17:12:07 2022 -0300
+
+    Revert " Implementação de feature 'getUser'"
+
+[33mcommit f2bf43aecae6cc2285185c4f46886864d9197808[m
+Merge: c63365d 4894553
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Thu Oct 20 16:57:26 2022 -0300
+
+    Merge pull request #3 from anacmaciel/feature-jhonatan-userget
+    
+     Implementação de feature 'getUser'
+
+[33mcommit 4894553f1b7bd7a7e56d5038922ab63becbf439a[m[33m ([m[1;31morigin/feature-jhonatan-userget[m[33m)[m
+Merge: b51bde8 c63365d
+Author: anacmaciel <casmaciel96@gmail.com>
+Date:   Thu Oct 20 16:48:43 2022 -0300
+
+    problem solving in user query
+
+[33mcommit 600b8ba8095dac62e516eaf9333bc81847a6f9ec[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Thu Oct 20 15:59:24 2022 -0300
+
+    Inserindo feature de implementação 'userputstatus'
+
+[33mcommit c63365d933f7f536314cf20179add22fe10813cf[m
+Merge: 2bc9cd6 f4f66c8
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Thu Oct 20 14:02:34 2022 -0300
+
+    Merge pull request #2 from anacmaciel/feature-kevin-userput
+    
+    Inserindo branch e implementação de feature
+
+[33mcommit 2bc9cd6f8d39c1692089df5dc15a2f1c04eeb45c[m
+Merge: 3967103 58e15d1
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Thu Oct 20 13:00:43 2022 -0300
+
+    Merge pull request #1 from anacmaciel/feature-view-registered-vacations-ana
+    
+    rising vacation order list feature
+
+[33mcommit b51bde80f2c06634dd71d4a62b64b09129660c21[m
+Author: jhstavares <jhstavares_01@hotmail.com>
+Date:   Thu Oct 20 12:07:57 2022 -0300
+
+     Implementação de feature 'getUser'
+
+[33mcommit 58e15d14df7a549b66f6e2f11da062af204cceac[m
+Author: anacmaciel <casmaciel96@gmail.com>
+Date:   Thu Oct 20 11:44:30 2022 -0300
+
+    rising vacation order list feature
+
+[33mcommit f4f66c8e1ad0a496ed93d6f9b4eda8ad7ce2d6fc[m[33m ([m[1;31morigin/feature-kevin-userput[m[33m)[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Thu Oct 20 11:42:55 2022 -0300
+
+    Inserindo branch e implementação de feature
+
+[33mcommit 396710369986f0ddc8fa09ed481a3f4d10cccaea[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 19:35:50 2022 -0300
+
+    Inserindo implementações na classe 'VacationRequestService'
+
+[33mcommit b2084d1c9c56316059076db8e08e6b4fd6ad690d[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 19:35:18 2022 -0300
+
+    Inserindo implementações na classe 'UserService'
+
+[33mcommit dd8fb5f01acc8c9021050f9a548ed686812b9d2f[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 19:34:22 2022 -0300
+
+    Inserindo impplementações de classe 'VacationRestController'
+
+[33mcommit 06c9805ffff4c4b9807314af1de3b51f22c92f57[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 19:33:39 2022 -0300
+
+    Inserindo impplementações de classe 'UserController'
+
+[33mcommit acef36dfb191d93951fc2eab78b89c90b6d2002d[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 18:11:23 2022 -0300
+
+    Inserindo impplementações de feedback
+
+[33mcommit 4a5c93202eb70359a27699a708d0fc65054edb48[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 18:10:55 2022 -0300
+
+    Inserindo implementaçõs de feedback
+
+[33mcommit 727304ae3cb0ecd4763492bcd13939bc1749a125[m
+Author: AI-QA-paiva <pedropaiva.62124@gmail.com>
+Date:   Wed Oct 19 18:01:39 2022 -0300
+
+    Inserindo correção de bug na geração das entidades User (passou para Users) e Vacation (mudamos o atributo userId para usersId)
+
+[33mcommit 04e39ff9c97eff00a24c0658609e668f777dc203[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 17:00:42 2022 -0300
+
+    Inserindo implementações gerais feitas no projeto
+
+[33mcommit fb9d115ca09c9b16fc1d5fc82bd1e172934c7443[m
+Author: jhstavares <jhstavares_01@hotmail.com>
+Date:   Wed Oct 19 15:39:32 2022 -0300
+
+    Inserindo implentações na classe 'VacationRequest'
+
+[33mcommit 46ba00c76c9b3a6332a894418d411144f6cbdc39[m
+Author: jhstavares <jhstavares_01@hotmail.com>
+Date:   Wed Oct 19 15:36:00 2022 -0300
+
+    Implementando classe Enum ' StatusVacationRequest'
+
+[33mcommit 5b2175de79506afec169389350c78c8ff2b70386[m
+Author: jhstavares <jhstavares_01@hotmail.com>
+Date:   Wed Oct 19 15:26:59 2022 -0300
+
+    Implementando mensageam de validação na classe 'VacationResponsetDto'
+
+[33mcommit 281a0fe80502fd985d37b66592770738a2f17bb6[m
+Author: jhstavares <jhstavares_01@hotmail.com>
+Date:   Wed Oct 19 15:25:14 2022 -0300
+
+    Implementando mensageam de validação na classe 'VacationRequestDto'
+
+[33mcommit 0b2b97c3e3277b2706890316939767668f15ca11[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 13:20:09 2022 -0300
+
+    Inserindo implementação inicial na classe 'UserService'
+
+[33mcommit 4b00bed6647a91da38b90194edab76b35cf21c51[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 13:19:13 2022 -0300
+
+    Inserindo implementação inicial na interface 'UserRepository'
+
+[33mcommit 27413923afe140171fcafb8a2daee3ea8a480748[m
+Author: k3vinrich4rd <kevinrichardve@gmail.com>
+Date:   Wed Oct 19 13:18:39 2022 -0300
+
+    Inserindo implementação inicial na classe 'UserController'
+
+[33mcommit 068de52311379166eb4c0668dab33a6c31a45710[m
+Author: anacmaciel <casmaciel96@gmail.com>
+Date:   Wed Oct 19 12:29:28 2022 -0300
+
+    subindo classes model, dto request e response do user e classe do vacation
+
+[33mcommit bdf4524d833db1415746b728eed9da1033c12e0b[m
+Author: anacmaciel <casmaciel96@gmail.com>
+Date:   Tue Oct 18 15:39:17 2022 -0300
+
+    subindo projeto configurado com pacotes e suas classes
+
+[33mcommit 8046a3ea0ad18d411f23953227fec215793f0f7d[m
+Author: Ana Clara Maciel <93095936+anacmaciel@users.noreply.github.com>
+Date:   Mon Oct 17 16:40:13 2022 -0300
+
+    Initial commit

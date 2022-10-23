@@ -3,12 +3,14 @@ package com.zup.gerenciadorDeFerias.service;
 import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
+import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -46,20 +48,31 @@ public class UserService {
     }
 
 
-    public UserResponseDto registerUser(UserRequestDto userRequestDto) {
+    public UserResponseDto registerUser(UserRequestDto userRequestDto){
+
+        Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
+        if(optionalUser.isPresent()){
+            throw new BadRequest("email already exists");
+        }
+
+        userRequestDto.getEmail();
+
+       if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
+           throw new BadRequest("Hire date is greater than today's date");
+       }
 
         Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
-
         if (validationAge) {
-
 
             User user = userRequestDto.convertToUserRequestDto();
             user.setStatusUser(StatusUser.ACTIVE);
-            User userModel = userRepository.save(user);
+            user.setDaysBalance(0);
 
+            User userModel = userRepository.save(user);
             return UserResponseDto.convertToUser(userModel);
+
         } else {
-            return null;
+            throw new BadRequest("The informed age is under 18 and is not allowed");
         }
     }
 
@@ -70,24 +83,34 @@ public class UserService {
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("The informed user was not found in the system");
         }
-        optionalUser.get();
-
-        return userRepository.save(user);
-    }
-
-    public User updateStatusUser(User user, Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        User user1 = userOptional.get();
-        if (user1.getStatusUser() == StatusUser.ACTIVE) {
-            throw new ObjectNotFoundException("Unable to deliver this action");
-        } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
-            throw new ObjectNotFoundException("Unable to deliver this action");
+            optionalUser.get();
+            return userRepository.save(user);
         }
-        return userRepository.save(user);
+
+        public User updateStatusUser (User user, Long id){
+            Optional<User> userOptional = userRepository.findById(id);
+            User user1 = userOptional.get();
+            if (user1.getStatusUser() == StatusUser.ACTIVE) {
+                throw new ObjectNotFoundException("Unable to deliver this action");
+            } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
+                throw new ObjectNotFoundException("Unable to deliver this action");
+            }
+            return userRepository.save(user);
+
     }
 
 
 //    public Optional<User> changeCharacter(Long id) {
 //        return userRepository.findById(id);
 //    }
+
+    //Boolean validationHiring = isDatefuture(userRequestDto.getHiringDate());
+
+//    /    private boolean isDatefuture(LocalDate hiringDate){return hiringDate.isAfter(LocalDate.now());
+//    }
+
+
 }
+
+
+

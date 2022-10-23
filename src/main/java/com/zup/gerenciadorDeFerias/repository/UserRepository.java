@@ -14,4 +14,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from users where status_user in ('ACTIVE', 'ON_VACATION')", nativeQuery = true)
     List<User> findAllStatusActiveOrOnVacation();
 
+    //public boolean existsByEmail(String email);
+
+    Optional<User> findByEmail(String email);
+
+
+
 }
+
+

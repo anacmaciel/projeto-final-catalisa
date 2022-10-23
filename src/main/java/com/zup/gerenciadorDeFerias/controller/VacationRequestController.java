@@ -32,7 +32,7 @@ public class VacationRequestController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<VacationRequest>> displayVacationRequestById(@PathVariable Long id) {
+    public ResponseEntity<Optional<VacationRequestDto>> displayVacationRequestById(@PathVariable Long id) {
         return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
     }
 
