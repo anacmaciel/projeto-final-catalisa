@@ -32,11 +32,11 @@ public class UserService {
             throw new ObjectNotFoundException("no user with the id {id} was found in the system");
         }
 
-       User userFound = optionalUser.get();
-if (userFound.getStatusUser().equals(StatusUser.INACTIVE)) {
-throw new UnprocessableEntityException("Error, cannot access this user's data");
-}
-return userFound;
+        User userFound = optionalUser.get();
+        if (userFound.getStatusUser().equals(StatusUser.INACTIVE)) {
+            throw new UnprocessableEntityException("Error, cannot access this user's data");
+        }
+        return userFound;
     }
 
     private boolean checkAge18(LocalDate birthDate) {
@@ -53,7 +53,7 @@ return userFound;
         if (validationAge) {
 
 
-            User  user = userRequestDto.convertToUserRequestDto();
+            User user = userRequestDto.convertToUserRequestDto();
             user.setStatusUser(StatusUser.ACTIVE);
             User userModel = userRepository.save(user);
 
@@ -70,7 +70,7 @@ return userFound;
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("The informed user was not found in the system");
         }
- optionalUser.get();
+        optionalUser.get();
 
         return userRepository.save(user);
     }
