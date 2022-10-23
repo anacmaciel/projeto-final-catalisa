@@ -36,7 +36,7 @@ public class UserService {
     public UserResponseDto registerUser(UserRequestDto userRequestDto){
 
        if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
-           throw new BadRequest("Data de contratação é maior que data de hoje");
+           throw new BadRequest("Hire date is greater than today's date");
        }
 
 
@@ -51,7 +51,7 @@ public class UserService {
             return UserResponseDto.convertToUser(userModel);
 
         } else {
-            throw new BadRequest("Idade menor que 18 anos não é permitido");
+            throw new BadRequest("The informed age is under 18 and is not allowed");
         }
 
         }
