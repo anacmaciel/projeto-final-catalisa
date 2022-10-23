@@ -56,4 +56,11 @@ public class ExceptionHandlerGerenciadorDeFerias {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erre);
     }
 
+    @ExceptionHandler(BadRequest.class)
+    public ResponseEntity<StandardError> badRequest(BadRequest e, HttpServletRequest request) {
+       StandardError erre = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erre);
+    }
+
 }
