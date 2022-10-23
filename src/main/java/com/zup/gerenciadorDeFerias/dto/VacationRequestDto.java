@@ -29,6 +29,5 @@ public class VacationRequestDto {
     @NotNull(message = "Error: 'StatusVocationRequest' field was not informed")
     private StatusVacationRequest statusVacationRequest;
 
-
     private User user;
 }
