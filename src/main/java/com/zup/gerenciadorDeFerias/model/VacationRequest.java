@@ -39,11 +39,9 @@ public class VacationRequest implements Serializable {
     private User user;
 
 
-    public VacationRequest(Integer vacationDays, LocalDate startAt, LocalDate endAt, StatusVacationRequest statusVacationRequest, User user) {
+    public VacationRequest(Integer vacationDays, LocalDate startAt, User user) {
         this.vacationDays = vacationDays;
         this.startAt = startAt;
-        this.endAt = endAt;
-        this.statusVacationRequest = statusVacationRequest;
         this.user = user;
     }
 }

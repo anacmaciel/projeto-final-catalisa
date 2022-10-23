@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class VacationRequestService {
 
-    private Integer rangeOfDays = 45;
+    private final Integer rangeOfDay = 45;
 
     @Autowired
     VacationRequestRepository vacationRequestRepository;
+
     @Autowired
     UserRepository userRepository;
 
@@ -34,16 +34,16 @@ public class VacationRequestService {
     }
 
     private LocalDate checkIfTheRoundTripIsNotABusinessDay(LocalDate date) {
-        LocalDate newDate = date.plus(2, ChronoUnit.DAYS);
+        LocalDate newDate = date.plusDays(2);
         while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-            newDate = newDate.plus(1, ChronoUnit.DAYS);
+            newDate = newDate.plusDays(1);
         }
 
         return newDate;
     }
 
     private LocalDate checkReturnToWorkDay(LocalDate startAt, Integer daysVacation) {
-        return startAt.plus(daysVacation, ChronoUnit.DAYS);
+        return startAt.plusDays(daysVacation);
     }
 
     private User checkIfTheUserIsActive(Long id) {
@@ -60,20 +60,27 @@ public class VacationRequestService {
 
     public VacationRequest registerVacationRequest(VacationRequestDto vacationRequestDto) {
         checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
-          LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
+        User user = vacationRequestDto.getUser();
+        LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
         vacationRequest.setUser(vacationRequest.getUser());
         vacationRequest.setStartAt(validateStartAt);
+       boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
+        if (validDate) {
         vacationRequest.setEndAt(checkReturnToWorkDay(vacationRequest.getStartAt(), vacationRequest.getVacationDays()));
         LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
         vacationRequest.setEndAt(validEndAt);
         vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
         return vacationRequestRepository.save(vacationRequest);
+    } else {
+            throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
+        }
     }
 
 
-    private VacationRequest checkHolidayRequestBackground(LocalDate startAt) {
-        if (startAt >= rangeOfDays.)
+    private boolean checkHolidayRequestBackground(LocalDate startAt) {
+        LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
+        return localDate.isBefore(startAt);
     }
 
     public List<VacationRequest> viewRegisteredVacations() {
