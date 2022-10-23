@@ -69,19 +69,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
+
     public User updateStatusUser(User user, Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
-        User user1 = userOptional.get();
-        if (user1.getStatusUser() == StatusUser.ACTIVE) {
-            throw new ObjectNotFoundException("Unable to deliver this action");
-        } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
-            throw new ObjectNotFoundException("Unable to deliver this action");
-        }
-        return userRepository.save(user);
+        User user1 = userRepository.findById(id).get();
+        user1.setStatusUser(user.getStatusUser());
+        user1.setStatusUser(StatusUser.INACTIVE);
+        return userRepository.save(user1);
+
     }
+}
 
 
 //    public Optional<User> changeCharacter(Long id) {
 //        return userRepository.findById(id);
 //    }
-}
+
