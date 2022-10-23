@@ -5,6 +5,7 @@ import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
+import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +23,43 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    private boolean checkAge18(LocalDate birthDate) {
-     LocalDate localDate=  birthDate.plusYears(18);
-        LocalDate now = LocalDate.now();
-        return localDate.isBefore(now);
+    public List<User> displayRegisteredUsers() {
+        return userRepository.findAllStatusActiveOrOnVacation();
     }
 
-    public boolean existsByEmail(String email){
-        return userRepository.existsByEmail(email);
+
+    public User displayUserById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("no user with the id {id} was found in the system");
+        }
+
+        User userFound = optionalUser.get();
+        if (userFound.getStatusUser().equals(StatusUser.INACTIVE)) {
+            throw new UnprocessableEntityException("Error, cannot access this user's data");
+        }
+        return userFound;
+    }
+
+    private boolean checkAge18(LocalDate birthDate) {
+        LocalDate localDate = birthDate.plusYears(18);
+        LocalDate now = LocalDate.now();
+        return localDate.isBefore(now);
     }
 
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto){
 
+        Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
+        if(optionalUser.isPresent()){
+            throw new BadRequest("email already exists");
+        }
+
+        userRequestDto.getEmail();
+
        if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
            throw new BadRequest("Hire date is greater than today's date");
        }
-
 
         Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
         if (validationAge) {
@@ -53,25 +74,16 @@ public class UserService {
         } else {
             throw new BadRequest("The informed age is under 18 and is not allowed");
         }
+    }
 
+
+    public User changeRegisteredUser(User user, Long id) {
+
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("The informed user was not found in the system");
         }
-
-        public List<User> displayRegisteredUsers() {
-            return userRepository.findAllStatusUser();
-        }
-
-
-        public Optional<User> displayUserById (Long id){
-            return userRepository.findById(id);
-        }
-
-
-        public User changeRegisteredUser (User user, Long id){
-
-            Optional<User> optionalUser = userRepository.findById(id);
-            if (optionalUser.isEmpty()) {
-                throw new RuntimeException("The informed user was not found in the system");
-            }
+            optionalUser.get();
             return userRepository.save(user);
         }
 
@@ -84,7 +96,8 @@ public class UserService {
                 throw new ObjectNotFoundException("Unable to deliver this action");
             }
             return userRepository.save(user);
-        }
+
+    }
 
 
 //    public Optional<User> changeCharacter(Long id) {
@@ -97,4 +110,7 @@ public class UserService {
 //    }
 
 
-    }
+}
+
+
+
