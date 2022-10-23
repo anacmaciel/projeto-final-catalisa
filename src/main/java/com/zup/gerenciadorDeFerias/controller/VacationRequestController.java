@@ -1,5 +1,6 @@
 package com.zup.gerenciadorDeFerias.controller;
 
+import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.service.VacationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class VacationRequestController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<VacationRequest>> displayVacationRequestById(@PathVariable Long id) {
+    public ResponseEntity<Optional<VacationRequestDto>> displayVacationRequestById(@PathVariable Long id) {
         return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
     }
 
