@@ -43,9 +43,9 @@ public class UserController {
         return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
-    @PutMapping(path = "/inativar/{id}")
-    public ResponseEntity<User> userInactiveStatus(@Valid @PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateStatusUser(user, id));
+    @DeleteMapping(path = "/inactive/{id}")
+    public void userInactiveStatus(@PathVariable Long id) {
+        userService.updateStatusUser(id);
 
     }
 }
