@@ -43,6 +43,7 @@ public class VacationRequestService {
         return newDate;
     }
 
+
     private LocalDate checkReturnToWorkDay(LocalDate startAt, Integer daysVacation) {
         return startAt.plusDays(daysVacation);
     }
@@ -80,7 +81,6 @@ public class VacationRequestService {
             User user = vacationRequest.getUser();
             updateDaysBalance(user, vacationRequest);
             VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
-
             return VacationResponseDto.convertToVacationRequestResponse(vacation);
         } else {
             throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
@@ -97,15 +97,9 @@ public class VacationRequestService {
         return vacationRequestRepository.findAllStatusVacationRequest();
     }
 
-    public Optional<VacationRequest> displayVacationRequestById(Long id) {
-        return vacationRequestRepository.findById(id);
-    }
+
 
     public VacationRequest changeRegisteredVacationRequest(VacationRequest vacationRequest) {
         return vacationRequestRepository.save(vacationRequest);
     }
-
-//    public Object changeCharacter(Long id) {
-//
-//    }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/vacationsrequest")
@@ -29,12 +28,6 @@ public class VacationRequestController {
     @GetMapping
     public ResponseEntity<List<VacationRequest>> viewRegisteredVacations() {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
-    }
-
-
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<VacationRequest>> displayVacationRequestById(@PathVariable Long id) {
-        return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
     }
 
     @PutMapping(path = "/{id}")

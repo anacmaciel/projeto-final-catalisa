@@ -11,20 +11,22 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class VacationResponseDto {
-
+    private Long id;
 
     private Integer vacationDays;
 
-    private LocalDate starTat;
+    private LocalDate startAt;
 
     private LocalDate endAt;
 
     private StatusVacationRequest statusVacationRequest;
+
     private User user;
 
     public VacationResponseDto(VacationRequest vacationRequest) {
+        this.id = vacationRequest.getId();
         this.vacationDays = vacationRequest.getVacationDays();
-        this.starTat = vacationRequest.getStartAt();
+        this.startAt = vacationRequest.getStartAt();
         this.endAt = vacationRequest.getEndAt();
         this.statusVacationRequest = vacationRequest.getStatusVacationRequest();
         this.user = vacationRequest.getUser();
@@ -32,6 +34,6 @@ public class VacationResponseDto {
 
     public static VacationResponseDto convertToVacationRequestResponse(VacationRequest vacationRequest) {
 
-        return new VacationResponseDto(vacationRequest.getVacationDays(), vacationRequest.getStartAt(), vacationRequest.getEndAt(), vacationRequest.getStatusVacationRequest(), vacationRequest.getUser());
+        return new VacationResponseDto(vacationRequest.getId(), vacationRequest.getVacationDays(), vacationRequest.getStartAt(), vacationRequest.getEndAt(), vacationRequest.getStatusVacationRequest(), vacationRequest.getUser());
     }
 }
