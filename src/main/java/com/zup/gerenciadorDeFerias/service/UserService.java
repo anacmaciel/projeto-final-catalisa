@@ -50,12 +50,11 @@ public class UserService {
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto){
 
+        userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if(optionalUser.isPresent()){
             throw new BadRequest("email already exists");
         }
-
-        userRequestDto.getEmail();
 
        if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
            throw new BadRequest("Hire date is greater than today's date");

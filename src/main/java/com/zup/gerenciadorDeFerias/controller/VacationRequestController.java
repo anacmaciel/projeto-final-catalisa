@@ -32,12 +32,17 @@ public class VacationRequestController {
 
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<VacationRequestDto>> displayVacationRequestById(@PathVariable Long id) {
+    public ResponseEntity<VacationRequest> displayVacationRequestById(@PathVariable Long id) {
         return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<VacationRequest> changeRegisteredVacationRequest(@RequestBody VacationRequest vacationRequest) {
+        return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequest));
+    }
+
+    @PutMapping(path = "/inativar/{id}")
+    public ResponseEntity<VacationRequest> cancelRegisteredVacationRequest(@RequestBody VacationRequest vacationRequest) {
         return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequest));
     }
 

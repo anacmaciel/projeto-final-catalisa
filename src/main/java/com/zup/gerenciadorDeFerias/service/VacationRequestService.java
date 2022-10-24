@@ -1,6 +1,10 @@
 package com.zup.gerenciadorDeFerias.service;
 
 import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
+import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
+import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
+import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
+import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.repository.VacationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +43,6 @@ public class VacationRequestService {
         LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getEndAt());
 
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
-
         vacationRequest.setStartAt(validatStartAt);
         vacationRequest.setEndAt(validEndAt);
 
@@ -50,25 +53,50 @@ public class VacationRequestService {
         return vacationRequestRepository.findAllStatusVacationRequest();
     }
 
+    public VacationRequest displayVacationRequestById(Long id) {
 
+        Optional<VacationRequest> optionalVacationRequest = vacationRequestRepository.findById(id);
+        if (optionalVacationRequest.isEmpty()) {
+            throw new ObjectNotFoundException("no request with the id {id} was found in the system");
+        }
+        VacationRequest vacationRequestFound = optionalVacationRequest.get();
+        if (vacationRequestFound.getUser().getStatusUser().equals(StatusUser.INACTIVE)){ //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
+            throw new UnprocessableEntityException("Error, cannot access this user's data");
+        }
 
-    //se usuario está com status INACTIVE nao pode fazer buscas - atraves do login, checar se esta ativo, se estiver inativo, desabilita o botao de pequisa
-    //usuario nao pode ter acesso a nenhum outro usuario - logica seria via seu acesso, Login/passorwd ja setar esse id nao deixar ele setar o id
-    public Optional<VacationRequestDto> displayVacationRequestById(Long id) {
-
-        VacationRequest vacationRequest= vacationRequestRepository.findById(id).get();
-        VacationRequestDto objDto = new VacationRequestDto(
-                vacationRequest.getVacationDays(),vacationRequest.getStartAt(),vacationRequest.getEndAt(),
-                vacationRequest.getStatusVacationRequest(), vacationRequest.getUser());
-        return Optional.of(objDto);
-
-      // return vacationRequestRepository.findById(id);
-
+        return vacationRequestFound;
     }
+
 
     public VacationRequest changeRegisteredVacationRequest(VacationRequest vacationRequest) {
         return vacationRequestRepository.save(vacationRequest);
     }
+
+    public VacationRequest cancelRegisteredVacationRequest(VacationRequest vacationRequest, Long id) {
+        Optional<VacationRequest> optionalVacationRequest = vacationRequestRepository.findById(id);
+        if (optionalVacationRequest.isEmpty()) {
+            throw new ObjectNotFoundException("no request with the id {id} was found in the system");
+        }
+
+        VacationRequest vacation1 = optionalVacationRequest.get();
+        if(vacation1.getStatusVacationRequest().equals(StatusVacationRequest.CREATED)) {
+            vacation1.setStatusVacationRequest(StatusVacationRequest.CANCELED);
+            vacationRequestRepository.save(vacation1);
+
+        } else if (vacation1.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) {
+            throw new ObjectNotFoundException("Request is already inactive");
+        }
+
+        return vacationRequestRepository.save(vacationRequest);
+
+        // aqui tem uma regra que se cancelado um pedido de ferias:
+        // mas cancelado antes de aprovado, nao subtraiu os dias pedidos com o saldo;  para isso teria que ter sido concluido
+        // se concluido, ou um pedido aprovado, pode depois ser cancelado?  sim até 7 dias é isso?
+        // se era autorizado, tinha subtraido, gerou um novo daysbalance; quando foi cancelado, tem que devolver os dias somando ao days balance
+    }
+
+
+
 
 //    public Object changeCharacter(Long id) {
 //
