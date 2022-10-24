@@ -38,6 +38,7 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private ProfileEnum profileEnum;
+
     @Enumerated(EnumType.STRING)
     private StatusUser statusUser;
 

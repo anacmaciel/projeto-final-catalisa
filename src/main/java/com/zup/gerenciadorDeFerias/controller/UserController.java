@@ -22,7 +22,7 @@ public class UserController {
 
     @PostMapping
 
-    public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto){
+    public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
@@ -43,8 +43,9 @@ public class UserController {
         return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
-    @PutMapping(path = "/userstatus/{id}")
-    public ResponseEntity<User> userInactiveStatus(@Valid @RequestBody User user, @PathVariable Long id) {
+    @PutMapping(path = "/inativar/{id}")
+    public ResponseEntity<User> userInactiveStatus(@Valid @PathVariable Long id, @RequestBody User user) {
         return ResponseEntity.ok(userService.updateStatusUser(user, id));
+
     }
 }

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class UserResponseDto {
+    private Long id;
 
     private String name;
 
@@ -29,6 +30,7 @@ public class UserResponseDto {
 
 
     public UserResponseDto(User user) {
+        this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
         this.birthDate = user.getBirthDate();
@@ -39,6 +41,6 @@ public class UserResponseDto {
     }
 
     public static UserResponseDto convertToUser(User user) {
-        return new UserResponseDto(user.getName(), user.getEmail(), user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(), user.getProfileEnum(), user.getStatusUser());
+        return new UserResponseDto(user.getId(),user.getName(), user.getEmail(), user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(), user.getProfileEnum(), user.getStatusUser());
     }
 }
