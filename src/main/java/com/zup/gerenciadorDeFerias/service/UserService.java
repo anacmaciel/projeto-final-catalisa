@@ -11,7 +11,6 @@ import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -91,20 +90,19 @@ public class UserService {
     }
 
 
-    public User updateStatusUser(User user, Long id) {
+    public void updateStatusUser(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("User does not exist");
         }
+
         User user1 = optionalUser.get();
-        if (user1.getStatusUser().equals(StatusUser.ACTIVE)) {
+        if (user1.getStatusUser().equals(StatusUser.ACTIVE) && (!user1.getStatusUser().equals(StatusUser.ON_VACATION))) {
             user1.setStatusUser(StatusUser.INACTIVE);
-            return userRepository.save(user1);
+            userRepository.save(user1);
         } else if (user1.getStatusUser().equals(StatusUser.INACTIVE)) {
             throw new ObjectNotFoundException("User is already inactive");
         }
-
-        return userRepository.save(user);
 
     }
 
