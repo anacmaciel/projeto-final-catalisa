@@ -1,6 +1,7 @@
 package com.zup.gerenciadorDeFerias.controller;
 
 import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
+import com.zup.gerenciadorDeFerias.dto.VacationResponseDto;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.service.VacationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/vacationsrequest")
@@ -20,20 +20,14 @@ public class VacationRequestController {
     VacationRequestService vacationRequestService;
 
     @PostMapping
-    public ResponseEntity<VacationRequest> registerVacationRequest(@Valid @RequestBody VacationRequestDto vacationRequestDto) {
-        VacationRequest vacationRequest = vacationRequestService.registerVacationRequest(vacationRequestDto);
-        return new ResponseEntity<>(vacationRequest, HttpStatus.CREATED);
+    public ResponseEntity<VacationResponseDto> registerVacationRequest(@Valid @RequestBody VacationRequestDto vacationRequestDto) {
+        VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(vacationRequestDto);
+        return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<List<VacationRequest>> viewRegisteredVacations() {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
-    }
-
-
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<VacationRequestDto>> displayVacationRequestById(@PathVariable Long id) {
-        return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
     }
 
     @PutMapping(path = "/{id}")
