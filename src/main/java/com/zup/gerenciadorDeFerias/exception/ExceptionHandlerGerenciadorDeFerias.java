@@ -56,4 +56,20 @@ public class ExceptionHandlerGerenciadorDeFerias {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erre);
     }
 
+
+    @ExceptionHandler(BadRequest.class)
+    public ResponseEntity<StandardError> badRequest(BadRequest e, HttpServletRequest request) {
+        StandardError erre = new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erre);
+    }
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<StandardError> unprocessableEntityException (UnprocessableEntityException e, HttpServletRequest request){
+        StandardError erre = new StandardError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(erre);
+
+    }
 }
+
+

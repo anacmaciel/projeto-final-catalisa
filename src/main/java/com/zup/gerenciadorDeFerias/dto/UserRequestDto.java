@@ -12,8 +12,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 public class UserRequestDto {
-    @NotBlank(message = "Name not informed error")
-    @Length(min = 5, max = 60, message = "error, minimum characters {min}, maximum {max}")
+
+    @Length(min = 5, message = "Error, the number of characters informed must be greater than 5 characters")
+    @Length(max = 60, message = "Error, the number of characters informed must be less than or equal to 60 characters")
     private String name;
 
     @Email(message = "Error, invalid email")
@@ -30,6 +31,7 @@ public class UserRequestDto {
 
 
     public User convertToUserRequestDto() {
-        return new User(name, email, birthDate, hiringDate, profileEnum);
+        return new User(name,email,birthDate,hiringDate,profileEnum);
+
     }
 }
