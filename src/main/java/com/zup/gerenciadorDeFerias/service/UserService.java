@@ -71,16 +71,23 @@ public class UserService {
 
 
     public User updateStatusUser(User user, Long id) {
-        User user1 = userRepository.findById(id).get();
-        user1.setStatusUser(user.getStatusUser());
-        user1.setStatusUser(StatusUser.INACTIVE);
-        return userRepository.save(user1);
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("User does not exist");
+        }
+        User user1 = optionalUser.get();
+        if (user1.getStatusUser().equals(StatusUser.ACTIVE)) {
+            user1.setStatusUser(StatusUser.INACTIVE);
+            return userRepository.save(user1);
+        } else if (user1.getStatusUser().equals(StatusUser.INACTIVE)) {
+            throw new ObjectNotFoundException("User is already inactive");
+        }
+
+        return userRepository.save(user);
 
     }
+
+
 }
 
-
-//    public Optional<User> changeCharacter(Long id) {
-//        return userRepository.findById(id);
-//    }
 
