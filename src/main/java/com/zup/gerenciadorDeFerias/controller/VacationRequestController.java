@@ -30,14 +30,20 @@ public class VacationRequestController {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<VacationRequest> displayVacationRequestById(@PathVariable Long id) {
+        return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
+    }
+
+
     @PutMapping(path = "/{id}")
     public ResponseEntity<VacationRequest> changeRegisteredVacationRequest(@RequestBody VacationRequest vacationRequest) {
         return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequest));
     }
 
-//    @PatchMapping(path = "/{id}")
-//    public ResponseEntity<VacationRequest> changeCharacter(@PathVariable Long id){
-//        return ResponseEntity.ok(vacationRequestService.changeCharacter(id));
-//    }
+    @DeleteMapping(path = "/cancel/{id}")
+    public void cancelRegisteredVacationRequest(@PathVariable Long id) {
+        vacationRequestService.cancelRegisteredVacationRequest(id);
+    }
 
 }

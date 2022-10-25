@@ -12,7 +12,6 @@ import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import com.zup.gerenciadorDeFerias.repository.VacationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -23,11 +22,16 @@ public class VacationRequestService {
 
     private final Integer rangeOfDay = 45;
 
+    private final Integer itsSevenDays = 7;
+
     @Autowired
     VacationRequestRepository vacationRequestRepository;
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
 
     private boolean validateIfTheDayOfTheWeekIsSaturdayOrSunday(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
@@ -42,7 +46,6 @@ public class VacationRequestService {
 
         return newDate;
     }
-
 
     private LocalDate checkReturnToWorkDay(LocalDate startAt, Integer daysVacation) {
         return startAt.plusDays(daysVacation);
@@ -66,6 +69,7 @@ public class VacationRequestService {
         return userRepository.save(user);
     }
 
+
     public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) {
         User userFound = checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
@@ -87,19 +91,65 @@ public class VacationRequestService {
         }
     }
 
-
     private boolean checkHolidayRequestBackground(LocalDate startAt) {
         LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
         return localDate.isBefore(startAt);
     }
 
+
     public List<VacationRequest> viewRegisteredVacations() {
         return vacationRequestRepository.findAllStatusVacationRequest();
     }
 
+    public VacationRequest displayVacationRequestById(Long id) {
+
+        Optional<VacationRequest> optionalVacationRequest = vacationRequestRepository.findById(id);
+        if (optionalVacationRequest.isEmpty()) {
+            throw new ObjectNotFoundException("no request with the id {id} was found in the system");
+        }
+        VacationRequest vacationRequestFound = optionalVacationRequest.get();
+        if (vacationRequestFound.getUser().getStatusUser().equals(StatusUser.INACTIVE)){ //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
+            throw new UnprocessableEntityException("Error, cannot access this user's data");
+        }
+
+        return vacationRequestFound;
+    }
 
 
     public VacationRequest changeRegisteredVacationRequest(VacationRequest vacationRequest) {
         return vacationRequestRepository.save(vacationRequest);
     }
+
+    private boolean checkItsSevenDaysBackground(VacationRequest vacationRequest) {
+        LocalDate checkStartAt = vacationRequest.getStartAt();
+        LocalDate localDate = LocalDate.now().plusDays(itsSevenDays);
+        return localDate.isAfter(checkStartAt);
+    }
+
+    public void cancelRegisteredVacationRequest(Long id) {
+        Optional<VacationRequest> optionalVacationRequest = vacationRequestRepository.findById(id);
+        if (optionalVacationRequest.isEmpty()) {
+            throw new ObjectNotFoundException("no request with the id {id} was found in the system");
+        }
+
+        VacationRequest requestFound = optionalVacationRequest.get();
+
+        boolean validDateSevenDays = checkItsSevenDaysBackground(requestFound);
+        if (validDateSevenDays){
+            throw new UnprocessableEntityException(
+                    "It is not possible to process your vacation cancellation request, as you must have "+itsSevenDays+" days prior to the start date of the vacation.");
+        }
+
+        if(requestFound.getStatusVacationRequest().equals(StatusVacationRequest.CREATED)) {
+            requestFound.setStatusVacationRequest(StatusVacationRequest.CANCELED);
+            userService.updateDaysBalancePlus(requestFound.getUser(), requestFound.getVacationDays());
+
+            vacationRequestRepository.save(requestFound);
+
+        } else if (requestFound.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) {
+            throw new ObjectNotFoundException("Request is already canceled");
+        }
+
+    }
+
 }

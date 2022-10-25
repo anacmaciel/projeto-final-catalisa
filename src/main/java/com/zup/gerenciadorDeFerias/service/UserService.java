@@ -7,11 +7,14 @@ import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
+import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,29 +43,34 @@ public class UserService {
         return userFound;
     }
 
-    private boolean checkAge18(LocalDate birthDate) {
-        LocalDate localDate = birthDate.plusYears(18);
+    private void checkAge18(LocalDate birthDate) {
+        LocalDate localDate = birthDate.plusYears(18);//.plusMonths(12).plusDays(365);
         LocalDate now = LocalDate.now();
-        return localDate.isBefore(now);
+
+        if(localDate.isAfter(now)){
+            throw new BadRequest("The informed age is under 18 and is not allowed");
+        }
+
     }
 
+    protected User updateDaysBalancePlus(User user, Integer vacationDays) {
+        user.setDaysBalance(user.getDaysBalance() + vacationDays);
+        return userRepository.save(user);
+    }
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
 
+        userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
-        if (optionalUser.isPresent()) {
-            throw new BadRequest("email already exists");
-        }
+        if (optionalUser.isPresent()) {throw new BadRequest("email already exists"); }
+
+       if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
+           throw new BadRequest("Hire date is greater than today's date");
+       }
 
         userRequestDto.getEmail();
 
-        if (userRequestDto.getHiringDate().isAfter(LocalDate.now())) {
-            throw new BadRequest("Hire date is greater than today's date");
-        }
-
-        Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
-        if (validationAge) {
-
+        checkAge18(userRequestDto.getBirthDate());
 
             User user = userRequestDto.convertToUserRequestDto();
             user.setStatusUser(StatusUser.ACTIVE);
@@ -71,11 +79,7 @@ public class UserService {
             User userModel = userRepository.save(user);
             return UserResponseDto.convertToUser(userModel);
 
-        } else {
-            throw new BadRequest("The informed age is under 18 and is not allowed");
-        }
     }
-
 
     public User changeRegisteredUser(User user, Long id) {
 
@@ -89,8 +93,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
     public void updateStatusUser(Long id) {
+
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("User does not exist");
@@ -106,7 +110,4 @@ public class UserService {
 
     }
 
-
 }
-
-
