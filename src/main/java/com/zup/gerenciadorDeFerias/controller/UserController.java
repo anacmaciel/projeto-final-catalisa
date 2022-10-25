@@ -43,9 +43,9 @@ public class UserController {
         return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
     }
 
-    @DeleteMapping(path = "/inativar/{id}")
-    public void userInactiveStatus(@PathVariable Long id, User user) {
-        userService.updateStatusUser(id, user);
+    @DeleteMapping(path = "/inactive/{id}")
+    public void userInactiveStatus(@PathVariable Long id) {
+        userService.updateStatusUser(id);
 
     }
 }
