@@ -54,5 +54,4 @@ public class User implements Serializable {
         this.hiringDate = hiringDate;
         this.profileEnum = profileEnum;
     }
-
 }

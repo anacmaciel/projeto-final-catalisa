@@ -12,6 +12,7 @@ import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import com.zup.gerenciadorDeFerias.repository.VacationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -25,13 +26,13 @@ public class VacationRequestService {
     private final Integer itsSevenDays = 7;
 
     @Autowired
-    VacationRequestRepository vacationRequestRepository;
+    private VacationRequestRepository vacationRequestRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     private boolean validateIfTheDayOfTheWeekIsSaturdayOrSunday(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
@@ -39,11 +40,14 @@ public class VacationRequestService {
     }
 
     private LocalDate checkIfTheRoundTripIsNotABusinessDay(LocalDate date) {
-        LocalDate newDate = date.plusDays(2);
-        while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
+        LocalDate newDate = date;
+        if (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
             newDate = newDate.plusDays(1);
+            while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
+                newDate = newDate.plusDays(2);
+            }
+            return newDate;
         }
-
         return newDate;
     }
 
@@ -63,10 +67,10 @@ public class VacationRequestService {
         return userFound;
     }
 
-    private User updateDaysBalance(User user, VacationRequest vacationRequest) {
-        user.setDaysBalance(user.getDaysBalance() - vacationRequest.getVacationDays());
 
-        return userRepository.save(user);
+    private boolean checkHolidayRequestBackground(LocalDate startAt) {
+        LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
+        return localDate.isBefore(startAt);
     }
 
 
@@ -82,18 +86,12 @@ public class VacationRequestService {
             LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
             vacationRequest.setEndAt(validEndAt);
             vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
-            User user = vacationRequest.getUser();
-            updateDaysBalance(user, vacationRequest);
+            userService.updateDaysBalance(vacationRequest.getUser(), vacationRequest.getVacationDays());
             VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
             return VacationResponseDto.convertToVacationRequestResponse(vacation);
         } else {
             throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
         }
-    }
-
-    private boolean checkHolidayRequestBackground(LocalDate startAt) {
-        LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
-        return localDate.isBefore(startAt);
     }
 
 
@@ -108,13 +106,12 @@ public class VacationRequestService {
             throw new ObjectNotFoundException("no request with the id {id} was found in the system");
         }
         VacationRequest vacationRequestFound = optionalVacationRequest.get();
-        if (vacationRequestFound.getUser().getStatusUser().equals(StatusUser.INACTIVE)){ //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
+        if (vacationRequestFound.getUser().getStatusUser().equals(StatusUser.INACTIVE)) { //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
             throw new UnprocessableEntityException("Error, cannot access this user's data");
         }
 
         return vacationRequestFound;
     }
-
 
     public VacationRequest changeRegisteredVacationRequest(VacationRequest vacationRequest) {
         return vacationRequestRepository.save(vacationRequest);
@@ -135,12 +132,12 @@ public class VacationRequestService {
         VacationRequest requestFound = optionalVacationRequest.get();
 
         boolean validDateSevenDays = checkItsSevenDaysBackground(requestFound);
-        if (validDateSevenDays){
+        if (validDateSevenDays) {
             throw new UnprocessableEntityException(
-                    "It is not possible to process your vacation cancellation request, as you must have "+itsSevenDays+" days prior to the start date of the vacation.");
+                    "It is not possible to process your vacation cancellation request, as you must have " + itsSevenDays + " days prior to the start date of the vacation.");
         }
 
-        if(requestFound.getStatusVacationRequest().equals(StatusVacationRequest.CREATED)) {
+        if (requestFound.getStatusVacationRequest().equals(StatusVacationRequest.CREATED)) {
             requestFound.setStatusVacationRequest(StatusVacationRequest.CANCELED);
             userService.updateDaysBalancePlus(requestFound.getUser(), requestFound.getVacationDays());
 
