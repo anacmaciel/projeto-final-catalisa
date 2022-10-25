@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @PutMapping(path = "{id}")
-    public ResponseEntity<User> updateRegisteredUser(@RequestBody User user, @PathVariable Long id) {
-        return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
+    public ResponseEntity<UserResponseDto> updateRegisteredUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return ResponseEntity.ok(userService.changeRegisteredUser(userRequestDto));
     }
 
     @DeleteMapping(path = "/inactive/{id}")
