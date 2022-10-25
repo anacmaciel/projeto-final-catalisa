@@ -41,6 +41,8 @@ public class UserResponseDto {
     }
 
     public static UserResponseDto convertToUser(User user) {
+
         return new UserResponseDto(user.getId(),user.getName(), user.getEmail(), user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(), user.getProfileEnum(), user.getStatusUser());
+
     }
 }

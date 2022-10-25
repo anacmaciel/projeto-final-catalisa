@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,38 +46,45 @@ public class UserService {
         return userFound;
     }
 
+    private void checkAge18(LocalDate birthDate) {
+        LocalDate localDate = birthDate.plusYears(18);//.plusMonths(12).plusDays(365);
+        LocalDate now = LocalDate.now();
 
+        if (localDate.isAfter(now)) {
+            throw new BadRequest("The informed age is under 18 and is not allowed");
+        }
 
+    }
+
+    protected User updateDaysBalancePlus(User user, Integer vacationDays) {
+        user.setDaysBalance(user.getDaysBalance() + vacationDays);
+        return userRepository.save(user);
+    }
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
 
+        userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new BadRequest("email already exists");
         }
 
-        userRequestDto.getEmail();
-
         if (userRequestDto.getHiringDate().isAfter(LocalDate.now())) {
             throw new BadRequest("Hire date is greater than today's date");
         }
 
-        Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
-        if (validationAge) {
+        userRequestDto.getEmail();
 
+        checkAge18(userRequestDto.getBirthDate());
 
-            User user = userRequestDto.convertToUserRequestDto();
-            user.setStatusUser(StatusUser.ACTIVE);
-            user.setDaysBalance(0);
+        User user = userRequestDto.convertToUserRequestDto();
+        user.setStatusUser(StatusUser.ACTIVE);
+        user.setDaysBalance(0);
 
-            User userModel = userRepository.save(user);
-            return UserResponseDto.convertToUser(userModel);
+        User userModel = userRepository.save(user);
+        return UserResponseDto.convertToUser(userModel);
 
-        } else {
-            throw new BadRequest("The informed age is under 18 and is not allowed");
-        }
     }
-
 
     public User changeRegisteredUser(User user, Long id) {
 
@@ -92,25 +98,21 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void updateStatusUser(Long id) {
 
-    public User updateStatusUser(User user, Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("User does not exist");
         }
+
         User user1 = optionalUser.get();
-        if (user1.getStatusUser().equals(StatusUser.ACTIVE)) {
+        if (user1.getStatusUser().equals(StatusUser.ACTIVE) && (!user1.getStatusUser().equals(StatusUser.ON_VACATION))) {
             user1.setStatusUser(StatusUser.INACTIVE);
-            return userRepository.save(user1);
+            userRepository.save(user1);
         } else if (user1.getStatusUser().equals(StatusUser.INACTIVE)) {
             throw new ObjectNotFoundException("User is already inactive");
         }
 
-        return userRepository.save(user);
-
     }
 
-
 }
-
-
