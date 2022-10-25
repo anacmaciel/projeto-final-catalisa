@@ -66,7 +66,7 @@ public class UserService {
         userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
-            throw new BadRequest("email already exists");
+            throw new BadRequest("Email already exists");
         }
 
         if (userRequestDto.getHiringDate().isAfter(LocalDate.now())) {
@@ -86,16 +86,24 @@ public class UserService {
 
     }
 
-    public User changeRegisteredUser(User user, Long id) {
+    public UserResponseDto changeRegisteredUser(UserRequestDto userRequestDto) {
 
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) {
-            throw new ObjectNotFoundException("The informed user was not found in the system");
+        Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
+        if (optionalUser.isPresent()) {
+            throw new BadRequest("Email already exists");
+        } else if (userRequestDto.getHiringDate().isAfter(LocalDate.now())) {
+            throw new BadRequest("Hire date is greater than today's date");
         }
 
-        optionalUser.get();
+        checkAge18(userRequestDto.getBirthDate());
 
-        return userRepository.save(user);
+        User user = userRequestDto.convertToUserRequestDto();
+        user.setStatusUser(StatusUser.ACTIVE);
+        user.setDaysBalance(0);
+
+        User userModel = userRepository.save(user);
+        return UserResponseDto.convertToUser(userModel);
+
     }
 
     public void updateStatusUser(Long id) {

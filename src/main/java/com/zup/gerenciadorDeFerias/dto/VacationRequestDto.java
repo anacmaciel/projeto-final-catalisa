@@ -1,6 +1,5 @@
 package com.zup.gerenciadorDeFerias.dto;
 
-import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,7 @@ public class VacationRequestDto {
 
     @NotNull(message = "Error: the 'holiday start' field was not informed")
     private LocalDate startAt;
-@NotNull(message = "field 'user' cannot be empty")
+    @NotNull(message = "field 'user' cannot be empty")
     private User user;
 
 
