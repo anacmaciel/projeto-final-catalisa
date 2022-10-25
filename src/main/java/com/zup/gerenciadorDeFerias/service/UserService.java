@@ -7,13 +7,12 @@ import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
-import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +26,6 @@ public class UserService {
     public List<User> displayRegisteredUsers() {
         return userRepository.findAllStatusActiveOrOnVacation();
     }
-
 
 
     protected User updateDaysBalance(User user, Integer vacationDays) {
@@ -49,11 +47,7 @@ public class UserService {
         return userFound;
     }
 
-    private boolean checkAge18(LocalDate birthDate) {
-        LocalDate localDate = birthDate.plusYears(18);
-        LocalDate now = LocalDate.now();
-        return localDate.isBefore(now);
-    }
+
 
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {

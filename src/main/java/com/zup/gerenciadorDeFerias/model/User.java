@@ -54,19 +54,4 @@ public class User implements Serializable {
         this.hiringDate = hiringDate;
         this.profileEnum = profileEnum;
     }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", birthDate=" + birthDate +
-                ", hiringDate=" + hiringDate +
-                ", daysBalance=" + daysBalance +
-                ", profileEnum=" + profileEnum +
-                ", statusUser=" + statusUser +
-                ", vacationRequests=" + vacationRequests +
-                '}';
-    }
 }
