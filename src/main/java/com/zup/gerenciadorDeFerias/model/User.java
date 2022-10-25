@@ -1,5 +1,6 @@
 package com.zup.gerenciadorDeFerias.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zup.gerenciadorDeFerias.enumeration.ProfileEnum;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import lombok.AllArgsConstructor;
@@ -38,9 +39,11 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private ProfileEnum profileEnum;
+
     @Enumerated(EnumType.STRING)
     private StatusUser statusUser;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<VacationRequest> vacationRequests;
 

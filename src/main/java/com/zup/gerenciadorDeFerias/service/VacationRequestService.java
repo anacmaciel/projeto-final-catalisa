@@ -1,27 +1,37 @@
 package com.zup.gerenciadorDeFerias.service;
 
 import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
+import com.zup.gerenciadorDeFerias.dto.VacationResponseDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
+import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
+import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import com.zup.gerenciadorDeFerias.repository.VacationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class VacationRequestService {
 
+    private final Integer rangeOfDay = 45;
+
+    private final Integer itsSevenDays = 7;
+
     @Autowired
     VacationRequestRepository vacationRequestRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
 
     private boolean validateIfTheDayOfTheWeekIsSaturdayOrSunday(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
@@ -29,25 +39,63 @@ public class VacationRequestService {
     }
 
     private LocalDate checkIfTheRoundTripIsNotABusinessDay(LocalDate date) {
-        LocalDate newDate = date.plus(2, ChronoUnit.DAYS);
+        LocalDate newDate = date.plusDays(2);
         while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-            newDate = newDate.plus(1, ChronoUnit.DAYS);
+            newDate = newDate.plusDays(1);
         }
 
         return newDate;
     }
 
-    public VacationRequest registerVacationRequest(VacationRequestDto vacationRequestDto) {
-
-        LocalDate validatStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
-        LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getEndAt());
-
-        VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
-        vacationRequest.setStartAt(validatStartAt);
-        vacationRequest.setEndAt(validEndAt);
-
-        return vacationRequestRepository.save(vacationRequest);
+    private LocalDate checkReturnToWorkDay(LocalDate startAt, Integer daysVacation) {
+        return startAt.plusDays(daysVacation);
     }
+
+    private User checkIfTheUserIsActive(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("no user with this id was found in the system");
+        }
+        User userFound = optionalUser.get();
+        if (!userFound.getStatusUser().equals(StatusUser.ACTIVE)) {
+            throw new UnprocessableEntityException("unable to process this request");
+        }
+        return userFound;
+    }
+
+    private User updateDaysBalance(User user, VacationRequest vacationRequest) {
+        user.setDaysBalance(user.getDaysBalance() - vacationRequest.getVacationDays());
+
+        return userRepository.save(user);
+    }
+
+
+    public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) {
+        User userFound = checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
+        LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
+        VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
+        vacationRequest.setUser(userFound);
+        vacationRequest.setStartAt(validateStartAt);
+        boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
+        if (validDate) {
+            vacationRequest.setEndAt(checkReturnToWorkDay(vacationRequest.getStartAt(), vacationRequest.getVacationDays()));
+            LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
+            vacationRequest.setEndAt(validEndAt);
+            vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
+            User user = vacationRequest.getUser();
+            updateDaysBalance(user, vacationRequest);
+            VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
+            return VacationResponseDto.convertToVacationRequestResponse(vacation);
+        } else {
+            throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
+        }
+    }
+
+    private boolean checkHolidayRequestBackground(LocalDate startAt) {
+        LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
+        return localDate.isBefore(startAt);
+    }
+
 
     public List<VacationRequest> viewRegisteredVacations() {
         return vacationRequestRepository.findAllStatusVacationRequest();
@@ -72,33 +120,36 @@ public class VacationRequestService {
         return vacationRequestRepository.save(vacationRequest);
     }
 
-    public VacationRequest cancelRegisteredVacationRequest(VacationRequest vacationRequest, Long id) {
+    private boolean checkItsSevenDaysBackground(VacationRequest vacationRequest) {
+        LocalDate checkStartAt = vacationRequest.getStartAt();
+        LocalDate localDate = LocalDate.now().plusDays(itsSevenDays);
+        return localDate.isAfter(checkStartAt);
+    }
+
+    public void cancelRegisteredVacationRequest(Long id) {
         Optional<VacationRequest> optionalVacationRequest = vacationRequestRepository.findById(id);
         if (optionalVacationRequest.isEmpty()) {
             throw new ObjectNotFoundException("no request with the id {id} was found in the system");
         }
 
-        VacationRequest vacation1 = optionalVacationRequest.get();
-        if(vacation1.getStatusVacationRequest().equals(StatusVacationRequest.CREATED)) {
-            vacation1.setStatusVacationRequest(StatusVacationRequest.CANCELED);
-            vacationRequestRepository.save(vacation1);
+        VacationRequest requestFound = optionalVacationRequest.get();
 
-        } else if (vacation1.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) {
-            throw new ObjectNotFoundException("Request is already inactive");
+        boolean validDateSevenDays = checkItsSevenDaysBackground(requestFound);
+        if (validDateSevenDays){
+            throw new UnprocessableEntityException(
+                    "It is not possible to process your vacation cancellation request, as you must have "+itsSevenDays+" days prior to the start date of the vacation.");
         }
 
-        return vacationRequestRepository.save(vacationRequest);
+        if(requestFound.getStatusVacationRequest().equals(StatusVacationRequest.CREATED)) {
+            requestFound.setStatusVacationRequest(StatusVacationRequest.CANCELED);
+            userService.updateDaysBalancePlus(requestFound.getUser(), requestFound.getVacationDays());
 
-        // aqui tem uma regra que se cancelado um pedido de ferias:
-        // mas cancelado antes de aprovado, nao subtraiu os dias pedidos com o saldo;  para isso teria que ter sido concluido
-        // se concluido, ou um pedido aprovado, pode depois ser cancelado?  sim até 7 dias é isso?
-        // se era autorizado, tinha subtraido, gerou um novo daysbalance; quando foi cancelado, tem que devolver os dias somando ao days balance
+            vacationRequestRepository.save(requestFound);
+
+        } else if (requestFound.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) {
+            throw new ObjectNotFoundException("Request is already canceled");
+        }
+
     }
 
-
-
-
-//    public Object changeCharacter(Long id) {
-//
-//    }
 }

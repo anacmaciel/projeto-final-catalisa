@@ -7,12 +7,15 @@ import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
+import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,27 +44,34 @@ public class UserService {
         return userFound;
     }
 
-    private boolean checkAge18(LocalDate birthDate) {
-        LocalDate localDate = birthDate.plusYears(18);
+    private void checkAge18(LocalDate birthDate) {
+        LocalDate localDate = birthDate.plusYears(18);//.plusMonths(12).plusDays(365);
         LocalDate now = LocalDate.now();
-        return localDate.isBefore(now);
+
+        if(localDate.isAfter(now)){
+            throw new BadRequest("The informed age is under 18 and is not allowed");
+        }
+
     }
 
+    protected User updateDaysBalancePlus(User user, Integer vacationDays) {
+        user.setDaysBalance(user.getDaysBalance() + vacationDays);
+        return userRepository.save(user);
+    }
 
-    public UserResponseDto registerUser(UserRequestDto userRequestDto){
+    public UserResponseDto registerUser(UserRequestDto userRequestDto) {
 
         userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
-        if(optionalUser.isPresent()){
-            throw new BadRequest("email already exists");
-        }
+        if (optionalUser.isPresent()) {throw new BadRequest("email already exists"); }
 
        if(userRequestDto.getHiringDate().isAfter(LocalDate.now())){
            throw new BadRequest("Hire date is greater than today's date");
        }
 
-        Boolean validationAge = checkAge18(userRequestDto.getBirthDate());
-        if (validationAge) {
+        userRequestDto.getEmail();
+
+        checkAge18(userRequestDto.getBirthDate());
 
             User user = userRequestDto.convertToUserRequestDto();
             user.setStatusUser(StatusUser.ACTIVE);
@@ -70,11 +80,7 @@ public class UserService {
             User userModel = userRepository.save(user);
             return UserResponseDto.convertToUser(userModel);
 
-        } else {
-            throw new BadRequest("The informed age is under 18 and is not allowed");
-        }
     }
-
 
     public User changeRegisteredUser(User user, Long id) {
 
@@ -82,34 +88,27 @@ public class UserService {
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("The informed user was not found in the system");
         }
-            optionalUser.get();
-            return userRepository.save(user);
+
+        optionalUser.get();
+
+        return userRepository.save(user);
+    }
+
+    public User updateStatusUser(Long id, User user) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("User does not exist");
+        }
+        User user1 = optionalUser.get();
+        if (user1.getStatusUser().equals(StatusUser.ACTIVE)) {
+            user1.setStatusUser(StatusUser.INACTIVE);
+            return userRepository.save(user1);
+        } else if (user1.getStatusUser().equals(StatusUser.INACTIVE)) {
+            throw new ObjectNotFoundException("User is already inactive");
         }
 
-        public User updateStatusUser (User user, Long id){
-            Optional<User> userOptional = userRepository.findById(id);
-            User user1 = userOptional.get();
-            if (user1.getStatusUser() == StatusUser.ACTIVE) {
-                throw new ObjectNotFoundException("Unable to deliver this action");
-            } else if (user1.getStatusUser() == StatusUser.ON_VACATION) {
-                throw new ObjectNotFoundException("Unable to deliver this action");
-            }
-            return userRepository.save(user);
+        return userRepository.save(user);
 
     }
 
-
-//    public Optional<User> changeCharacter(Long id) {
-//        return userRepository.findById(id);
-//    }
-
-    //Boolean validationHiring = isDatefuture(userRequestDto.getHiringDate());
-
-//    /    private boolean isDatefuture(LocalDate hiringDate){return hiringDate.isAfter(LocalDate.now());
-//    }
-
-
 }
-
-
-

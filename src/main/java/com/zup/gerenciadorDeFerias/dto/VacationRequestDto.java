@@ -27,17 +27,11 @@ public class VacationRequestDto {
 
     @NotNull(message = "Error: the 'holiday start' field was not informed")
     private LocalDate startAt;
-
-    @NotNull(message = "Error: the field 'back from vacation' was not informed")
-    private LocalDate endAt;
-
-    @NotNull(message = "Error: 'StatusVocationRequest' field was not informed")
-    private StatusVacationRequest statusVacationRequest;
-
+@NotNull(message = "field 'user' cannot be empty")
     private User user;
 
 
     public VacationRequest convertToVacationRequest() {
-        return new VacationRequest(vacationDays, startAt, endAt, statusVacationRequest, user);
+        return new VacationRequest(vacationDays, startAt, user);
     }
 }
