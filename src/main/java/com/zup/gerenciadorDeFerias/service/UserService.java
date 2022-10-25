@@ -7,6 +7,7 @@ import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
+import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,13 @@ public class UserService {
         return userRepository.findAllStatusActiveOrOnVacation();
     }
 
+
+
+    protected User updateDaysBalance(User user, Integer vacationDays) {
+        user.setDaysBalance(user.getDaysBalance() - vacationDays);
+
+        return userRepository.save(user);
+    }
 
     public User displayUserById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);

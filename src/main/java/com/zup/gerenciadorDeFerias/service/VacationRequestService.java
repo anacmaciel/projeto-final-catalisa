@@ -29,20 +29,26 @@ public class VacationRequestService {
     @Autowired
     UserRepository userRepository;
 
+
+    @Autowired
+    UserService userService;
+
     private boolean validateIfTheDayOfTheWeekIsSaturdayOrSunday(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
     }
 
     private LocalDate checkIfTheRoundTripIsNotABusinessDay(LocalDate date) {
-        LocalDate newDate = date.plusDays(2);
-        while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
+        LocalDate newDate = date;
+        if (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
             newDate = newDate.plusDays(1);
+            while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
+                newDate = newDate.plusDays(2);
+            }
+            return newDate;
         }
-
         return newDate;
     }
-
 
     private LocalDate checkReturnToWorkDay(LocalDate startAt, Integer daysVacation) {
         return startAt.plusDays(daysVacation);
@@ -60,11 +66,12 @@ public class VacationRequestService {
         return userFound;
     }
 
-    private User updateDaysBalance(User user, VacationRequest vacationRequest) {
-        user.setDaysBalance(user.getDaysBalance() - vacationRequest.getVacationDays());
 
-        return userRepository.save(user);
+    private boolean checkHolidayRequestBackground(LocalDate startAt) {
+        LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
+        return localDate.isBefore(startAt);
     }
+
 
     public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) {
         User userFound = checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
@@ -78,8 +85,7 @@ public class VacationRequestService {
             LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
             vacationRequest.setEndAt(validEndAt);
             vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
-            User user = vacationRequest.getUser();
-            updateDaysBalance(user, vacationRequest);
+            userService.updateDaysBalance(vacationRequest.getUser(), vacationRequest.getVacationDays());
             VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
             return VacationResponseDto.convertToVacationRequestResponse(vacation);
         } else {
@@ -88,15 +94,9 @@ public class VacationRequestService {
     }
 
 
-    private boolean checkHolidayRequestBackground(LocalDate startAt) {
-        LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
-        return localDate.isBefore(startAt);
-    }
-
     public List<VacationRequest> viewRegisteredVacations() {
         return vacationRequestRepository.findAllStatusVacationRequest();
     }
-
 
 
     public VacationRequest changeRegisteredVacationRequest(VacationRequest vacationRequest) {
