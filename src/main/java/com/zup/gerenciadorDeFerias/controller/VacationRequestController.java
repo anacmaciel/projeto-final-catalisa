@@ -37,8 +37,8 @@ public class VacationRequestController {
 
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<VacationRequest> changeRegisteredVacationRequest(@RequestBody VacationRequest vacationRequest) {
-        return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequest));
+    public ResponseEntity<VacationResponseDto> changeRegisteredVacationRequest(@Valid @RequestBody VacationRequestDto vacationRequestDto) {
+        return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequestDto));
     }
 
     @DeleteMapping(path = "/cancel/{id}")
