@@ -21,6 +21,18 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    protected User checkIfTheUserIsActive(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("No user with this id was found in the system");
+        }
+        User userFound = optionalUser.get();
+        if (!userFound.getStatusUser().equals(StatusUser.ACTIVE)) {
+            throw new UnprocessableEntityException("Unable to process this request");
+        }
+        return userFound;
+    }
+
 
     public List<User> displayRegisteredUsers() {
         return userRepository.findAllStatusActiveOrOnVacation();
@@ -98,9 +110,6 @@ public class UserService {
         checkAge18(userRequestDto.getBirthDate());
 
         User user = userRequestDto.convertToUserRequestDto();
-        user.setStatusUser(StatusUser.ACTIVE);
-        user.setDaysBalance(0);
-
         User userModel = userRepository.save(user);
         return UserResponseDto.convertToUser(userModel);
 
