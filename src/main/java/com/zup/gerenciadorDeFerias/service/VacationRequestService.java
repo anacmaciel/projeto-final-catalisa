@@ -8,7 +8,6 @@ import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
 import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
-import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import com.zup.gerenciadorDeFerias.repository.VacationRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +27,6 @@ public class VacationRequestService {
     @Autowired
     private VacationRequestRepository vacationRequestRepository;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private UserService userService;
@@ -51,11 +48,6 @@ public class VacationRequestService {
         return newDate;
     }
 
-    private LocalDate checkReturnToWorkDay(LocalDate startAt, Integer daysVacation) {
-        return startAt.plusDays(daysVacation);
-    }
-
-
     private boolean checkHolidayRequestBackground(LocalDate startAt) {
         LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
         return localDate.isBefore(startAt);
@@ -70,7 +62,7 @@ public class VacationRequestService {
         vacationRequest.setStartAt(validateStartAt);
         boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
         if (validDate) {
-            vacationRequest.setEndAt(checkReturnToWorkDay(vacationRequest.getStartAt(), vacationRequest.getVacationDays()));
+            vacationRequest.setEndAt(vacationRequest.getStartAt().plusDays(vacationRequest.getVacationDays()));
             LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
             vacationRequest.setEndAt(validEndAt);
             vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
@@ -109,7 +101,7 @@ public class VacationRequestService {
         vacationRequest.setStartAt(validateStartAt);
         boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
         if (validDate) {
-            vacationRequest.setEndAt(checkReturnToWorkDay(vacationRequest.getStartAt(), vacationRequest.getVacationDays()));
+            vacationRequest.setEndAt(vacationRequest.getStartAt().plusDays(vacationRequest.getVacationDays()));
             LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
             vacationRequest.setEndAt(validEndAt);
 
