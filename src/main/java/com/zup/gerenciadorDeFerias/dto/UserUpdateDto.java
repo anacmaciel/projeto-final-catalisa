@@ -31,8 +31,10 @@ public class UserUpdateDto {
 
     @NotNull(message = "Error, the field 'hiring date' was not informed")
     private LocalDate hiringDate;
-@Max(value = 30, message = "the maximum amount of days balance is 30")
+
+    @Max(value = 30, message = "the maximum amount of days balance is 30")
     private Integer daysBalance;
+
 
     @NotNull(message = "Error, the profile field was not informed")
     private ProfileEnum profileEnum;
