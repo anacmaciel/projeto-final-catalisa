@@ -1,7 +1,6 @@
 package com.zup.gerenciadorDeFerias.dto;
 
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
-import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
