@@ -91,7 +91,7 @@ public class VacationRequestService {
         return vacationRequestFound;
     }
 
-    public VacationResponseDto changeRegisteredVacationRequest(Long id, VacationRequest vacationRequest) {
+    public VacationResponseDto  changeRegisteredVacationRequest(Long id, VacationRequest vacationRequest) {
         VacationRequest requestFound = displayVacationRequestById(id);
         User userFound = userService.checkIfTheUserIsActive(requestFound.getUser().getId());
         userService.updateDaysBalancePlus(userFound, requestFound.getVacationDays());
