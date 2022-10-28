@@ -9,6 +9,7 @@ import com.zup.gerenciadorDeFerias.exception.UnprocessableEntityException;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,6 +21,11 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    private BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 
     protected User checkIfTheUserIsActive(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -68,6 +74,7 @@ public class UserService {
 
     }
 
+
     protected User updateDaysBalancePlus(User user, Integer vacationDays) {
         user.setDaysBalance(user.getDaysBalance() + vacationDays);
         return userRepository.save(user);
@@ -75,7 +82,7 @@ public class UserService {
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
 
-        userRequestDto.getEmail();
+        //userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new BadRequest("Email already exists");
@@ -85,13 +92,15 @@ public class UserService {
             throw new BadRequest("Hire date is greater than today's date");
         }
 
-        userRequestDto.getEmail();
+        //userRequestDto.getEmail();
 
         checkAge18(userRequestDto.getBirthDate());
 
         User user = userRequestDto.convertToUserRequestDto();
         user.setStatusUser(StatusUser.ACTIVE);
         user.setDaysBalance(0);
+        user.setPassword(passwordEncoder().encode(user.getPassword()));
+
 
         User userModel = userRepository.save(user);
         return UserResponseDto.convertToUser(userModel);

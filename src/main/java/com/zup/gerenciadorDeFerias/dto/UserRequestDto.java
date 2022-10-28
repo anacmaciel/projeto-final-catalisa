@@ -31,9 +31,15 @@ public class UserRequestDto {
     @NotNull(message = "Error, the profile field was not informed")
     private ProfileEnum profileEnum;
 
+    private String login;
+
+    private String password;
+
+
+
 
     public User convertToUserRequestDto() {
-        return new User(name, email, birthDate, hiringDate, profileEnum);
+        return new User(name, email, birthDate, hiringDate, profileEnum, login, password);
 
     }
 }

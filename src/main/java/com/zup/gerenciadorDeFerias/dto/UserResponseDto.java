@@ -28,6 +28,11 @@ public class UserResponseDto {
 
     private StatusUser statusUser;
 
+    private String login;
+
+
+    private String password;
+
 
     public UserResponseDto(User user) {
         this.id = user.getId();
@@ -38,11 +43,15 @@ public class UserResponseDto {
         this.daysBalance = user.getDaysBalance();
         this.profileEnum = user.getProfileEnum();
         this.statusUser = user.getStatusUser();
+        this.login = user.getLogin();
+        this.password = user.getPassword();
     }
 
     public static UserResponseDto convertToUser(User user) {
 
-        return new UserResponseDto(user.getId(), user.getName(), user.getEmail(), user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(), user.getProfileEnum(), user.getStatusUser());
+        return new UserResponseDto(user.getId(), user.getName(), user.getEmail(),
+                user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(),
+                user.getProfileEnum(), user.getStatusUser(), user.getLogin(),user.getPassword());
 
     }
 }
