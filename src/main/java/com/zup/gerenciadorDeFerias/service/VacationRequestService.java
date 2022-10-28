@@ -2,6 +2,7 @@ package com.zup.gerenciadorDeFerias.service;
 
 import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
 import com.zup.gerenciadorDeFerias.dto.VacationResponseDto;
+import com.zup.gerenciadorDeFerias.dto.VacationUpdateDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
@@ -91,20 +92,20 @@ public class VacationRequestService {
         return vacationRequestFound;
     }
 
-    public VacationResponseDto  changeRegisteredVacationRequest(Long id, VacationRequest vacationRequest) {
+    public VacationResponseDto  changeRegisteredVacationRequest(Long id, VacationUpdateDto vacationUpdateDto) {
         VacationRequest requestFound = displayVacationRequestById(id);
         User userFound = userService.checkIfTheUserIsActive(requestFound.getUser().getId());
         userService.updateDaysBalancePlus(userFound, requestFound.getVacationDays());
-        LocalDate startAt = vacationRequest.getStartAt();
+        LocalDate startAt = vacationUpdateDto.getStartAt();
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(startAt);
         requestFound.setStartAt(validateStartAt);
         boolean validDate = checkHolidayRequestBackground(requestFound.getStartAt());
         if (validDate) {
-            requestFound.setEndAt(requestFound.getStartAt().plusDays(vacationRequest.getVacationDays()));
+            requestFound.setEndAt(requestFound.getStartAt().plusDays(vacationUpdateDto.getVacationDays()));
             requestFound.setEndAt(checkIfTheRoundTripIsNotABusinessDay(requestFound.getEndAt()));
-            requestFound.setVacationDays(vacationRequest.getVacationDays());
+            requestFound.setVacationDays(vacationUpdateDto.getVacationDays());
 
-            requestFound.setStatusVacationRequest(vacationRequest.getStatusVacationRequest());
+            requestFound.setStatusVacationRequest(vacationUpdateDto.getStatusVacationRequest());
             userService.updateDaysBalance(userFound, requestFound.getVacationDays());
             VacationRequest vacation = vacationRequestRepository.save(requestFound);
             return VacationResponseDto.convertToVacationRequestResponse(vacation);
