@@ -18,6 +18,9 @@ import java.time.LocalDate;
 @Table(name = "vacation_request")
 
 public class VacationRequest implements Serializable {
+
+    private final static long serialVersionUID =1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -20,6 +20,9 @@ import java.util.List;
 @Setter
 @Table(name = "users")
 public class User implements Serializable {
+
+    private final static long serialVersionUID =1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
