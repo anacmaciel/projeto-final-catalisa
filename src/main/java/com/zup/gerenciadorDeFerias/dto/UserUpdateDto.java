@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -30,10 +31,13 @@ public class UserUpdateDto {
 
     @NotNull(message = "Error, the field 'hiring date' was not informed")
     private LocalDate hiringDate;
+@Max(value = 30, message = "the maximum amount of days balance is 30")
+    private Integer daysBalance;
 
     @NotNull(message = "Error, the profile field was not informed")
     private ProfileEnum profileEnum;
 
     @NotNull(message = "Error, the status field was not informed")
     private StatusUser statusUser;
+
 }

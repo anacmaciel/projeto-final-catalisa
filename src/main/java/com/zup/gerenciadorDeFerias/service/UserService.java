@@ -114,6 +114,7 @@ public class UserService {
         userFound.setStatusUser(userUpdateDto.getStatusUser());
         userFound.setProfileEnum(userUpdateDto.getProfileEnum());
         userFound.setEmail(userUpdateDto.getEmail());
+        userFound.setDaysBalance(userUpdateDto.getDaysBalance());
         User userModel = userRepository.save(userFound);
         return UserResponseDto.convertToUser(userModel);
     }
