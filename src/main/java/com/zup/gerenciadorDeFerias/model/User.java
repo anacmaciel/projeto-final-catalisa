@@ -20,6 +20,9 @@ import java.util.List;
 @Setter
 @Table(name = "users")
 public class User implements Serializable {
+
+    private final static long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,4 +57,15 @@ public class User implements Serializable {
         this.hiringDate = hiringDate;
         this.profileEnum = profileEnum;
     }
+
+    public User(String name, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum, StatusUser statusUser, Integer daysBalance) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.hiringDate = hiringDate;
+        this.daysBalance = daysBalance;
+        this.profileEnum = profileEnum;
+        this.statusUser = statusUser;
+    }
+
 }

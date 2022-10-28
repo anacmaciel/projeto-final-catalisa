@@ -2,6 +2,7 @@ package com.zup.gerenciadorDeFerias.controller;
 
 import com.zup.gerenciadorDeFerias.dto.VacationRequestDto;
 import com.zup.gerenciadorDeFerias.dto.VacationResponseDto;
+import com.zup.gerenciadorDeFerias.dto.VacationUpdateDto;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.service.VacationRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class VacationRequestController {
 
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<VacationResponseDto> changeRegisteredVacationRequest(@Valid @RequestBody VacationRequestDto vacationRequestDto) {
-        return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequestDto));
+    public ResponseEntity<VacationResponseDto> changeRegisteredVacationRequest(@PathVariable Long id, @RequestBody @Valid VacationUpdateDto vacationUpdateDto) {
+        return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(id, vacationUpdateDto));
     }
 
     @DeleteMapping(path = "/cancel/{id}")

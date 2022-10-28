@@ -2,6 +2,7 @@ package com.zup.gerenciadorDeFerias.service;
 
 import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
+import com.zup.gerenciadorDeFerias.dto.UserUpdateDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
@@ -74,8 +75,6 @@ public class UserService {
     }
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
-
-        userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new BadRequest("Email already exists");
@@ -98,21 +97,26 @@ public class UserService {
 
     }
 
-    public UserResponseDto changeRegisteredUser(UserRequestDto userRequestDto) {
+    public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto) {
+        User userFound = checkIfTheUserIsActive(id);
 
-        Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
+        Optional<User> optionalUser = userRepository.findByEmail(userUpdateDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new BadRequest("Email already exists");
-        } else if (userRequestDto.getHiringDate().isAfter(LocalDate.now())) {
+        } else if (userUpdateDto.getHiringDate().isAfter(LocalDate.now())) {
             throw new BadRequest("Hire date is greater than today's date");
         }
 
-        checkAge18(userRequestDto.getBirthDate());
-
-        User user = userRequestDto.convertToUserRequestDto();
-        User userModel = userRepository.save(user);
+        checkAge18(userUpdateDto.getBirthDate());
+        userFound.setName(userUpdateDto.getName());
+        userFound.setHiringDate(userUpdateDto.getHiringDate());
+        userFound.setBirthDate(userUpdateDto.getBirthDate());
+        userFound.setStatusUser(userUpdateDto.getStatusUser());
+        userFound.setProfileEnum(userUpdateDto.getProfileEnum());
+        userFound.setEmail(userUpdateDto.getEmail());
+        userFound.setDaysBalance(userUpdateDto.getDaysBalance());
+        User userModel = userRepository.save(userFound);
         return UserResponseDto.convertToUser(userModel);
-
     }
 
     public void updateStatusUser(Long id) {
@@ -129,7 +133,5 @@ public class UserService {
         } else if (user1.getStatusUser().equals(StatusUser.INACTIVE)) {
             throw new ObjectNotFoundException("User is already inactive");
         }
-
     }
-
 }
