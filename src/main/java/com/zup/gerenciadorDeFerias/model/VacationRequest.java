@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 public class VacationRequest implements Serializable {
 
-    private final static long serialVersionUID =1L;
+    private final static long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,5 +46,11 @@ public class VacationRequest implements Serializable {
         this.vacationDays = vacationDays;
         this.startAt = startAt;
         this.user = user;
+    }
+
+    public VacationRequest(Integer vacationDays, LocalDate startAt, StatusVacationRequest statusVacationRequest) {
+        this.vacationDays = vacationDays;
+        this.startAt = startAt;
+        this.statusVacationRequest = statusVacationRequest;
     }
 }
