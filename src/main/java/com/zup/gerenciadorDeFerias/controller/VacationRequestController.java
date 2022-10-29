@@ -13,37 +13,36 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/vacationsrequest")
+//@RequestMapping(path = "/vacationsrequest")
 public class VacationRequestController {
 
     @Autowired
     VacationRequestService vacationRequestService;
 
-    @PostMapping
-    public ResponseEntity<VacationResponseDto> registerVacationRequest(@Valid @RequestBody VacationRequestDto vacationRequestDto) {
-        VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(vacationRequestDto);
+    @PostMapping(path = "/user/{id}/vacationsrequest")
+    public ResponseEntity<VacationResponseDto> registerVacationRequest(@PathVariable Long  id, @RequestBody @Valid VacationRequestDto vacationRequestDto) {
+        VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(id, vacationRequestDto);
         return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping(path = "vacationsrequest")
     public ResponseEntity<List<VacationRequest>> viewRegisteredVacations() {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/vacationsrequest/{id}")
     public ResponseEntity<VacationRequest> displayVacationRequestById(@PathVariable Long id) {
         return ResponseEntity.ok(vacationRequestService.displayVacationRequestById(id));
     }
 
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "/vacationsrequest/{id}")
     public ResponseEntity<VacationRequest> changeRegisteredVacationRequest(@RequestBody VacationRequest vacationRequest) {
         return ResponseEntity.ok(vacationRequestService.changeRegisteredVacationRequest(vacationRequest));
     }
 
-    @DeleteMapping(path = "/cancel/{id}")
+    @DeleteMapping(path = "/vacationsrequest/cancel/{id}")
     public void cancelRegisteredVacationRequest(@PathVariable Long id) {
         vacationRequestService.cancelRegisteredVacationRequest(id);
     }
-
 }

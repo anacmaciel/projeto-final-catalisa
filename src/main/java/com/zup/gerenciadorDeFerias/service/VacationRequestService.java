@@ -74,8 +74,8 @@ public class VacationRequestService {
     }
 
 
-    public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) {
-        User userFound = checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
+    public VacationResponseDto registerVacationRequest(Long id, VacationRequestDto vacationRequestDto) {
+        User userFound = checkIfTheUserIsActive(id);
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
         vacationRequest.setUser(userFound);
