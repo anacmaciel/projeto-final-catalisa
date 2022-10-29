@@ -21,29 +21,33 @@ public class UserController {
     UserService userService;
 
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PostMapping
-
     public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping
     public ResponseEntity<List<User>> displayRegisteredUsers() {
         return ResponseEntity.ok(userService.displayRegisteredUsers());
     }
 
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping(path = "/{id}")
     public ResponseEntity<User> displayUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.displayUserById(id));
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PutMapping(path = "/{id}")
     public ResponseEntity<UserResponseDto> updateRegisteredUser(@PathVariable Long id, @RequestBody @Valid UserUpdateDto userUpdateDto) {
         return ResponseEntity.ok(userService.changeRegisteredUser(id, userUpdateDto));
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @DeleteMapping(path = "/inactive/{id}")
     public void userInactiveStatus(@PathVariable Long id) {
         userService.updateStatusUser(id);
