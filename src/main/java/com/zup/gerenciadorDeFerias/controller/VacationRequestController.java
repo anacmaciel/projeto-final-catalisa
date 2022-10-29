@@ -19,7 +19,7 @@ public class VacationRequestController {
     VacationRequestService vacationRequestService;
 
     @PostMapping(path = "/user/{id}/vacationsrequest")
-    public ResponseEntity<VacationResponseDto> registerVacationRequest(@PathVariable Long  id, @RequestBody @Valid VacationRequestDto vacationRequestDto) {
+    public ResponseEntity<VacationResponseDto> registerVacationRequest(@PathVariable Long id, @RequestBody @Valid VacationRequestDto vacationRequestDto) {
         VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(id, vacationRequestDto);
         return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
     }
