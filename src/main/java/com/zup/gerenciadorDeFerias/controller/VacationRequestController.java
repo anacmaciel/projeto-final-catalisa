@@ -25,7 +25,7 @@ public class VacationRequestController {
         return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping(path = "vacationsrequest")
+    @GetMapping(path = "/vacationsrequest")
     public ResponseEntity<List<VacationRequest>> viewRegisteredVacations() {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
     }
