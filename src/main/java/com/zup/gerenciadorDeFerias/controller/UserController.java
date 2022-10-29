@@ -2,6 +2,7 @@ package com.zup.gerenciadorDeFerias.controller;
 
 import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
+import com.zup.gerenciadorDeFerias.dto.UserUpdateDto;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class UserController {
         return ResponseEntity.ok(userService.displayUserById(id));
     }
 
-    @PutMapping(path = "{id}")
-    public ResponseEntity<User> updateRegisteredUser(@RequestBody User user, @PathVariable Long id) {
-        return ResponseEntity.ok(userService.changeRegisteredUser(user, id));
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<UserResponseDto> updateRegisteredUser(@PathVariable Long id, @RequestBody @Valid UserUpdateDto userUpdateDto) {
+        return ResponseEntity.ok(userService.changeRegisteredUser(id, userUpdateDto));
     }
 
     @DeleteMapping(path = "/inactive/{id}")

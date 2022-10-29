@@ -22,7 +22,7 @@ public class ExceptionHandlerGerenciadorDeFerias {
     //Métodos de tratamento de UNPROCESSABLE
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> exceptionHandlerEntradaInvalida(HttpMessageNotReadableException ex) {
-        return new ResponseEntity<>("Campo inválido.", HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>("Invalid field.", HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @Getter
@@ -63,8 +63,9 @@ public class ExceptionHandlerGerenciadorDeFerias {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erre);
     }
+
     @ExceptionHandler(UnprocessableEntityException.class)
-    public ResponseEntity<StandardError> unprocessableEntityException (UnprocessableEntityException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> unprocessableEntityException(UnprocessableEntityException e, HttpServletRequest request) {
         StandardError erre = new StandardError(HttpStatus.UNPROCESSABLE_ENTITY.value(), e.getMessage(), System.currentTimeMillis());
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(erre);

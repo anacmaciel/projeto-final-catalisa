@@ -1,6 +1,6 @@
 package com.zup.gerenciadorDeFerias.dto;
 
-import com.zup.gerenciadorDeFerias.model.VacationRequest;
+import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Validated
 
-public class VacationRequestDto {
+public class VacationUpdateDto {
 
     @NotNull(message = "Error: the field 'vacation days' was not informed")
     @Min(value = 5, message = "error, it is not possible to request less than five days of vacation")
@@ -26,7 +26,6 @@ public class VacationRequestDto {
     @NotNull(message = "Error: the 'holiday start' field was not informed")
     private LocalDate startAt;
 
-    public VacationRequest convertToVacationRequest() {
-        return new VacationRequest(vacationDays, startAt);
-    }
+    @NotNull(message = "field 'statusRequestVacation' cannot be empty")
+    private StatusVacationRequest statusVacationRequest;
 }

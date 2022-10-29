@@ -2,6 +2,7 @@ package com.zup.gerenciadorDeFerias.service;
 
 import com.zup.gerenciadorDeFerias.dto.UserRequestDto;
 import com.zup.gerenciadorDeFerias.dto.UserResponseDto;
+import com.zup.gerenciadorDeFerias.dto.UserUpdateDto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
 import com.zup.gerenciadorDeFerias.exception.BadRequest;
 import com.zup.gerenciadorDeFerias.exception.ObjectNotFoundException;
@@ -20,6 +21,18 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    protected User checkIfTheUserIsActive(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("No user with this id was found in the system");
+        }
+        User userFound = optionalUser.get();
+        if (!userFound.getStatusUser().equals(StatusUser.ACTIVE)) {
+            throw new UnprocessableEntityException("Unable to process this request");
+        }
+        return userFound;
+    }
 
 
     public List<User> displayRegisteredUsers() {
@@ -62,11 +75,9 @@ public class UserService {
     }
 
     public UserResponseDto registerUser(UserRequestDto userRequestDto) {
-
-        userRequestDto.getEmail();
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
-            throw new BadRequest("email already exists");
+            throw new BadRequest("Email already exists");
         }
 
         if (userRequestDto.getHiringDate().isAfter(LocalDate.now())) {
@@ -86,16 +97,26 @@ public class UserService {
 
     }
 
-    public User changeRegisteredUser(User user, Long id) {
+    public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto) {
+        User userFound = checkIfTheUserIsActive(id);
 
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isEmpty()) {
-            throw new ObjectNotFoundException("The informed user was not found in the system");
+        Optional<User> optionalUser = userRepository.findByEmail(userUpdateDto.getEmail());
+        if (optionalUser.isPresent()) {
+            throw new BadRequest("Email already exists");
+        } else if (userUpdateDto.getHiringDate().isAfter(LocalDate.now())) {
+            throw new BadRequest("Hire date is greater than today's date");
         }
 
-        optionalUser.get();
-
-        return userRepository.save(user);
+        checkAge18(userUpdateDto.getBirthDate());
+        userFound.setName(userUpdateDto.getName());
+        userFound.setHiringDate(userUpdateDto.getHiringDate());
+        userFound.setBirthDate(userUpdateDto.getBirthDate());
+        userFound.setStatusUser(userUpdateDto.getStatusUser());
+        userFound.setProfileEnum(userUpdateDto.getProfileEnum());
+        userFound.setEmail(userUpdateDto.getEmail());
+        userFound.setDaysBalance(userUpdateDto.getDaysBalance());
+        User userModel = userRepository.save(userFound);
+        return UserResponseDto.convertToUser(userModel);
     }
 
     public void updateStatusUser(Long id) {
@@ -112,7 +133,5 @@ public class UserService {
         } else if (user1.getStatusUser().equals(StatusUser.INACTIVE)) {
             throw new ObjectNotFoundException("User is already inactive");
         }
-
     }
-
 }

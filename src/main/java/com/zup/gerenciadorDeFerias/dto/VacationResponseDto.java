@@ -3,7 +3,10 @@ package com.zup.gerenciadorDeFerias.dto;
 import com.zup.gerenciadorDeFerias.enumeration.StatusVacationRequest;
 import com.zup.gerenciadorDeFerias.model.User;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
