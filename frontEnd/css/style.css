@@ -1,0 +1,40 @@
+body{
+    background-color: #07011e;
+    background-image: url("imagem/channels4_profile");
+    font-family: sans-serif;
+    border-radius: 5px;
+
+}
+
+form{
+    width: 400px;
+    margin: auto;
+    box-sizing: border-box;
+    padding: 10px ;
+
+    
+}
+
+form{
+    width: 300px;
+     margin: 200px auto;
+     text-align: center;
+}
+input{
+    display: block;
+    margin: 10px auto;
+    width: 250px;
+    height: 30px;
+}
+
+
+    h2 {
+
+        color: aliceblue;
+    }
+    h4 {
+        color: aliceblue;
+        
+   
+
+}
