@@ -53,10 +53,9 @@ public class VacationRequestService {
         return localDate.isBefore(startAt);
     }
 
-<<<<<<<HEAD
 
     public VacationResponseDto registerVacationRequest(Long id, VacationRequestDto vacationRequestDto) {
-        User userFound = checkIfTheUserIsActive(id);
+        User userFound = userService.checkIfTheUserIsActive(id);
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
         vacationRequest.setUser(userFound);
