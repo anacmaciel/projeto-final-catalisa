@@ -28,7 +28,6 @@ public class VacationRequestService {
     @Autowired
     private VacationRequestRepository vacationRequestRepository;
 
-
     @Autowired
     private UserService userService;
 
@@ -54,8 +53,9 @@ public class VacationRequestService {
         return localDate.isBefore(startAt);
     }
 
-    public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) {
-        User userFound = userService.checkIfTheUserIsActive(vacationRequestDto.getUser().getId());
+
+    public VacationResponseDto registerVacationRequest(Long id, VacationRequestDto vacationRequestDto) {
+        User userFound = userService.checkIfTheUserIsActive(id);
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
         vacationRequest.setUser(userFound);
@@ -92,7 +92,7 @@ public class VacationRequestService {
         return vacationRequestFound;
     }
 
-    public VacationResponseDto  changeRegisteredVacationRequest(Long id, VacationUpdateDto vacationUpdateDto) {
+    public VacationResponseDto changeRegisteredVacationRequest(Long id, VacationUpdateDto vacationUpdateDto) {
         VacationRequest requestFound = displayVacationRequestById(id);
         User userFound = userService.checkIfTheUserIsActive(requestFound.getUser().getId());
         userService.updateDaysBalancePlus(userFound, requestFound.getVacationDays());
