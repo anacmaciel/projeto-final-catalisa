@@ -34,16 +34,30 @@ public class UserService {
         return userFound;
     }
 
+    protected User checkUserActiveByEmail(String email) throws Exception {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            throw new ObjectNotFoundException("No user with this id was found in the system");
+        }
+
+        User userFound = optionalUser.get();
+
+        if (!userFound.getStatusUser().equals(StatusUser.ACTIVE)) {
+            throw new UnprocessableEntityException("Unable to process this request");
+        }
+        return userFound;
+    }
+
 
     public List<User> displayRegisteredUsers() {
         return userRepository.findAllStatusActiveOrOnVacation();
     }
 
 
-    protected User updateDaysBalance(User user, Integer vacationDays) {
+    protected void updateDaysBalance(User user, Integer vacationDays) {
         user.setDaysBalance(user.getDaysBalance() - vacationDays);
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     public User displayUserById(Long id) {
@@ -69,12 +83,12 @@ public class UserService {
 
     }
 
-    protected User updateDaysBalancePlus(User user, Integer vacationDays) {
+    protected void updateDaysBalancePlus(User user, Integer vacationDays) {
         user.setDaysBalance(user.getDaysBalance() + vacationDays);
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
-    public UserResponseDto registerUser(UserRequestDto userRequestDto) {
+    public UserResponseDto registerUser(UserRequestDto userRequestDto) throws Exception{
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new BadRequest("Email already exists");
@@ -84,8 +98,6 @@ public class UserService {
             throw new BadRequest("Hire date is greater than today's date");
         }
 
-        userRequestDto.getEmail();
-
         checkAge18(userRequestDto.getBirthDate());
 
         User user = userRequestDto.convertToUserRequestDto();
@@ -94,7 +106,6 @@ public class UserService {
 
         User userModel = userRepository.save(user);
         return UserResponseDto.convertToUser(userModel);
-
     }
 
     public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto) {
