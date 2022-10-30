@@ -5,6 +5,7 @@ import com.zup.gerenciadorDeFerias.dto.VacationResponseDto;
 import com.zup.gerenciadorDeFerias.dto.VacationUpdateDto;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import com.zup.gerenciadorDeFerias.service.VacationRequestService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,21 @@ public class VacationRequestController {
     @Autowired
     VacationRequestService vacationRequestService;
 
+
     @CrossOrigin(origins = "http://127.0.0.1:5500")
-    @PostMapping(path = "/user/{id}/vacationsrequest")
-    public ResponseEntity<VacationResponseDto> registerVacationRequest(@PathVariable Long id, @RequestBody @Valid VacationRequestDto vacationRequestDto) {
-        VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(id, vacationRequestDto);
-        return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
+    @PostMapping(path = "/user/vacationsrequest")
+    public ResponseEntity<VacationResponseDto> registerVacationRequest(@RequestBody @Valid VacationRequestDto vacationRequestDto)  throws Exception{
+       try{
+            VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(vacationRequestDto);
+            return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
+       }catch (Exception e){
+           ResponseEntity responseEntity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+           return responseEntity;
+       }
     }
 
     @GetMapping(path = "/vacationsrequest")
+
     public ResponseEntity<List<VacationRequest>> viewRegisteredVacations() {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
     }
