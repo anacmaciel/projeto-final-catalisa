@@ -54,23 +54,27 @@ public class VacationRequestService {
     }
 
 
-    public VacationResponseDto registerVacationRequest(Long id, VacationRequestDto vacationRequestDto) {
-        User userFound = userService.checkIfTheUserIsActive(id);
+    public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) throws Exception {
+        try {
+        User userFound = userService.checkUserActiveByEmail(vacationRequestDto.getEmail());
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
         VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
         vacationRequest.setUser(userFound);
         vacationRequest.setStartAt(validateStartAt);
         boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
-        if (validDate) {
-            vacationRequest.setEndAt(vacationRequest.getStartAt().plusDays(vacationRequest.getVacationDays()));
-            LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
-            vacationRequest.setEndAt(validEndAt);
-            vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
-            userService.updateDaysBalance(vacationRequest.getUser(), vacationRequest.getVacationDays());
-            VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
-            return VacationResponseDto.convertToVacationRequestResponse(vacation);
-        } else {
-            throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
+            if (validDate) {
+                vacationRequest.setEndAt(vacationRequest.getStartAt().plusDays(vacationRequest.getVacationDays()));
+                LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
+                vacationRequest.setEndAt(validEndAt);
+                vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
+                userService.updateDaysBalance(vacationRequest.getUser(), vacationRequest.getVacationDays());
+                VacationRequest vacation = vacationRequestRepository.save(vacationRequest);
+                return VacationResponseDto.convertToVacationRequestResponse(vacation);
+            } else {
+                throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
+            }
+        } catch (Exception exception){
+            throw new Exception(exception);
         }
     }
 
@@ -99,8 +103,7 @@ public class VacationRequestService {
         LocalDate startAt = vacationUpdateDto.getStartAt();
         LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(startAt);
         requestFound.setStartAt(validateStartAt);
-        boolean validDate = checkHolidayRequestBackground(requestFound.getStartAt());
-        if (validDate) {
+        if (checkHolidayRequestBackground(requestFound.getStartAt())) {
             requestFound.setEndAt(requestFound.getStartAt().plusDays(vacationUpdateDto.getVacationDays()));
             requestFound.setEndAt(checkIfTheRoundTripIsNotABusinessDay(requestFound.getEndAt()));
             requestFound.setVacationDays(vacationUpdateDto.getVacationDays());
