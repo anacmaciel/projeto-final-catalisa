@@ -6,7 +6,7 @@ form.addEventListener('submit', event => { // ouvir até o submit ser acionado
     const formData = new FormData(form); // Pega o formulário e java em uma variável 
     const data = Object.fromEntries(formData); // Se torna em objeto 
 
-    fetch("http://localhost:8080/vacationsrequest", {
+    fetch("http://localhost:8080/user/vacationsrequest", {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -14,10 +14,10 @@ form.addEventListener('submit', event => { // ouvir até o submit ser acionado
         body: JSON.stringify(data)
     }).then(res => res.json())
         .then(data => console.log(data))
-        .catch(error => console.log(error));
+        .catch(error => alert('Falha na requisicao'));
 });
 
-function msg() {
-    alert("Salvo com sucesso!");
+function msg() {   
     window.location.reload(true);
   }
+  
