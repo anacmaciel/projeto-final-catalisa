@@ -8,27 +8,33 @@
     <title>List Users</title>
 </head>
 <body>
-    <h3>List Users</h3>
-    <!-- A table para mostrar os usuários-->
+    <h3>List Vacation-Request</h3>
+    <!-- A table para mostrar as vacations request-->
     <table id="table-suario" class="table table-striped" style="width:100%">
         <!--cabeçalho-->
         <thead>
             <tr>
+                <th scope="col">Id Vacation Request</th>
+                <th scope="col">Vacation Days</th>
+                <th scope="col">Start At</th>
+                <th scope="col">End At</th>
+                <th scope="col">Status Vacation Request</th>
                 <th scope="col">Id user</th>
                 <th scope="col">Name user</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Birth Date</th>
-                <th scope="col">Hiring Date</th>
-                <th scope="col">Days Balance</th>
-                <th scope="col">Profile Enum</th>
+                <th scope="col">email</th>
+                <th scope="col">Birth date</th>   
+                <th scope="col">Hiring Date</th>   
+                <th scope="col">Days Balance</th>   
+                <th scope="col">Profile user</th>   
                 <th scope="col">Status User</th>   
+                 
             </tr>
         </thead>
         <!--Corpo do tbody. E gerido pelo js-->
-        <tbody id="allDicesUsers">
+        <tbody id="allDicesVacationRequest">
         </tbody>
     </table>
-    <script src="js/listTheUsers.js"></script>
+    <script src="js/listTheVacationsRequests.js"></script>
 </body>
 </html>
 

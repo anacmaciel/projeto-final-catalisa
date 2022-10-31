@@ -28,8 +28,7 @@ public class VacationRequestController {
             VacationResponseDto vacationResponseDto = vacationRequestService.registerVacationRequest(vacationRequestDto);
             return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
        }catch (Exception e){
-           ResponseEntity responseEntity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-           return responseEntity;
+           return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
     }
 

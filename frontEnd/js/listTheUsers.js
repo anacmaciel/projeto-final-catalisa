@@ -1,9 +1,9 @@
  //table - trazer usuários cadastrados na tela
  fetch("http://localhost:8080/users").then((data)=>{
     return data.json();
-  }).then((todosUsuarios) =>{
+  }).then((allUsers) =>{
       let data1 = "";
-      todosUsuarios.map((values) =>{
+      allUsers.map((values) =>{
           data1 += `
           <tbody>
               <tr>
@@ -20,6 +20,6 @@
           </tbody>
           `
       })
-      document.getElementById("usuarioDados").innerHTML = data1;
+      document.getElementById("allDicesUsers").innerHTML = data1;
       console.log(todosUsuarios); 
   })
