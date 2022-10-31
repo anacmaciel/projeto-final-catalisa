@@ -29,11 +29,13 @@ public class VacationRequestController {
             return new ResponseEntity<>(vacationResponseDto, HttpStatus.CREATED);
        }catch (Exception e){
            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+
        }
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping(path = "/vacationsrequest")
-
     public ResponseEntity<List<VacationRequest>> viewRegisteredVacations() {
         return ResponseEntity.ok(vacationRequestService.viewRegisteredVacations());
     }
