@@ -12,17 +12,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    UserDetailsServiceImpl userDetailsServiceImpl;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/users")
+        http.csrf().disable().authorizeHttpRequests().antMatchers("/users")
                 .permitAll().and().httpBasic();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+       auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+
+
     }
 
     @Bean

@@ -17,7 +17,7 @@ public class UserRequestDto {
 
     @Length(min = 5, message = "Error, the number of characters informed must be greater than 5 characters")
     @Length(max = 60, message = "Error, the number of characters informed must be less than or equal to 60 characters")
-    private String name;
+    private String username;
 
     @Email(message = "Error, invalid email")
     @NotBlank(message = "Error, 'email' field not informed")
@@ -33,13 +33,13 @@ public class UserRequestDto {
 
     private String login;
 
-    private String password;
+    private String senha;
 
 
 
 
     public User convertToUserRequestDto() {
-        return new User(name, email, birthDate, hiringDate, profileEnum, login, password);
+        return new User(username, email, birthDate, hiringDate, profileEnum, login, senha);
 
     }
 }

@@ -1,5 +1,4 @@
 package com.zup.gerenciadorDeFerias.model;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zup.gerenciadorDeFerias.enumeration.ProfileEnum;
 import com.zup.gerenciadorDeFerias.enumeration.StatusUser;
@@ -31,7 +30,7 @@ public class User implements UserDetails, Serializable {
     private Long id;
 
     @Column(nullable = false, length = 60)
-    private String name;
+    private String username;
 
     @Column(unique = true, nullable = false, length = 45)
     private String email;
@@ -53,7 +52,7 @@ public class User implements UserDetails, Serializable {
     private String login;
 
     @Column(nullable = false)
-    private String password;
+    private String senha;
 
 
     @JsonIgnore
@@ -61,16 +60,19 @@ public class User implements UserDetails, Serializable {
     private List<VacationRequest> vacationRequests;
 
 
+    @ManyToOne
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    private List<RolesModel> roles;
 
 
-    public User(String name, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum, String login, String password) {
-        this.name = name;
+    public User(String username, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum, String login, String senha) {
+        this.username = username;
         this.email = email;
         this.birthDate = birthDate;
         this.hiringDate = hiringDate;
         this.profileEnum = profileEnum;
         this.login=login;
-        this.password=password;
+        this.senha=senha;
     }
 
 
@@ -80,27 +82,32 @@ public class User implements UserDetails, Serializable {
     }
 
     @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
     public String getUsername() {
-        return null;
+        return this.username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

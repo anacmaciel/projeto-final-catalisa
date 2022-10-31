@@ -99,7 +99,8 @@ public class UserService {
         User user = userRequestDto.convertToUserRequestDto();
         user.setStatusUser(StatusUser.ACTIVE);
         user.setDaysBalance(0);
-        user.setPassword(passwordEncoder().encode(user.getPassword()));
+        //user.setPassword(passwordEncoder().encode(user.getPassword()));
+        user.setSenha(passwordEncoder().encode(user.getSenha()));
 
 
         User userModel = userRepository.save(user);

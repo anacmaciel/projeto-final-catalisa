@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class UserResponseDto {
     private Long id;
 
-    private String name;
+    private String username;
 
     private String email;
 
@@ -31,12 +31,12 @@ public class UserResponseDto {
     private String login;
 
 
-    private String password;
+    private String senha;
 
 
     public UserResponseDto(User user) {
         this.id = user.getId();
-        this.name = user.getName();
+        this.username = user.getUsername();
         this.email = user.getEmail();
         this.birthDate = user.getBirthDate();
         this.hiringDate = user.getHiringDate();
@@ -44,14 +44,14 @@ public class UserResponseDto {
         this.profileEnum = user.getProfileEnum();
         this.statusUser = user.getStatusUser();
         this.login = user.getLogin();
-        this.password = user.getPassword();
+        this.senha = user.getSenha();
     }
 
     public static UserResponseDto convertToUser(User user) {
 
-        return new UserResponseDto(user.getId(), user.getName(), user.getEmail(),
+        return new UserResponseDto(user.getId(), user.getUsername(), user.getEmail(),
                 user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(),
-                user.getProfileEnum(), user.getStatusUser(), user.getLogin(),user.getPassword());
+                user.getProfileEnum(), user.getStatusUser(), user.getLogin(),user.getSenha());
 
     }
 }
