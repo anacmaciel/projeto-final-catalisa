@@ -14,8 +14,6 @@
                   <td>${values.statusVacationRequest}</td> 
                   <td>${values.user.name}</td> 
                   <td>${values.user.email}</td>
-                  <td>${values.user.birthDate}</td>
-                  <td>${values.user.hiringDate}</td>
                   <td>${values.user.daysBalance}</td>
                   <td>${values.user.profileEnum}</td>
                   <td>${values.user.statusUser}</td>
