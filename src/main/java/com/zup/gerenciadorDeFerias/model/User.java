@@ -60,8 +60,9 @@ public class User implements UserDetails, Serializable {
     private List<VacationRequest> vacationRequests;
 
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    @ManyToMany
+    @JoinTable(name = "TB_USERES_ROLES", joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "rode_id"))
     private List<RolesModel> roles;
 
 
@@ -78,7 +79,7 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.roles;
     }
 
     @Override

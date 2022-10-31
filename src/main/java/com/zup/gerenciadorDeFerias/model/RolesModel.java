@@ -26,7 +26,6 @@ public class RolesModel implements Serializable, GrantedAuthority {
         return this.role.toString();
     }
 
-
     @OneToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     private List<User> userPeople;
 

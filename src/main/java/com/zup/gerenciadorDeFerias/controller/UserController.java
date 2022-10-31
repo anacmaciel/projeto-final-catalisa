@@ -7,6 +7,7 @@ import com.zup.gerenciadorDeFerias.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,13 +20,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
-    @PostMapping
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "/create")
     public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
     }
+
 
     @GetMapping
     public ResponseEntity<List<User>> displayRegisteredUsers() {
