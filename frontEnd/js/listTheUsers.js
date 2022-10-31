@@ -7,7 +7,6 @@
           data1 += `
           <tbody>
               <tr>
-                  <th scope="row">${values.id} </td>
                   <td>${values.name}</td> 
                   <td>${values.email}</td> 
                   <td>${values.birthDate} </td>
