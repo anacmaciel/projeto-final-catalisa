@@ -60,8 +60,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User displayUserById(Long id) {
-        Optional<User> optionalUser = userRepository.findById(id);
+    public User displayUserByEmail(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("no user with the id {id} was found in the system");
         }
@@ -125,9 +125,9 @@ public class UserService {
         return UserResponseDto.convertToUser(userModel);
     }
 
-    public void updateStatusUser(Long id) {
+    public void updateStatusUser(String email) {
 
-        Optional<User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isEmpty()) {
             throw new ObjectNotFoundException("User does not exist");
         }
