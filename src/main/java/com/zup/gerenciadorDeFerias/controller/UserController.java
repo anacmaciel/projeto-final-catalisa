@@ -41,8 +41,8 @@ public class UserController {
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @GetMapping(path = "/{id}")
-    public ResponseEntity<User> displayUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(userService.displayUserById(id));
+    public ResponseEntity<User> displayUserByEmail(@PathVariable String email) {
+        return ResponseEntity.ok(userService.displayUserByEmail(email));
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")
@@ -52,9 +52,9 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")
-    @DeleteMapping(path = "/inactive/{id}")
-    public void userInactiveStatus(@PathVariable Long id) {
-        userService.updateStatusUser(id);
+    @DeleteMapping(path = "/inactive/{email}")
+    public void userInactiveStatus(@PathVariable String email) {
+        userService.updateStatusUser(email);
 
     }
 }
