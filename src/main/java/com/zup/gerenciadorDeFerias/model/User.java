@@ -58,9 +58,8 @@ public class User implements Serializable {
         this.profileEnum = profileEnum;
     }
 
-    public User(String name, String email, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum, StatusUser statusUser, Integer daysBalance) {
+    public User(String name, LocalDate birthDate, LocalDate hiringDate, ProfileEnum profileEnum, StatusUser statusUser, Integer daysBalance) {
         this.name = name;
-        this.email = email;
         this.birthDate = birthDate;
         this.hiringDate = hiringDate;
         this.daysBalance = daysBalance;

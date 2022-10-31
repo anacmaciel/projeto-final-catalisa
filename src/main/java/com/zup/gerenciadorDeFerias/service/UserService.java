@@ -99,11 +99,7 @@ public class UserService {
 
     public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto) {
         User userFound = checkIfTheUserIsActive(id);
-
-        Optional<User> optionalUser = userRepository.findByEmail(userUpdateDto.getEmail());
-        if (optionalUser.isPresent()) {
-            throw new BadRequest("Email already exists");
-        } else if (userUpdateDto.getHiringDate().isAfter(LocalDate.now())) {
+        if (userUpdateDto.getHiringDate().isAfter(LocalDate.now())) {
             throw new BadRequest("Hire date is greater than today's date");
         }
 
@@ -113,7 +109,6 @@ public class UserService {
         userFound.setBirthDate(userUpdateDto.getBirthDate());
         userFound.setStatusUser(userUpdateDto.getStatusUser());
         userFound.setProfileEnum(userUpdateDto.getProfileEnum());
-        userFound.setEmail(userUpdateDto.getEmail());
         userFound.setDaysBalance(userUpdateDto.getDaysBalance());
         User userModel = userRepository.save(userFound);
         return UserResponseDto.convertToUser(userModel);
