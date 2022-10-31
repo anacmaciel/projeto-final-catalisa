@@ -26,7 +26,7 @@ public class UserController {
     public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
        try {
            UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
-           return new ResponseEntity(userResponseDto, HttpStatus.CREATED);
+           return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
        }catch (Exception e){
            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
@@ -40,7 +40,7 @@ public class UserController {
 
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "/{email}")
     public ResponseEntity<User> displayUserByEmail(@PathVariable String email) {
         return ResponseEntity.ok(userService.displayUserByEmail(email));
     }
