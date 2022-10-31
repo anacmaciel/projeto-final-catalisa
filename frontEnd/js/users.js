@@ -12,13 +12,17 @@ form.addEventListener('submit', event => { // ouvir até o submit ser acionado
             'Content-Type':'application/json'
         },
         body: JSON.stringify(data)
-    }).then(res => res.json())
-        .then(data => console.log(data))
+    }).then(res => { 
+        alert("Salvo com sucesso!")
+         res.json();} )
+        .then(data => {
+            alert("Salvo data")
+            console.log(data)
+        })
         .catch(error => console.log(error));
 });
 
 function msg() {
-    alert("Salvo com sucesso!");
     window.location.reload(true);
   }
 

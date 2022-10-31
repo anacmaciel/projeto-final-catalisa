@@ -1,5 +1,5 @@
  //table - trazer vacations request cadastrados na tela
- fetch("http://localhost:8080/user/vacationsrequest").then((data)=>{
+ fetch("http://localhost:8080/vacationsrequest").then((data)=>{
     return data.json();
   }).then((allVacations) =>{
       let data1 = "";
@@ -12,15 +12,13 @@
                   <td>${values.startAt}</td> 
                   <td>${values.endAt} </td>
                   <td>${values.statusVacationRequest}</td> 
-                  <td>${values.user}</td> 
-                  <td>${values.id}</td> 
-                  <td>${values.name}</td>
-                  <td>${values.email}</td>
-                  <td>${values.birthDate}</td>
-                  <td>${values.hiringDate}</td>
-                  <td>${values.daysBalance}</td>
-                  <td>${values.profileEnum}</td>
-                  <td>${values.statusUser}</td>
+                  <td>${values.user.name}</td> 
+                  <td>${values.user.email}</td>
+                  <td>${values.user.birthDate}</td>
+                  <td>${values.user.hiringDate}</td>
+                  <td>${values.user.daysBalance}</td>
+                  <td>${values.user.profileEnum}</td>
+                  <td>${values.user.statusUser}</td>
               </tr>
           </tbody>
           `
