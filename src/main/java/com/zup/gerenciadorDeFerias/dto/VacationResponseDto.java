@@ -39,4 +39,5 @@ public class VacationResponseDto {
 
         return new VacationResponseDto(vacationRequest.getId(), vacationRequest.getVacationDays(), vacationRequest.getStartAt(), vacationRequest.getEndAt(), vacationRequest.getStatusVacationRequest(), vacationRequest.getUser());
     }
+
 }
