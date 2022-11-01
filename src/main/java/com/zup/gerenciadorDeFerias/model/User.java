@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -79,7 +80,12 @@ public class User implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles;
+       Role role = new Role();
+       role.setAuthority(profileEnum.name());
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        return roles;
     }
 
     @Override

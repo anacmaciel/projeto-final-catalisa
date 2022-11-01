@@ -20,8 +20,9 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @PostMapping(path = "/create")
+//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
         return new ResponseEntity(userResponseDto, HttpStatus.CREATED);

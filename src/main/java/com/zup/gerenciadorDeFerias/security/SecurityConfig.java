@@ -20,10 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeHttpRequests()
-// nao precisa mais ja que to usando @PreAuthorize               .antMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
-                .antMatchers("/users/create")
-                .permitAll().and().httpBasic();
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/users").permitAll()
+//                .antMatchers(HttpMethod.GET,"/users").permitAll()
+                .antMatchers(HttpMethod.POST,"/users/create").hasRole("ADMIN")
+                .and().httpBasic();
     }
 
     @Override
