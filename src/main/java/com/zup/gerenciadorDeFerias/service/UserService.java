@@ -140,4 +140,5 @@ public class UserService {
             throw new ObjectNotFoundException("User is already inactive");
         }
     }
+
 }
