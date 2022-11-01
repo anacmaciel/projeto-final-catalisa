@@ -3,7 +3,6 @@ package com.zup.gerenciadorDeFerias.dto;
 import com.zup.gerenciadorDeFerias.model.VacationRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
