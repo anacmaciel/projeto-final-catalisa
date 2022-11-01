@@ -34,6 +34,5 @@ public class UserRequestDto {
 
     public User convertToUserRequestDto() {
         return new User(name, email, birthDate, hiringDate, profileEnum);
-
     }
 }
