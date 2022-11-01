@@ -28,4 +28,5 @@ public class VacationUpdateDto {
 
     @NotNull(message = "field 'statusRequestVacation' cannot be empty")
     private StatusVacationRequest statusVacationRequest;
+
 }

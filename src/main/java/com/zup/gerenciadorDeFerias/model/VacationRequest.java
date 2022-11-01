@@ -52,4 +52,5 @@ public class VacationRequest implements Serializable {
         this.startAt = startAt;
         this.statusVacationRequest = statusVacationRequest;
     }
+
 }
