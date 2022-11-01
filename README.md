@@ -91,24 +91,27 @@ A aplicação é composta por duas entidades: USER e VACATIONREQUEST.
 Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
 
 Na entidade User temos a possibilidade de CRUD's que permitem o cadastro de um novo usuário, a atualização de um usuário já cadastrado,
-e a busca por registros de usuários cadastrados ou apenas um especifico e o cancelamento (inativação) do usuário, será via o e-mail cadastrado.
+e a busca por registros de usuários cadastrados ou apenas um especifico, apenas com perfil ativo ou  de férias e, utilizando o atributo email, 
+para requsitar as buscas. Também usaremos o e-mail para solicitar a requisição de cancelamento (inativação) do usuário.
 
 Todo o fluxo parte de uma requisição via Front-End, na qual um formulário front-end recebe os dados que serão comunicados para o 
 Back-end onde a classe Controller recebe a requisição (Get/Post/Put/Delete) em uma imagem DTO, passando para camada service/repository/model, onde se dá 
 o processamento dos dados de entrada serão analisados e persisitidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
 
 Para o cadastro de usuario, serão validados dados obrigatorios conforme a regra de negocio, como a idade, a data de admissão, o email,
-que, em caso de inadequações, conforme regras inseridas em cada metodo, serão recusadas e nao cadastrará um novo usuario.
+que, em caso de inadequações, conforme regras inseridas em cada metodo, serão recusadas e nao cadastrará um novo usuario, sempre repostando uma mensagem orientativa.
+
 
 O mesmo fluxo, ocorre para a entidade Vacation Request com o devido processo e fluxo especifico para esta. 
 
-Todo o fluxo para pedido de férias, parte de uma requisição via Front-End, na qual um formulário front-end recebe os dados que serão comunicados para o
-Back-end onde a classe Controller recebe a requisição (Get/Post/Put/Delete) em uma imagem DTO, passando para camada service/repository/model, onde se dá
-o processamento dos dados de entrada serão analisados e persisitidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
+Todo o fluxo para pedido de férias (Vacation Request), parte de uma requisição via Front-End, na qual um formulário front-end 
+recebe os dados que serão comunicados para o Back-end, onde a classe Controller recebe a requisição (Get/Post/Put/Delete) em uma
+imagem DTO, passando para camada service/repository/model, em que se dará o processamento dos dados de entrada, uma analise conforme
+as regras de negocio e,em seguida, persisitidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
 
-Para o cadastro de Pedido de Ferias, serão validados dados obrigatorios conforme a regra de negocio, como a quantidade minima de dias 
-de férias, prazo minimo de dias antecedendo ao dia do inicio de férias, e que em caso de inadequações, conforme regras inseridas em cada 
-metodo, serão recusadas e nao cadastrará um novo pedido de férias.
+Para o cadastro de Pedido de Férias, serão validados dados obrigatórios conforme a regra de negócio, como a quantidade minima de dias 
+de férias, prazo minimo de dias antecedendo ao dia do inicio de férias, e que em caso de inadequações, conforme regras inseridas em 
+cada metodo, serão recusadas e nao cadastrará um novo pedido de férias, sempre repostando uma mensagem orientativa.
 
 Essas entidades, User e Vacation Request se relacionam entre si por anotações próprias que permitem que ao requisitar um pedido 
 de férias ficam relacionados o pedido de férias ao seu respectivo usuario, e esse dado é salvo na entidade Vacatiopn Request, porem 
