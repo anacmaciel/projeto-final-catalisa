@@ -27,11 +27,10 @@ async function msg() {
 
         document.getElementById("vacationsRequest-form").reset();
       } else{
-        alert("Error: " + response.status);
+        alert("Error: " + response.status + " - Preencha o formulário com dados validos");
         console.log(response);
       }  
     } catch(error) {
       console.log(error);
     }
 }
-

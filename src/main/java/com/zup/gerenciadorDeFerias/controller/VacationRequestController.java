@@ -57,4 +57,5 @@ public class VacationRequestController {
     public void cancelRegisteredVacationRequest(@PathVariable Long id) {
         vacationRequestService.cancelRegisteredVacationRequest(id);
     }
+
 }

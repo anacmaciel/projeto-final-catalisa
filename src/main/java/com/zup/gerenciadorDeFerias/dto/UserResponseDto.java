@@ -44,5 +44,6 @@ public class UserResponseDto {
 
         return new UserResponseDto(user.getId(), user.getName(), user.getEmail(), user.getBirthDate(), user.getHiringDate(), user.getDaysBalance(), user.getProfileEnum(), user.getStatusUser());
 
+
     }
 }

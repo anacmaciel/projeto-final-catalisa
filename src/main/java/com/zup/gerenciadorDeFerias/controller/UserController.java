@@ -24,12 +24,12 @@ public class UserController {
     @CrossOrigin(origins = "http://127.0.0.1:5500")
     @PostMapping
     public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-       try {
-           UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
-           return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
-       }catch (Exception e){
-           return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-       }
+        try {
+            UserResponseDto userResponseDto = userService.registerUser(userRequestDto);
+            return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @CrossOrigin(origins = "http://127.0.0.1:5500")

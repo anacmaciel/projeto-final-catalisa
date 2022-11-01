@@ -66,5 +66,4 @@ public class User implements Serializable {
         this.profileEnum = profileEnum;
         this.statusUser = statusUser;
     }
-
 }

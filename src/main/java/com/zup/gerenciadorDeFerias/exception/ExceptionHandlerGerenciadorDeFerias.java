@@ -71,6 +71,7 @@ public class ExceptionHandlerGerenciadorDeFerias {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(erre);
 
     }
+
 }
 
 
