@@ -1,18 +1,27 @@
 >># VACATION-MANAGER-projeto-final
+
+---
 Projeto final do programa Catalisa turma 4
 
 Equipe do projeto: Squad 5
+- Ana Clara dos Santos Maciel;
+- Jonathan Santos Tavares;
+- Kevin Richard da Silva Candido;
+- Pedro Pereira Paiva.
 
+---
 ## Objetivo desta aplicação (Conceitual)
 
 ---
-<p Align="justify">A Vacation Manager é um projeto que consiste em desenvolver uma aplicação,que permite a gestão de solictações de gozo à 
-férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
+<p Align="justify">A Vacation Manager é um projeto que consiste em desenvolver uma aplicação, que permite a gestão de solictações 
+de gozo à férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
 de forma global, através de acessos seus especificos,
 fazer o procedimento.</p>
 
-## Tecnlogias Utilizadas nesse Projeto
+---
+## Tecnologias Utilizadas nesse Projeto
 
+---
 ### Back-end
 
 - Java, versão 11;
@@ -22,14 +31,15 @@ fazer o procedimento.</p>
 
 ### Front-end
 
-- HTML / Bootstrap / JS
+- HTML / CSS / Bootstrap / JS
 
-
+---
 ## Regra de Negócio
 
+---
 ### Regras Globais 
 
-Através da aplicação, deve ser possível:
+***Através da aplicação, deve ser possível:***
 
 - cadastrar um novo usuário.
 - um ADMIN buscar os dados de qualquer usuário.
@@ -48,12 +58,15 @@ Através da aplicação, deve ser possível:
 - um usuário com estado INACTIVE ou ON_VACATION não poderá editar seus dados, nem seus pedidos de férias.
 - ao cancelar um pedido de férias, o status do pedido deverá ser atualizado para CANCELED.
 - um pedido com estado CANCELED não deverá ser listado nos recursos de busca (de pedidos ou de usuários).
+- 
 --- 
 ### Especificas por Classes
 
+---
 **Classe User**
 
-Atributos da Entidade User:
+***Atributos da Entidade User:***
+
 - id: identificador do usuário (Long/String?) - Único
 - name: nome do usuário (String)
 - email: email do usuário (String) - Único
@@ -64,7 +77,7 @@ Atributos da Entidade User:
 - status: estado no qual se encontra o usuário (Enum)
 - vacationRequests: lista dos pedidos de férias do usuário (List<VacationRequest>)
 
-Especificações para User
+***Especificações para User***
 
 - existirá (inicialmente) dois perfis de usuários: ADMIN e EMPLOYEE, determinados no cadastro dos usuários.
 - o saldo de dias de férias não poderá ser informado no cadastro.
@@ -75,10 +88,12 @@ Especificações para User
 - não pode ter dois usuários cadastrados com o mesmo email.
 - um usuário não pode ter mais de 60 dias de saldo de férias.
 - existirá (inicialmente) três tipos de usuários: ACTIVE, ON_VACATION e INACTIVE.
+- 
 ---
 **Classe Vacation Request**
----
-Atributos da Entidade Vacation Request:
+
+***Atributos da Entidade Vacation Request:***
+
 - id: identificador do pedido (Long/String?) - Único
 - userId: identificador do usuário pedindo férias (Long)
 - vacationDays: quantidade de dias de férias usados no pedido (Integer)
@@ -86,7 +101,7 @@ Atributos da Entidade Vacation Request:
 - endAt: dia de volta ao escritório (LocalDate)
 - status: estado no qual se encontra o pedido de férias (Enum)
 
-Especificações para Vacation Request
+***Especificações para Vacation Request***
 
 - o usuário não poderá pedir menos de 5 dias de férias.
 - o usuário não poderá pedir férias caso não tenha um saldo de dias suficiente.
@@ -97,20 +112,24 @@ Especificações para Vacation Request
 - existirá (inicialmente) três tipos de estado de pedido de férias: CREATED, ONGOING, CONCLUDED e CANCELED, atualizados automaticamente à medida que o calendário avance.
 - um pedido só poderá ser alterado ou cancelado até 7 dias antes do início do período de férias.
 - um pedido cancelado deverá retornar o saldo de dias para o usuário.
+- 
 ---
 ## Versão da Aplicação
 
+---
+
 Versao 1 ...
 
+---
 ## Explicação Técnica
+
+---
 <div class="text-justify">
 <p Align="justify"></p>
 
-A aplicação é composta por duas entidades: USER e VACATIONREQUEST.</p>
-
-A Aplicação ela persisite com dois perfis de acesso:
-- um sendo do usuário que chamaremos por via de uma ENUM com a nomenclatura EMPLOYEE; 
-- outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.
+A aplicação é composta por duas entidades: USER e VACATIONREQUEST, que permitem o acesso de dois perfis padronizados via Enum:
+- perfil usuário, nomenclatura EMPLOYEE; 
+- perfil administrador, nomenclatura ADMIN.
 
 Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
 
@@ -161,8 +180,10 @@ Também usaremos o id do pedido de férias para solicitar a requisição de canc
 
 </div>
 
-
+---
 ## Como usar
+
+---
 
 Para cadastrar um novo usuario User, exclusivamente para o acesso tipo ADMIN, os dados de entrada na requisição Post, 
 seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
@@ -198,29 +219,40 @@ path (localhost:8080/user/vacationsrequest)
 ```
 
 
-Para consultar um usuário já cadastrado pelo acesso EMPLOYEE, os dados de entrada na requisição GET, seguindo o exemplo ficticio
-abaixo, deverá estar com a seguinte configuração:
+Para consultar um usuário específico já cadastrado via acesso EMPLOYEE ou ADMIN, os dados de entrada na requisição GET, seguindo 
+o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
 
-
+```
+path (localhost:8080/users/emailDoUsuario)
+```
 
 Para consultar um usuário já cadastrado pelo acesso ADMIN, os dados de entrada na requisição GET, seguindo o exemplo ficticio
 abaixo, deverá estar com a seguinte configuração:
 
-
-
+```
+path (localhost:8080/users)
+```
 
 Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entrada na requisição DELETE, seguindo o exemplo ficticio
 abaixo, deverá estar com a seguinte configuração:
 
-
-Para inativar um pedido de férias já cadastrado pelo acesso ADMIN, os dados de entrada na requisição DELETE, seguindo o exemplo ficticio
-abaixo, deverá estar com a seguinte configuração:
-
 ```
-path localhost:8080/vacationsrequest/cancel/2
+path (localhost:8080/users/inactive/emailDoUsuario)
 ```
 
+Para inativar um pedido de férias já cadastrado pelo acesso ADMIN, os dados de entrada na requisição DELETE, utilizar o id do pedido
+de ferias, seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
+
+```
+path (localhost:8080/vacationsrequest/cancel/id)
+```
+
+---
 ## Conclusão
+
+---
+
+
 
 
 
