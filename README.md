@@ -3,96 +3,97 @@ Projeto final do programa catalisa turma 4
 
 Equipe do projeto: Squad 5
 
-# Objetivo desta aplicação (Conceitual)
+## Objetivo desta aplicação (Conceitual)
 
-A Vacation Manager é um projeto que consiste em desenvolver uma aplicação, 
-que permite a gestão de solictações de gozo à férias dentro de uma organização, objetivando um fluxo mais 
-intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador, de forma global, através de acessos seus especificos,
+A Vacation Manager é um projeto que consiste em desenvolver uma aplicação,que permite a gestão de solictações de gozo à 
+férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
+de forma global, através de acessos seus especificos,
 fazer o procedimento.
 
-# Regra de Negócio
+## Regra de Negócio
 
-Regras Globais 
- Através da aplicação, deve ser possível:
+### Regras Globais 
 
-*-Cadastrar um novo usuário.*
--Um ADMIN buscar os dados de qualquer usuário.
--Um EMPLOYEE buscar os seus dados.
--Um ADMIN atualizar os dados de qualquer usuário.
--Um EMPLOYEE atualizar seus próprios dados (mas não de outros usuários).
--Um ADMIN inativar os dados de um usuário.
--Um usuário criar um pedido de férias.
--Um usuário buscar seus pedidos de férias.
--Um usuário atualizar seu pedido de férias.
--Um usuário cancelar seu pedido de férias.
--O recurso de busca de usuários não deverá trazer usuários INACTIVE.
--Deverá ter telas de Front-End básicas para usar a aplicação.
--A aplicação deverá retornar mensagens amigáveis para as eventuais exceções retornadas pela aplicação.
--Deverão ser usados Http Status adequados para cada resposta.
--Um usuário com estado INACTIVE ou ON_VACATION não poderá editar seus dados, nem seus pedidos de férias.
--Ao cancelar um pedido de férias, o status do pedido deverá ser atualizado para CANCELED.
--Um pedido com estado CANCELED não deverá ser listado nos recursos de busca (de pedidos ou de usuários).
+Através da aplicação, deve ser possível:
 
-**Especificas para as Classes**
+- cadastrar um novo usuário.
+- um ADMIN buscar os dados de qualquer usuário.
+- um EMPLOYEE buscar os seus dados.
+- um ADMIN atualizar os dados de qualquer usuário.
+- um EMPLOYEE atualizar seus próprios dados (mas não de outros usuários).
+- um ADMIN inativar os dados de um usuário.
+- um usuário criar um pedido de férias.
+- um usuário buscar seus pedidos de férias.
+- um usuário atualizar seu pedido de férias.
+- um usuário cancelar seu pedido de férias.
+- o recurso de busca de usuários não deverá trazer usuários INACTIVE.
+- deverá ter telas de Front-End básicas para usar a aplicação.
+- a aplicação deverá retornar mensagens amigáveis para as eventuais exceções retornadas pela aplicação.
+- deverão ser usados Http Status adequados para cada resposta.
+- um usuário com estado INACTIVE ou ON_VACATION não poderá editar seus dados, nem seus pedidos de férias.
+- ao cancelar um pedido de férias, o status do pedido deverá ser atualizado para CANCELED.
+- um pedido com estado CANCELED não deverá ser listado nos recursos de busca (de pedidos ou de usuários).
+
+### Especificas por Classes
 
 **Classe User**
 
 Atributos da Entidade User:
--id: identificador do usuário (Long/String?) - Único
--name: nome do usuário (String)
--email: email do usuário (String) - Único
--birthDate: data de nascimento do usuário (LocalDate)
--hiringDate: data de contratação do usuário (LocalDate)
--daysBalance: saldo de dias de férias disponíveis (Integer)
--profile: perfil do usuário (Enum)
--status: estado no qual se encontra o usuário (Enum)
--vacationRequests: lista dos pedidos de férias do usuário (List<VacationRequest>)
+- id: identificador do usuário (Long/String?) - Único
+- name: nome do usuário (String)
+- email: email do usuário (String) - Único
+- birthDate: data de nascimento do usuário (LocalDate)
+- hiringDate: data de contratação do usuário (LocalDate)
+- daysBalance: saldo de dias de férias disponíveis (Integer)
+- profile: perfil do usuário (Enum)
+- status: estado no qual se encontra o usuário (Enum)
+- vacationRequests: lista dos pedidos de férias do usuário (List<VacationRequest>)
 
-Especificações
+Especificações para User
 
--Existirá (inicialmente) dois perfis de usuários: ADMIN e EMPLOYEE, determinados no cadastro dos usuários.
--O saldo de dias de férias não poderá ser informado no cadastro.
--Não deve ser possível cadastrar um usuário com uma data de contratação futura.
--Não deve ser possível cadastrar (inicialmente) um usuário com menos de 18 anos.
--O campo nome deve conter no mínimo 5 caracteres.
--O formato do email deve ser validado no cadastro.
--Não pode ter dois usuários cadastrados com o mesmo email.
--Um usuário não pode ter mais de 60 dias de saldo de férias.
--Existirá (inicialmente) três tipos de usuários: ACTIVE, ON_VACATION e INACTIVE.
+- existirá (inicialmente) dois perfis de usuários: ADMIN e EMPLOYEE, determinados no cadastro dos usuários.
+- o saldo de dias de férias não poderá ser informado no cadastro.
+- não deve ser possível cadastrar um usuário com uma data de contratação futura.
+- não deve ser possível cadastrar (inicialmente) um usuário com menos de 18 anos.
+- o campo nome deve conter no mínimo 5 caracteres.
+- o formato do email deve ser validado no cadastro.
+- não pode ter dois usuários cadastrados com o mesmo email.
+- um usuário não pode ter mais de 60 dias de saldo de férias.
+- existirá (inicialmente) três tipos de usuários: ACTIVE, ON_VACATION e INACTIVE.
 
 **Classe Vacation Request**
 
 Atributos da Entidade Vacation Request:
--id: identificador do pedido (Long/String?) - Único
--userId: identificador do usuário pedindo férias (Long)
--vacationDays: quantidade de dias de férias usados no pedido (Integer)
--startAt: dia de início das férias (LocalDate)
--endAt: dia de volta ao escritório (LocalDate)
--status: estado no qual se encontra o pedido de férias (Enum)
+- id: identificador do pedido (Long/String?) - Único
+- userId: identificador do usuário pedindo férias (Long)
+- vacationDays: quantidade de dias de férias usados no pedido (Integer)
+- startAt: dia de início das férias (LocalDate)
+- endAt: dia de volta ao escritório (LocalDate)
+- status: estado no qual se encontra o pedido de férias (Enum)
 
-Especificações
+Especificações para Vacation Request
 
--O usuário não poderá pedir menos de 5 dias de férias.
--O usuário não poderá pedir férias caso não tenha um saldo de dias suficiente.
--O usuário não poderá pedir férias com menos de 45 dias de antecedência.
--Só um usuário com estado ACTIVE pode gerenciar seus pedidos de férias.
--A data de início das férias (startAt) não poderá coincidir com um fim de semana.
--A data de volta ao escritório (endAt) não poderá coincidir com um fim de semana (Exemplo: caso as férias acabem um sábado, a volta ao escritório deveria ser na segunda-feira seguinte).
--Existirá (inicialmente) três tipos de estado de pedido de férias: CREATED, ONGOING, CONCLUDED e CANCELED, atualizados automaticamente à medida que o calendário avance.
--Um pedido só poderá ser alterado ou cancelado até 7 dias antes do início do período de férias.
--Um pedido cancelado deverá retornar o saldo de dias para o usuário.
+- o usuário não poderá pedir menos de 5 dias de férias.
+- o usuário não poderá pedir férias caso não tenha um saldo de dias suficiente.
+- o usuário não poderá pedir férias com menos de 45 dias de antecedência.
+- só um usuário com estado ACTIVE pode gerenciar seus pedidos de férias.
+- a data de início das férias (startAt) não poderá coincidir com um fim de semana.
+- a data de volta ao escritório (endAt) não poderá coincidir com um fim de semana (Exemplo: caso as férias acabem um sábado, a volta ao escritório deveria ser na segunda-feira seguinte).
+- existirá (inicialmente) três tipos de estado de pedido de férias: CREATED, ONGOING, CONCLUDED e CANCELED, atualizados automaticamente à medida que o calendário avance.
+- um pedido só poderá ser alterado ou cancelado até 7 dias antes do início do período de férias.
+- um pedido cancelado deverá retornar o saldo de dias para o usuário.
 
-# Versão da Aplicação
+## Versão da Aplicação
 
 Versao 1 ...
 
-# Explicação Técnica
+## Explicação Técnica
 
 A aplicação é composta por duas entidades: USER e VACATIONREQUEST.
 
 A Aplicação ela persisite com dois perfis de acesso:
--um sendo do usuário que chamaremos por via de uma ENUM com a nomenclatura EMPLOYEE; 
--outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.
+- um sendo do usuário que chamaremos por via de uma ENUM com a nomenclatura EMPLOYEE; 
+- outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.
 
 Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
 
@@ -136,8 +137,13 @@ Entre as entidades (User e Vacation Request), há um relacionamento OneToMany e 
 permitem que ao requisitar um pedido de férias, usuário e o pedido de férias gerado, ficam relacionados e esse dado é salvo na 
 tabela de dados entidade Vacatiopn Request, e podem ser buscados via GET, relacionados conforme a necessidade.
 
+A busca de um pedido de férias já cadastrado, deverá ser via Id do pedido, e somente trará em tela, os pedidos com status
+CREATED, ONGOING, CONCLUDED.
 
-# Como usar
+Também usaremos o id do pedido de férias para solicitar a requisição de cancelamento (inativação) de um pedido de férias.
+
+
+## Como usar
 
 Para cadastrar um novo usuario User, exclusivamente para o acesso tipo ADMIN, os dados de entrada na requisição Post, 
 seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
@@ -183,7 +189,7 @@ Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entr
 abaixo, deverá estar com a seguinte configuração:
 
 
-# Conclusão
+## Conclusão
 
 
 
