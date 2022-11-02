@@ -13,14 +13,15 @@ async function findById(){
     }).then((response) => response.json())
     .then((data) => {console.log(data)
    // if (response.status == 200) {
+       
         let data1 = "";
-      allVacations = data
-      if (data == null){
-        alert("Vacation request não encontrada")
+      let allVacations = data
+      if (data.status == 404){
+        alert("Pedido de férias não encontrado")
         return
       }
       
-        console.log("deu certo",allVacations)
+        console.log(allVacations)
 
       //  allVacations.id =allVacations.id
       //  allVacations.daysBalance =allVacations.daysBalance

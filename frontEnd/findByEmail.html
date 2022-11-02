@@ -9,37 +9,35 @@
     <title>Buscar/ Atualizar/Deletar (User)</title>
 </head>
 <body>
-    <h3 class="text-center">Buscar/ Atualizar/Deletar (User)</h3>
-
+   
         <!--Navbar ou menu-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light justify-content-md-center"  style="background-color: rgb(24, 12, 199);">
+          <!-- <div class="container-fluid"> -->
              
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-            
+                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="users.html">User Registration</a>
+                    <a class="nav-link text-white" aria-current="page" href="users.html">User Registration</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="findAllUsers.html">List Vacation-Request</a>
+                    <a class="nav-link text-white " aria-current="page" href="findAllUsers.html">List Vacation-Request</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link " aria-current="page" href="index.html">Exit</a>
+                    <a class="nav-link text-white" aria-current="page" href="index.html">Exit</a>
                   </li>
                 </ul>
-              </div>
-            </div>
+              <!-- </div>
+            </div> -->
           </nav>    
 
           <form id="usuario-form">
             <div class="m-5">
                <h1 class="text-truncate"><label class="form-label">Email User</label></h1> 
-                <input type="text" name = "emailSearch" class="form-control" id="emailSearch" placeholder="Inform your email user" required>
+                <input type="text" name = "emailSearch" class="form-control borderinput" id="emailSearch" placeholder="Inform your email user" required>
             </div>
             <button type="button" onclick="findUserByEmail()" class="btn btn-lg btn-primary m-3 d-grid gap-2 col-2 mx-auto">Send</button>
-
           <table id="table-suario" style="width:100%">
             <!--cabeçalho-->
             <!-- <thead>
@@ -62,33 +60,33 @@
         <!--Form para cadastro de usuários-->
      <form id="usuario-form">
       <div class="m-5">
-         <h1 class="text-truncate"><label class="form-label">Username</label></h1> 
-          <input type="text" name = "name" class="form-control" id="name" placeholder="Inform your user name" required>
+         <h4 class="text-truncate"><label class="form-label">Username</label></h1> 
+          <input type="text" name = "name" class="form-control borderinput " id="name" placeholder="Inform your user name" required>
       </div>
       <div class="m-5">
-          <h1 class="text-truncate"><label class="form-label">Email</label></h1>
-          <input type="email" name = "email" class="form-control" id="email" placeholder="Inform your E-mail" disabled>
+          <h4 class="text-truncate"><label class="form-label">Email</label></h1>
+          <input type="email" name = "email" class="form-control borderinput" id="email" placeholder="Inform your E-mail" disabled>
       </div>
       <div class="m-5">
-          <h1 class="text-truncate"><label class="form-label">Birth data</label></h1>
-          <input type="date" max="2004-10-25" min="1950-12-01" name = "birthDate" class="form-control" id="birthDate" placeholder="Inform your birth data">
+          <h4 class="text-truncate"><label class="form-label">Birth data</label></h1>
+          <input type="date" max="2004-10-25" min="1950-12-01" name = "birthDate" class="form-control borderinput" id="birthDate" placeholder="Inform your birth data">
       </div>
       <div class="m-5">
-          <h1 class="text-truncate"><label class="form-label">Hiring Date</label></h1>
-          <input type="date" max="2022-11-01" name = "hiringDate"  class="form-control" id="hiringDate" placeholder="Enter your hiring details" required>
+          <h4 class="text-truncate"><label class="form-label">Hiring Date</label></h1>
+          <input type="date" max="2022-11-01" name = "hiringDate"  class="form-control borderinput" id="hiringDate" placeholder="Enter your hiring details" required>
       </div>
 
       <div class="m-5">
-        <h1 class="text-truncate"><label class="form-label">Profile</label></h1>
-        <select class="form-select"  id="profileEnum" name="profileEnum" aria-label="Default select example">
+        <h4 class="text-truncate"><label class="form-label">Profile</label></h1>
+        <select class="form-select borderinput"  id="profileEnum" name="profileEnum" aria-label="Default select example">
           <option value="ADMIN">Admin</option>
           <option value="EMPLOYEE">Employee</option>
         </select>
       </div>
 
       <div class="m-5">
-        <h1 class="text-truncate"><label class="form-label">Days Balance</label></h1> 
-         <input type="text" name = "daysBalance" class="form-control" id="daysBalance"  placeholder="Inform your user name">
+        <h4 class="text-truncate"><label class="form-label">Days Balance</label></h1> 
+         <input type="text" name = "daysBalance" class="form-control borderinput" id="daysBalance"  placeholder="Inform your user name">
      </div>
 
       <button type="button" onclick="openSubmitButton()" class="btn btn-lg btn-primary m-3 d-grid gap-2 col-2 mx-auto">Update</button>
@@ -165,14 +163,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
-    
-      <style>
-        body {color: aliceblue;}
-    </style>
+
+        <style>
+            body {color: aliceblue;}
+        </style>
 
 
-    <style>
+        <style>
 
-        body{background-color: rgb(17, 3, 67);}
+             body{background-color: rgba(1, 0, 3, 0.979);}
 
-    </style>
+        </style>
+</html>
