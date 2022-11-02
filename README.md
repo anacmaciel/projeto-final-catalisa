@@ -10,16 +10,15 @@ Equipe do projeto: Squad 5
 - Pedro Pereira Paiva.
 
 ---
-## Objetivo desta aplicação (Conceitual)
+## Sobre o Proejto - Objetivo desta aplicação (Conceitual)
 
 ---
-<p Align="justify">A Vacation Manager é um projeto que consiste em desenvolver uma aplicação, que permite a gestão de solictações 
-de gozo à férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
-de forma global, através de acessos seus especificos,
-fazer o procedimento.</p>
+<p Align="justify">A Vacation Manager é um projeto que consiste em desenvolver uma aplicação, que permite a gestão de solicitações 
+para gozo à férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
+de forma global, de forma segura através de acessos seus especificos, o pedido, a atualização, a aprovação e o cancelamento.</p>
 
 ---
-## Tecnologias Utilizadas nesse Projeto
+## Tecnologias Utilizadas
 
 ---
 ### Back-end
@@ -32,6 +31,25 @@ fazer o procedimento.</p>
 ### Front-end
 
 - HTML / CSS / Bootstrap / JS
+
+
+### Implantação em produção
+
+- Back end: IntelliJ
+- Front end: VSCode
+- Banco de dados: Postgresql
+
+
+---
+## Competências
+
+---
+
+- SOLID
+- CRUD - camadas
+- ENUM
+- EXCEPTIONS
+
 
 ---
 ## Regra de Negócio
@@ -58,7 +76,7 @@ fazer o procedimento.</p>
 - um usuário com estado INACTIVE ou ON_VACATION não poderá editar seus dados, nem seus pedidos de férias.
 - ao cancelar um pedido de férias, o status do pedido deverá ser atualizado para CANCELED.
 - um pedido com estado CANCELED não deverá ser listado nos recursos de busca (de pedidos ou de usuários).
-- 
+
 --- 
 ### Especificas por Classes
 
@@ -112,7 +130,7 @@ fazer o procedimento.</p>
 - existirá (inicialmente) três tipos de estado de pedido de férias: CREATED, ONGOING, CONCLUDED e CANCELED, atualizados automaticamente à medida que o calendário avance.
 - um pedido só poderá ser alterado ou cancelado até 7 dias antes do início do período de férias.
 - um pedido cancelado deverá retornar o saldo de dias para o usuário.
-- 
+
 ---
 ## Versão da Aplicação
 
@@ -181,9 +199,42 @@ Também usaremos o id do pedido de férias para solicitar a requisição de canc
 </div>
 
 ---
-## Como usar
+## Como executar o Projeto
 
 ---
+
+### Back end
+
+Pré-requisitos: Java 11
+
+```bash
+1. clonar repositório
+git clone https://github.com/anacmaciel/projeto-final-catalisa/tree/main/src
+
+2. entrar na pasta do projeto back ende
+cd backend
+
+3. executar o projeto
+./mvnw spring-boot:run
+```
+
+### Front end
+
+Pré-requisitos: npm
+
+```bash
+1. clonar repositório
+git clone https://github.com/anacmaciel/projeto-final-catalisa/tree/main/frontEnd
+
+2. entrar na pasta do projeto front end
+cd frontend
+
+3. executar o projeto
+. vscode
+```
+
+---
+Operando a Aplicação
 
 Para cadastrar um novo usuario User, exclusivamente para o acesso tipo ADMIN, os dados de entrada na requisição Post, 
 seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
@@ -247,10 +298,29 @@ de ferias, seguindo o exemplo ficticio abaixo, deverá estar com a seguinte conf
 path (localhost:8080/vacationsrequest/cancel/id)
 ```
 
----
-## Conclusão
 
 ---
+## Lay-out da aplicação
+
+---
+
+
+---
+## Modelo Conceitual (diagramas)
+
+---
+
+
+---
+## Agradecimentos
+
+---
+
+
+- Programa Catalisa ZUP
+- Giovana
+- Professores, Carol, Joy e Crispim
+- Mentores Guil, Raphael, Graziela, Thiago Barros
 
 
 
