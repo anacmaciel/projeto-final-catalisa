@@ -1,5 +1,7 @@
 # VACATION-MANAGER-projeto-final
-Projeto final do programa catalisa
+Projeto final do programa catalisa turma 4
+
+Equipe do projeto: Squad 5
 
 # Objetivo desta aplicação (Conceitual)
 
@@ -88,6 +90,10 @@ Versao 1 ...
 
 A aplicação é composta por duas entidades: USER e VACATIONREQUEST.
 
+A Aplicação ela persisite com dois perfis de acesso:
+-um sendo do usuário que chamaremos por via de uma ENUM com a nomenclatura EMPLOYEE; 
+-outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.
+
 Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
 
 Na entidade User temos a possibilidade de CRUD's que permitem o cadastro de um novo usuário, a atualização de um usuário já cadastrado,
@@ -100,7 +106,6 @@ o processamento dos dados de entrada serão analisados e persisitidos ou não, d
 
 Para o cadastro de usuario, serão validados dados obrigatorios conforme a regra de negocio, como a idade, a data de admissão, o email,
 que, em caso de inadequações, conforme regras inseridas em cada metodo, serão recusadas e nao cadastrará um novo usuario, sempre repostando uma mensagem orientativa.
-
 
 O mesmo fluxo, ocorre para a entidade Vacation Request com o devido processo e fluxo especifico para esta. 
 
@@ -116,6 +121,37 @@ cada metodo, serão recusadas e nao cadastrará um novo pedido de férias, sempr
 Essas entidades, User e Vacation Request se relacionam entre si por anotações próprias que permitem que ao requisitar um pedido 
 de férias ficam relacionados o pedido de férias ao seu respectivo usuario, e esse dado é salvo na entidade Vacatiopn Request, porem 
 podem ser relacionados com o metodo de busca adequado.
+
+
+# Como usar
+
+Para cadastrar um novo usuario User, os dados de entrada na requisição Post, seguindo um exemplo 
+ficticio abaixo, deverá estar com a seguinte configuração:
+
+path (localhost:8080/users)
+
+{
+"name": "teste1231",
+"email": "teste@egmail.com",
+"birthDate": "2002-10-31",
+"hiringDate": "2022-10-24",
+"profileEnum": "ADMIN"
+}
+
+
+Para cadastrar um pedido de férias Vacation Request, os dados de entrada na requisição Post com path (localhost:8080/users), seguindo um exemplo
+ficticio abaixo, deverá estar com a seguinte configuração:
+
+path (localhost:8080/user/vacationsrequest)
+{
+"vacationDays": 10,
+"startAt": "2022-12-23",
+"email": "teste@gmail.com"
+}
+
+
+Para consultar um usuario já cadastrado pelo acesso Employee
+
 
 # Conclusão
 
