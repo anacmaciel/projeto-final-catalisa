@@ -37,30 +37,9 @@
                 <input type="text" name = "id" class="form-control" id="id" placeholder="Inform vacation id" required>
             </div>
             <button type="button" onclick="findById()" class="btn btn-lg btn-primary m-3 d-grid gap-2 col-2 mx-auto">Send</button>
-
+          </form>
           <table id="table-suario" class="table-dark table-striped" style="width:100%">
-            <!--cabeçalho-->
-            <!-- <thead>
-                <tr>
-                    <th scope="col">Id Vacation Request</th>
-                    <th scope="col">Vacation Days</th>
-                    <th scope="col">Start At</th>
-                    <th scope="col">End At</th>
-                    <th scope="col">Status Vacation Request</th>
-                    <th scope="col">User</th>
-                    <th scope="col">email</th> 
-                    <th scope="col">Days Balance</th>   
-                    <th scope="col">Profile user</th>   
-                    <th scope="col">Status User</th>   
-                </tr>
-            </thead> -->
-            <!--Corpo do tbody. E gerido pelo js-->
-            <!-- <tbody id="findById">
-            </tbody>
-        </table> -->
-
-
-      <!--Form para cadastro de vacation request-->
+            
     <form id="vacationsRequest-form">
       <div class="m-5">
         <h1 class="text-truncate"><label class="form-label">Vacation Days</label></h1> 
@@ -72,7 +51,7 @@
       </div>
       <div class="m-5">
         <h1 class="text-truncate"><label class="form-label">End At</label></h1>
-        <input type="date" name = "startAt" class="form-control" id="startAt" placeholder="Inform your startAt" disabled>
+        <input type="date" name = "endAt" class="form-control" id="endAt" placeholder="Inform your endAt" disabled>
     </div>
       <div class="m-5">
         <h1 class="text-truncate"><label class="form-label">Status Vacation Request</label></h1>
@@ -80,25 +59,25 @@
     </div>
     <div class="m-5">
       <h1 class="text-truncate"><label class="form-label">User</label></h1>
-      <input type="text" name = "name" class="form-control" id="name" placeholder="Inform your E-mail">
+      <input type="text" name = "name" class="form-control" id="name" placeholder="Inform your name" disabled>
   </div>
     <div class="m-5">
       <h1 class="text-truncate"><label class="form-label">E-mail</label></h1>
-      <input type="text" name = "email" class="form-control" id="email" placeholder="Inform your E-mail">
+      <input type="text" name = "email" class="form-control" id="email" placeholder="Inform your E-mail" disabled>
   </div>
   <div class="m-5">
     <h1 class="text-truncate"><label class="form-label">Days Balance</label></h1>
-    <input type="text" name = "daysBalance" class="form-control" id="daysBalance" placeholder="Inform your E-mail">
+    <input type="text" name = "daysBalance" class="form-control" id="daysBalance" placeholder="Inform your daysBalance" disabled>
 </div>
 
 <div class="m-5">
   <h1 class="text-truncate"><label class="form-label">Profile User</label></h1>
-  <input type="text" name = "profileEnum" class="form-control" id="profileEnum" placeholder="Inform your E-mail">
+  <input type="text" name = "profileEnum" class="form-control" id="profileEnum" placeholder="Inform your profileEnum" disabled>
 </div>
 
 <div class="m-5">
   <h1 class="text-truncate"><label class="form-label">Status user</label></h1>
-  <input type="text" name = "statusUser" class="form-control" id="statusUser" placeholder="Inform your E-mail">
+  <input type="text" name = "statusUser" class="form-control" id="statusUser" placeholder="Inform your E-mail" disabled>
 </div>
 
 

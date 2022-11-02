@@ -1,5 +1,5 @@
 
-let actualVacations = {}
+let allVacations = {}
 async function findById(){
     const id = document.getElementById("id").value
 
@@ -14,48 +14,29 @@ async function findById(){
     .then((data) => {console.log(data)
    // if (response.status == 200) {
         let data1 = "";
-      let allVacations = data
+      allVacations = data
       if (data == null){
         alert("Vacation request não encontrada")
         return
       }
       
-        console.log(allVacations)
+        console.log("deu certo",allVacations)
 
-        actualVacations.id = actualVacations.id
-        actualVacations.daysBalance = actualVacations.daysBalance
-        actualVacations.email.actualVacations.email
-        document.getElementById("id").value = actualVacations.id
-        document.getElementById("vacationDays").value = actualVacations.vacationDays
-        document.getElementById("startAt").value = actualVacations.startAt
-        document.getElementById("endAt").value = actualVacations.endAt
-        document.getElementById("statusVacationRequest").value = actualVacations.statusVacationRequest
-        document.getElementById("name").value = actualVacations.name
-        document.getElementById("email").value = actualVacations.email
-        document.getElementById("daysBalance").value = actualVacations.daysBalance
-        document.getElementById("profileEnum").value = actualVacations.profileEnum
-        document.getElementById("statusUser").value = actualVacations.statusUser
+      //  allVacations.id =allVacations.id
+      //  allVacations.daysBalance =allVacations.daysBalance
+      //  allVacations.email.alvaallVacations.email
+        document.getElementById("id").value =allVacations.id
+        document.getElementById("vacationDays").value = allVacations.vacationDays
+        document.getElementById("startAt").value =allVacations.startAt
+        document.getElementById("endAt").value =allVacations.endAt
+        document.getElementById("statusVacationRequest").value =allVacations.statusVacationRequest
+        document.getElementById("name").value = allVacations.user.name
+        document.getElementById("email").value = allVacations.user.email
+        document.getElementById("daysBalance").value = allVacations.user.daysBalance
+        document.getElementById("profileEnum").value =allVacations.user.profileEnum
+        document.getElementById("statusUser").value =allVacations.user.statusUser
 
-             
-          data1 += `
-          <tbody>
-              <tr>
-              <th scope="row">${allVacations.id} </td>
-              <td>${allVacations.vacationDays}</td> 
-              <td>${allVacations.startAt}</td> 
-              <td>${allVacations.endAt} </td>
-              <td>${allVacations.statusVacationRequest}</td> 
-              <td>${allVacations.user.name}</td> 
-              <td>${allVacations.user.email}</td>
-              <td>${allVacations.user.daysBalance}</td>
-              <td>${allVacations.user.profileEnum}</td>
-              <td>${allVacations.user.statusUser}</td>
-              </tr>
-          </tbody>
-          `
-      console.log(data1)
-      document.getElementById("findById").innerHTML = data1;
-      console.log(todosUsuarios); 
+     
       })
     // //   else{
     // //     alert("Error: " + response.status + " - Preencha o formulário com dados validos");
@@ -70,7 +51,7 @@ async function findById(){
   }
   
 
-  const form = document.getElementById("usuario-form");
+  const form = document.getElementById("vacationsRequest-form");
 function openSubmitButton() {
     // event.preventDefault();
     var myModal = new bootstrap.Modal(document.getElementById("myModal"));
@@ -97,7 +78,7 @@ function openSubmitButton() {
 
 
     try {
-      const response = await fetch(`http://localhost:8080/vacationsrequest/${actualVacations.id}`, {
+      const response = await fetch(`http://localhost:8080/vacationsrequest/${allVacations.id}`, {
         method: 'PUT',
         headers: {
          "Content-Type": "application/json",
@@ -123,7 +104,7 @@ function openSubmitButton() {
 async function canceledVacationsRequest(){
 
   try {
-    const response = await fetch(`http://localhost:8080/vacationsrequest/cancel/${actualVacations.id}`, {
+    const response = await fetch(`http://localhost:8080/vacationsrequest/cancel/${allVacations.id}`, {
       method: 'DELETE',
       headers: {
        "Content-Type": "application/json",

@@ -83,7 +83,7 @@ function openSubmitButton() {
       name: data.name,
       birthDate: data.birthDate, 
       hiringDate: data.hiringDate,
-      daysBalance: actualUser.daysBalance,
+      daysBalance: data.daysBalance,
       profileEnum: data.profileEnum,
       statusUser: "ACTIVE",
       
