@@ -96,37 +96,51 @@ A Aplicação ela persisite com dois perfis de acesso:
 
 Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
 
-Na entidade User temos a possibilidade de CRUD's que permitem o cadastro de um novo usuário, a atualização de um usuário já cadastrado,
-e a busca por registros de usuários cadastrados ou apenas um especifico, apenas com perfil ativo ou  de férias e, utilizando o atributo email, 
-para requsitar as buscas. Também usaremos o e-mail para solicitar a requisição de cancelamento (inativação) do usuário.
+Para a entidade User temos a possibilidade de utilizar CRUD's que permitirão o cadastro de um novo usuário, a atualização de um
+usuário já cadastrado, a busca por todos os usuários já cadastrados na API ou apenas um único usuário especificamente, e fazer a 
+inativaçao de um usuário que já não pertença mais a organização.
 
-Todo o fluxo parte de uma requisição via Front-End, na qual um formulário front-end recebe os dados que serão comunicados para o 
-Back-end onde a classe Controller recebe a requisição (Get/Post/Put/Delete) em uma imagem DTO, passando para camada service/repository/model, onde se dá 
-o processamento dos dados de entrada serão analisados e persisitidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
+A busca de um usuário já cadastrado, deverá ser via email do usuário, e somente trará em tela, usuario com status Ativo ou em ferias 
 
-Para o cadastro de usuario, serão validados dados obrigatorios conforme a regra de negocio, como a idade, a data de admissão, o email,
-que, em caso de inadequações, conforme regras inseridas em cada metodo, serão recusadas e nao cadastrará um novo usuario, sempre repostando uma mensagem orientativa.
+Também usaremos o e-mail para solicitar a requisição de cancelamento (inativação) do usuário.
+
+Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
+
+Todo o fluxo partirá de uma requisição via Front-End, na qual um formulário Front-end recebe e envia os dados para o Back-end 
+onde a classe Controller identifica o tipo de requisição (Get/Post/Put/Delete), passa em uma imagem DTO, passando para camada 
+service/repository/model, onde se dará todo o processamento dos dados de entrada, a análise das regras de negócio e se serão 
+persisitidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
+
+Para o cadastro de usuário, serão validados os dados obrigatórios conforme a regra de negócio, como a idade, a data de admissão, 
+o email, e que em caso de inadequações, conforme regras de negócio inseridas em cada método, serão recusadas e nao permitirá o
+cadastro de um novo usuario, sempre reportando uma mensagem orientativa do motivo. Estando os dados adequados, será cadastrado um
+novo usuario com status enum ACTIVE.
 
 O mesmo fluxo, ocorre para a entidade Vacation Request com o devido processo e fluxo especifico para esta. 
 
-Todo o fluxo para pedido de férias (Vacation Request), parte de uma requisição via Front-End, na qual um formulário front-end 
-recebe os dados que serão comunicados para o Back-end, onde a classe Controller recebe a requisição (Get/Post/Put/Delete) em uma
-imagem DTO, passando para camada service/repository/model, em que se dará o processamento dos dados de entrada, uma analise conforme
-as regras de negocio e,em seguida, persisitidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
+Para a entidade Vacations Request temos a possibilidade de utilizar CRUD's que permitirão o cadastro de um novo pedido de férias,
+, a atualização de um pedido já cadastrado, a busca por todos os pedidos já cadastrados na API ou apenas um único pedido especificamente, 
+e fazer o cancelamento de um pedido de férias via Id do pedido.
+
+Todo o fluxo para pedido de férias (Vacation Request), partirá de uma requisição via Front-End, na qual um formulário Front-end 
+recebe e envia os dados para o Back-end, onde a classe Controller identifica o tipo de requisição (Get/Post/Put/Delete), passa em uma
+imagem DTO, passando para camada service/repository/model, onde se dará todo o processamento dos dados de entrada, a análise das
+regras de negócio e se serão persistidos ou não, devolvendo as respostas adequadas a cada tipo de requisição recebida.
 
 Para o cadastro de Pedido de Férias, serão validados dados obrigatórios conforme a regra de negócio, como a quantidade minima de dias 
-de férias, prazo minimo de dias antecedendo ao dia do inicio de férias, e que em caso de inadequações, conforme regras inseridas em 
-cada metodo, serão recusadas e nao cadastrará um novo pedido de férias, sempre repostando uma mensagem orientativa.
+de férias, o prazo minimo de dias antecedendo ao dia que se quer o inicio de férias e, que em caso de inadequações, conforme regras
+inseridas em cada metodo, serão recusadas e nao permitirá o cadastro de um novo pedido de férias, sempre reportando uma mensagem 
+orientativa do motivo. Estando os dados adequados, será cadastrado um novo pedido de férias com status CREATED.
 
-Essas entidades, User e Vacation Request se relacionam entre si por anotações próprias que permitem que ao requisitar um pedido 
-de férias ficam relacionados o pedido de férias ao seu respectivo usuario, e esse dado é salvo na entidade Vacatiopn Request, porem 
-podem ser relacionados com o metodo de busca adequado.
+Entre as entidades (User e Vacation Request), há um relacionamento OneToMany e ManyToMay entre elas, via anotações próprias e, que 
+permitem que ao requisitar um pedido de férias, usuário e o pedido de férias gerado, ficam relacionados e esse dado é salvo na 
+tabela de dados entidade Vacatiopn Request, e podem ser buscados via GET, relacionados conforme a necessidade.
 
 
 # Como usar
 
-Para cadastrar um novo usuario User, os dados de entrada na requisição Post, seguindo um exemplo 
-ficticio abaixo, deverá estar com a seguinte configuração:
+Para cadastrar um novo usuario User, exclusivamente para o acesso tipo ADMIN, os dados de entrada na requisição Post, 
+seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
 
 path (localhost:8080/users)
 
@@ -139,7 +153,7 @@ path (localhost:8080/users)
 }
 
 
-Para cadastrar um pedido de férias Vacation Request, os dados de entrada na requisição Post com path (localhost:8080/users), seguindo um exemplo
+Para cadastrar um pedido de férias Vacation Request, os dados de entrada na requisição POST, seguindo o exemplo
 ficticio abaixo, deverá estar com a seguinte configuração:
 
 path (localhost:8080/user/vacationsrequest)
@@ -150,7 +164,23 @@ path (localhost:8080/user/vacationsrequest)
 }
 
 
-Para consultar um usuario já cadastrado pelo acesso Employee
+Para consultar um usuário já cadastrado pelo acesso Employee, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+abaixo, deverá estar com a seguinte configuração:
+
+
+
+Para consultar um usuário já cadastrado pelo acesso ADMIN, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+abaixo, deverá estar com a seguinte configuração:
+
+
+
+
+Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+abaixo, deverá estar com a seguinte configuração:
+
+
+Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+abaixo, deverá estar com a seguinte configuração:
 
 
 # Conclusão
