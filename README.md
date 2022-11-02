@@ -1,15 +1,16 @@
-# VACATION-MANAGER-projeto-final
-Projeto final do programa catalisa turma 4
+>># VACATION-MANAGER-projeto-final
+Projeto final do programa Catalisa turma 4
 
 Equipe do projeto: Squad 5
 
 ## Objetivo desta aplicação (Conceitual)
 
-A Vacation Manager é um projeto que consiste em desenvolver uma aplicação,que permite a gestão de solictações de gozo à 
+---
+<p>A Vacation Manager é um projeto que consiste em desenvolver uma aplicação,que permite a gestão de solictações de gozo à 
 férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
 de forma global, através de acessos seus especificos,
-fazer o procedimento.
-
+fazer o procedimento.</p>
+---
 ## Regra de Negócio
 
 ### Regras Globais 
@@ -33,7 +34,7 @@ Através da aplicação, deve ser possível:
 - um usuário com estado INACTIVE ou ON_VACATION não poderá editar seus dados, nem seus pedidos de férias.
 - ao cancelar um pedido de férias, o status do pedido deverá ser atualizado para CANCELED.
 - um pedido com estado CANCELED não deverá ser listado nos recursos de busca (de pedidos ou de usuários).
-
+--- 
 ### Especificas por Classes
 
 **Classe User**
@@ -60,9 +61,9 @@ Especificações para User
 - não pode ter dois usuários cadastrados com o mesmo email.
 - um usuário não pode ter mais de 60 dias de saldo de férias.
 - existirá (inicialmente) três tipos de usuários: ACTIVE, ON_VACATION e INACTIVE.
-
+---
 **Classe Vacation Request**
-
+---
 Atributos da Entidade Vacation Request:
 - id: identificador do pedido (Long/String?) - Único
 - userId: identificador do usuário pedindo férias (Long)
@@ -82,24 +83,24 @@ Especificações para Vacation Request
 - existirá (inicialmente) três tipos de estado de pedido de férias: CREATED, ONGOING, CONCLUDED e CANCELED, atualizados automaticamente à medida que o calendário avance.
 - um pedido só poderá ser alterado ou cancelado até 7 dias antes do início do período de férias.
 - um pedido cancelado deverá retornar o saldo de dias para o usuário.
-
+---
 ## Versão da Aplicação
 
 Versao 1 ...
 
 ## Explicação Técnica
 
-A aplicação é composta por duas entidades: USER e VACATIONREQUEST.
+<p Align="justify">A aplicação é composta por duas entidades: USER e VACATIONREQUEST.</p>
 
-A Aplicação ela persisite com dois perfis de acesso:
+<p Align="justify">A Aplicação ela persisite com dois perfis de acesso:
 - um sendo do usuário que chamaremos por via de uma ENUM com a nomenclatura EMPLOYEE; 
-- outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.
+- outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.</p>
 
-Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
+<p Align="justify">Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".</p>
 
-Para a entidade User temos a possibilidade de utilizar CRUD's que permitirão o cadastro de um novo usuário, a atualização de um
+<p Align="justify">Para a entidade User temos a possibilidade de utilizar CRUD's que permitirão o cadastro de um novo usuário, a atualização de um
 usuário já cadastrado, a busca por todos os usuários já cadastrados na API ou apenas um único usuário especificamente, e fazer a 
-inativaçao de um usuário que já não pertença mais a organização.
+inativaçao de um usuário que já não pertença mais a organização.</p>
 
 A busca de um usuário já cadastrado, deverá ser via email do usuário, e somente trará em tela, usuario com status Ativo ou em ferias 
 
@@ -150,6 +151,7 @@ seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
 
 path (localhost:8080/users)
 
+```Json
 {
 "name": "teste1231",
 "email": "teste@egmail.com",
@@ -157,17 +159,21 @@ path (localhost:8080/users)
 "hiringDate": "2022-10-24",
 "profileEnum": "ADMIN"
 }
+```
 
 
 Para cadastrar um pedido de férias Vacation Request, os dados de entrada na requisição POST, seguindo o exemplo
 ficticio abaixo, deverá estar com a seguinte configuração:
 
 path (localhost:8080/user/vacationsrequest)
+
+```Json
 {
 "vacationDays": 10,
 "startAt": "2022-12-23",
 "email": "teste@gmail.com"
 }
+```
 
 
 Para consultar um usuário já cadastrado pelo acesso Employee, os dados de entrada na requisição GET, seguindo o exemplo ficticio
