@@ -6,11 +6,25 @@ Equipe do projeto: Squad 5
 ## Objetivo desta aplicação (Conceitual)
 
 ---
-<p>A Vacation Manager é um projeto que consiste em desenvolver uma aplicação,que permite a gestão de solictações de gozo à 
+<p Align="justify">A Vacation Manager é um projeto que consiste em desenvolver uma aplicação,que permite a gestão de solictações de gozo à 
 férias dentro de uma organização, objetivando um fluxo mais intuitivo, fácil e fluído, possibilitanto ao gestor e ao colaborador,
 de forma global, através de acessos seus especificos,
 fazer o procedimento.</p>
----
+
+## Tecnlogias Utilizadas nesse Projeto
+
+### Back-end
+
+- Java, versão 11;
+- Spring Boot;
+- JPA / Hibernate;
+- Maven
+
+### Front-end
+
+- HTML / Bootstrap / JS
+
+
 ## Regra de Negócio
 
 ### Regras Globais 
@@ -89,17 +103,19 @@ Especificações para Vacation Request
 Versao 1 ...
 
 ## Explicação Técnica
+<div class="text-justify">
+<p Align="justify"></p>
 
-<p Align="justify">A aplicação é composta por duas entidades: USER e VACATIONREQUEST.</p>
+A aplicação é composta por duas entidades: USER e VACATIONREQUEST.</p>
 
-<p Align="justify">A Aplicação ela persisite com dois perfis de acesso:
+A Aplicação ela persisite com dois perfis de acesso:
 - um sendo do usuário que chamaremos por via de uma ENUM com a nomenclatura EMPLOYEE; 
-- outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.</p>
+- outro sendo do administrador que chamaremos via ENUM com a nomenclatura ADMIN.
 
-<p Align="justify">Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".</p>
+Os atributos de cada entidade estão listadas no campo acima, "Regra de Negócio".
 
-<p Align="justify">Para a entidade User temos a possibilidade de utilizar CRUD's que permitirão o cadastro de um novo usuário, a atualização de um
-usuário já cadastrado, a busca por todos os usuários já cadastrados na API ou apenas um único usuário especificamente, e fazer a 
+<p Align="justify">Para a entidade User temos a possibilidade de utilizar CRUD's que permitirão o cadastro de um novo usuário, a atualização de
+um usuário já cadastrado, a busca por todos os usuários já cadastrados na API ou apenas um único usuário especificamente, e fazer a 
 inativaçao de um usuário que já não pertença mais a organização.</p>
 
 A busca de um usuário já cadastrado, deverá ser via email do usuário, e somente trará em tela, usuario com status Ativo ou em ferias 
@@ -143,13 +159,17 @@ CREATED, ONGOING, CONCLUDED.
 
 Também usaremos o id do pedido de férias para solicitar a requisição de cancelamento (inativação) de um pedido de férias.
 
+</div>
+
 
 ## Como usar
 
 Para cadastrar um novo usuario User, exclusivamente para o acesso tipo ADMIN, os dados de entrada na requisição Post, 
 seguindo o exemplo ficticio abaixo, deverá estar com a seguinte configuração:
 
+```
 path (localhost:8080/users)
+```
 
 ```Json
 {
@@ -165,7 +185,9 @@ path (localhost:8080/users)
 Para cadastrar um pedido de férias Vacation Request, os dados de entrada na requisição POST, seguindo o exemplo
 ficticio abaixo, deverá estar com a seguinte configuração:
 
+```
 path (localhost:8080/user/vacationsrequest)
+```
 
 ```Json
 {
@@ -176,7 +198,7 @@ path (localhost:8080/user/vacationsrequest)
 ```
 
 
-Para consultar um usuário já cadastrado pelo acesso Employee, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+Para consultar um usuário já cadastrado pelo acesso EMPLOYEE, os dados de entrada na requisição GET, seguindo o exemplo ficticio
 abaixo, deverá estar com a seguinte configuração:
 
 
@@ -187,13 +209,16 @@ abaixo, deverá estar com a seguinte configuração:
 
 
 
-Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entrada na requisição DELETE, seguindo o exemplo ficticio
 abaixo, deverá estar com a seguinte configuração:
 
 
-Para inativar um usuario USER já cadastrado pelo acesso ADMIN, os dados de entrada na requisição GET, seguindo o exemplo ficticio
+Para inativar um pedido de férias já cadastrado pelo acesso ADMIN, os dados de entrada na requisição DELETE, seguindo o exemplo ficticio
 abaixo, deverá estar com a seguinte configuração:
 
+```
+path localhost:8080/vacationsrequest/cancel/2
+```
 
 ## Conclusão
 
