@@ -203,34 +203,17 @@ Também usaremos o id do pedido de férias para solicitar a requisição de canc
 
 ---
 
-### Back end
-
 Pré-requisitos: Java 11
 
 ```bash
 1. clonar repositório
-git clone https://github.com/anacmaciel/projeto-final-catalisa/tree/main/src
+git clone https://github.com/anacmaciel/projeto-final-catalisa.git
 
-2. entrar na pasta do projeto back ende
-cd backend
-
-3. executar o projeto
-./mvnw spring-boot:run
-```
-
-### Front end
-
-Pré-requisitos: npm
-
-```bash
-1. clonar repositório
-git clone https://github.com/anacmaciel/projeto-final-catalisa/tree/main/frontEnd
-
-2. entrar na pasta do projeto front end
-cd frontend
+2. entrar na pasta do projeto
+cd src
 
 3. executar o projeto
-. vscode
+
 ```
 
 ---
