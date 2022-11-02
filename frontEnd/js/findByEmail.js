@@ -30,9 +30,10 @@ async function findUserByEmail(){
         document.getElementById("email").value = allUsers.email
         document.getElementById("birthDate").value = allUsers.birthDate
         document.getElementById("hiringDate").value = allUsers.hiringDate
-        document.getElementById("daysBalance").value = allUsers.daysBalance
         document.getElementById("profileEnum").value = allUsers.profileEnum
-        document.getElementById("statusUser").value = allUsers.statusUser
+        document.getElementById("daysBalance").value = allUsers.daysBalance
+
+   
           data1 += `
           <tbody>
               <tr>

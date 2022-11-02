@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="css/modal.css" />
-    <title>Find by Email User</title>
+    <title>Buscar/ Atualizar/Deletar (User)</title>
 </head>
 <body>
-    <h3 class="text-center">Find by Email User</h3>
+    <h3 class="text-center">Buscar/ Atualizar/Deletar (User)</h3>
 
         <!--Navbar ou menu-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,9 +40,9 @@
             </div>
             <button type="button" onclick="findUserByEmail()" class="btn btn-lg btn-primary m-3 d-grid gap-2 col-2 mx-auto">Send</button>
 
-          <table id="table-suario" class="table table-striped" style="width:100%">
+          <table id="table-suario" style="width:100%">
             <!--cabeçalho-->
-            <thead>
+            <!-- <thead>
                 <tr>
                     <th scope="col">Name user</th>
                     <th scope="col">E-mail</th>
@@ -52,11 +52,11 @@
                     <th scope="col">Profile Enum</th>
                     <th scope="col">Status User</th>   
                 </tr>
-            </thead>
+            </thead> -->
             <!--Corpo do tbody. E gerido pelo js-->
-            <tbody id="findByEmail">
+            <!-- <tbody id="findByEmail">
             </tbody>
-        </table>
+        </table> -->
 
 
         <!--Form para cadastro de usuários-->
@@ -85,6 +85,11 @@
           <option value="EMPLOYEE">Employee</option>
         </select>
       </div>
+
+      <div class="m-5">
+        <h1 class="text-truncate"><label class="form-label">Days Balance</label></h1> 
+         <input type="text" name = "daysBalance" class="form-control" id="daysBalance"  placeholder="Inform your user name" disabled>
+     </div>
 
       <button type="button" onclick="openSubmitButton()" class="btn btn-lg btn-primary m-3 d-grid gap-2 col-2 mx-auto">Update</button>
     
@@ -160,3 +165,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
     </html>
+    
+      <style>
+        body {color: aliceblue;}
+    </style>
+
+
+    <style>
+
+        body{background-color: rgb(17, 3, 67);}
+
+    </style>
