@@ -1,6 +1,5 @@
 const form = document.getElementById("vacationsRequest-form");
 function openSubmitButton() {
-    // event.preventDefault();
     var myModal = new bootstrap.Modal(document.getElementById("myModal"));
     var modalToggle = document.getElementById("myModal");
   

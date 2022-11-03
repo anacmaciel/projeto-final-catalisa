@@ -93,6 +93,11 @@ public class VacationRequestService {
             throw new UnprocessableEntityException("Error, cannot access this user's data");
         }
 
+        if (vacationRequestFound.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) { //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
+            throw new UnprocessableEntityException("Error, unable to access data for this vacation request");
+        }
+
+
         return vacationRequestFound;
     }
 
