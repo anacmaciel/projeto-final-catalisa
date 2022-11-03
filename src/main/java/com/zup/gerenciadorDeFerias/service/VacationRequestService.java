@@ -39,9 +39,9 @@ public class VacationRequestService {
     private LocalDate checkIfTheRoundTripIsNotABusinessDay(LocalDate date) {
         LocalDate newDate = date;
         if (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-            newDate = newDate.plusDays(1);
+            newDate = newDate.plusDays(2);
             while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-                newDate = newDate.plusDays(2);
+                newDate = newDate.plusDays(1);
             }
             return newDate;
         }
