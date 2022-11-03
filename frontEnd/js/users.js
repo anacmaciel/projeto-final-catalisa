@@ -13,20 +13,15 @@ async function msg() {
     console.log( JSON.stringify(data))
    
     try {
-        const res = await fetch("http://localhost:8080/users", {
+        const response = await fetch("http://localhost:8080/users", {
           method: 'POST',
           headers: {
            "Content-Type": "application/json",
          },
          body: JSON.stringify(data),
 
-         
-      }).then(function(data){
-          console.log("retorno response", data)
-      }).then(function(response){
-        console.log("retorno response2", response)
       })
-      if (res.status == 201) {
+      if (response.status == 201) {
         alert("Salvo com sucesso!");
         var myModalEl = document.querySelector("#myModal"); //Id
         var modal = bootstrap.Modal.getOrCreateInstance(myModalEl);
@@ -34,8 +29,8 @@ async function msg() {
 
         document.getElementById("usuario-form").reset();
       } else{
-        alert("Error: " + res.status + " - Preencha o formulário com dados validos");
-        console.log(res.text());
+        alert("Error: " + response.status + " - Preencha o formulário com dados validos");
+        console.log(response.text());
       }  
     } catch(error) {
       console.log("catch",error);
