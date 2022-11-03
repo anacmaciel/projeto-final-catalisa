@@ -19,7 +19,8 @@ async function msg() {
            "Content-Type": "application/json",
          },
          body: JSON.stringify(data),
-      });
+
+      })
       if (response.status == 201) {
         alert("Salvo com sucesso!");
         var myModalEl = document.querySelector("#myModal"); //Id
@@ -29,9 +30,9 @@ async function msg() {
         document.getElementById("usuario-form").reset();
       } else{
         alert("Error: " + response.status + " - Preencha o formulário com dados validos");
-        console.log(response);
+        console.log(response.text());
       }  
     } catch(error) {
-      console.log(error);
+      console.log("catch",error);
     }
 }
