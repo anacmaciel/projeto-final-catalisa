@@ -12,7 +12,7 @@ async function findUserByEmail(){
         },
     }).then((response) => response.json())
     .then((data) => {console.log(data)
-   //if (response.status == 200) {
+  
     
         let data1 = "";
       let allUsers = data
@@ -52,10 +52,7 @@ async function findUserByEmail(){
       document.getElementById("findByEmail").innerHTML = data1;
       console.log(todosUsuarios); 
       })
-    //   else{
-    //     alert("Error: " + response.status + " - Preencha o formulário com dados validos");
-    //     console.log(response);
-    //   }  
+   
     } catch(error) {
       console.log(error);
     }
@@ -67,7 +64,6 @@ async function findUserByEmail(){
 
   const form = document.getElementById("usuario-form");
 function openSubmitButton() {
-    // event.preventDefault();
     var myModal = new bootstrap.Modal(document.getElementById("myModal"));
     var modalToggle = document.getElementById("myModal");
   
@@ -143,7 +139,6 @@ function openSubmitButton() {
   }
 
   function openDeleteButton() {
-    // event.preventDefault();
     var myModal = new bootstrap.Modal(document.getElementById("deleteModal"));
     var modalToggle = document.getElementById("deleteModal");
   

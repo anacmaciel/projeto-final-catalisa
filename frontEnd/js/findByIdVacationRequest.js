@@ -1,4 +1,3 @@
-
 let allVacations = {}
 async function findById(){
     const id = document.getElementById("id").value
@@ -12,10 +11,10 @@ async function findById(){
         },
     }).then((response) => response.json())
     .then((data) => {console.log(data)
-   // if (response.status == 200) {
+  
        
         let data1 = "";
-      let allVacations = data
+      allVacations = data
       if (data.status == 404){
         alert("Pedido de férias não encontrado")
         return
@@ -23,9 +22,7 @@ async function findById(){
       
         console.log(allVacations)
 
-      //  allVacations.id =allVacations.id
-      //  allVacations.daysBalance =allVacations.daysBalance
-      //  allVacations.email.alvaallVacations.email
+      
         document.getElementById("id").value =allVacations.id
         document.getElementById("vacationDays").value = allVacations.vacationDays
         document.getElementById("startAt").value =allVacations.startAt
@@ -39,10 +36,7 @@ async function findById(){
 
      
       })
-    // //   else{
-    // //     alert("Error: " + response.status + " - Preencha o formulário com dados validos");
-    // //     console.log(response);
-    //  }  
+  
     } catch(error) {
       console.log(error);
     }
@@ -93,6 +87,7 @@ function openSubmitButton() {
       modal.hide();
 
       document.getElementById("usuario-form").reset();
+      document.getElementById("vacationsRequest-form").reset();
     } else{
       alert("Error: " + response.status + " - Preencha o formulário com dados validos");
       console.log(response);
@@ -118,6 +113,7 @@ async function canceledVacationsRequest(){
     modal.hide();
 
     document.getElementById("usuario-form").reset();
+    document.getElementById("vacationsRequest-form").reset();
   } else{
     alert("Error: " + response.status + " - Preencha o formulário com dados validos");
     console.log(response);
@@ -129,7 +125,6 @@ async function canceledVacationsRequest(){
 }
 
 function openDeleteButton() {
-  // event.preventDefault();
   var myModal = new bootstrap.Modal(document.getElementById("deleteModal"));
   var modalToggle = document.getElementById("deleteModal");
 
