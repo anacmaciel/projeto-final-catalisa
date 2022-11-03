@@ -108,7 +108,7 @@ public class UserService {
         return UserResponseDto.convertToUser(userModel);
     }
 
-    public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto) {
+    public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto){
         User userFound = checkIfTheUserIsActive(id);
         if (userUpdateDto.getHiringDate().isAfter(LocalDate.now())) {
             throw new BadRequest("Hire date is greater than today's date");
