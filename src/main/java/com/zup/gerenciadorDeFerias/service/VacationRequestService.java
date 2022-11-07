@@ -31,34 +31,27 @@ public class VacationRequestService {
     @Autowired
     private UserService userService;
 
-    private boolean validateIfTheDayOfTheWeekIsSaturdayOrSunday(LocalDate date) {
+    private boolean validateIfTheDayOfTheWeekIsSaturday(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
+        return dayOfWeek == DayOfWeek.SATURDAY;
+    }
+
+    private boolean validateIfTheDayOfTheWeekIsSunday(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SUNDAY;
     }
 
     private LocalDate checkIfTheRoundTripIsNotABusinessDay(LocalDate date) {
         LocalDate newDate = date;
-        if (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
+        if (validateIfTheDayOfTheWeekIsSaturday(newDate)) {
             newDate = newDate.plusDays(2);
-            while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-                newDate = newDate.plusDays(1);
-            }
             return newDate;
+        } else if (validateIfTheDayOfTheWeekIsSunday(newDate)) {
+            newDate = newDate.plusDays(1);
         }
         return newDate;
     }
 
-    private LocalDate checkIfTheRoundTripIsNotABusinessDayEnd(LocalDate date) {
-        LocalDate newDate = date;
-        if (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-            newDate = newDate.plusDays(1);
-            while (validateIfTheDayOfTheWeekIsSaturdayOrSunday(newDate)) {
-                newDate = newDate.plusDays(2);
-            }
-            return newDate;
-        }
-        return newDate;
-    }
 
     private boolean checkHolidayRequestBackground(LocalDate startAt) {
         LocalDate localDate = LocalDate.now().plusDays(rangeOfDay);
@@ -76,7 +69,7 @@ public class VacationRequestService {
             boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
             if (validDate) {
                 vacationRequest.setEndAt(vacationRequest.getStartAt().plusDays(vacationRequest.getVacationDays()));
-                LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDayEnd(vacationRequest.getEndAt());
+                LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequest.getEndAt());
                 vacationRequest.setEndAt(validEndAt);
                 vacationRequest.setStatusVacationRequest(StatusVacationRequest.CREATED);
                 userService.updateDaysBalance(vacationRequest.getUser(), vacationRequest.getVacationDays());
