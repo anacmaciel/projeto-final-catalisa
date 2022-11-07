@@ -1,4 +1,4 @@
- //table - trazer usuários cadastrados na tela
+
  fetch("http://localhost:8080/users").then((data)=>{
     return data.json();
   }).then((allUsers) =>{

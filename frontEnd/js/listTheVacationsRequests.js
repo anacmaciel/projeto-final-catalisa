@@ -1,4 +1,4 @@
- //table - trazer vacations request cadastrados na tela
+
  fetch("http://localhost:8080/vacationsrequest").then((data)=>{
     return data.json();
   }).then((allVacations) =>{

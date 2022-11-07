@@ -68,12 +68,12 @@ public class VacationRequestService {
 
     public VacationResponseDto registerVacationRequest(VacationRequestDto vacationRequestDto) throws Exception {
         try {
-        User userFound = userService.checkUserActiveByEmail(vacationRequestDto.getEmail());
-        LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
-        VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
-        vacationRequest.setUser(userFound);
-        vacationRequest.setStartAt(validateStartAt);
-        boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
+            User userFound = userService.checkUserActiveByEmail(vacationRequestDto.getEmail());
+            LocalDate validateStartAt = checkIfTheRoundTripIsNotABusinessDay(vacationRequestDto.getStartAt());
+            VacationRequest vacationRequest = vacationRequestDto.convertToVacationRequest();
+            vacationRequest.setUser(userFound);
+            vacationRequest.setStartAt(validateStartAt);
+            boolean validDate = checkHolidayRequestBackground(vacationRequest.getStartAt());
             if (validDate) {
                 vacationRequest.setEndAt(vacationRequest.getStartAt().plusDays(vacationRequest.getVacationDays()));
                 LocalDate validEndAt = checkIfTheRoundTripIsNotABusinessDayEnd(vacationRequest.getEndAt());
@@ -85,7 +85,7 @@ public class VacationRequestService {
             } else {
                 throw new UnprocessableEntityException("it was not possible to process this request, the request must be made at least " + rangeOfDay + " days in advance");
             }
-        } catch (Exception exception){
+        } catch (Exception exception) {
             throw new Exception(exception);
         }
     }
@@ -101,11 +101,11 @@ public class VacationRequestService {
             throw new ObjectNotFoundException("no request with the id {id} was found in the system");
         }
         VacationRequest vacationRequestFound = optionalVacationRequest.get();
-        if (vacationRequestFound.getUser().getStatusUser().equals(StatusUser.INACTIVE)) { //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
+        if (vacationRequestFound.getUser().getStatusUser().equals(StatusUser.INACTIVE)) {
             throw new UnprocessableEntityException("Error, cannot access this user's data");
         }
 
-        if (vacationRequestFound.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) { //||vacationRequestFound.getUser().getStatusUser().equals(StatusUser.ON_VACATION)
+        if (vacationRequestFound.getStatusVacationRequest().equals(StatusVacationRequest.CANCELED)) {
             throw new UnprocessableEntityException("Error, unable to access data for this vacation request");
         }
 

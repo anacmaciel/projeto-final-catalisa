@@ -1,4 +1,4 @@
-//table - trazer usuários cadastrados na tela
+
 let actualUser = {} 
 async function findUserByEmail(){
     const email = document.getElementById("emailSearch").value
@@ -71,8 +71,8 @@ function openSubmitButton() {
   }
 
  async function updateUser() {
-    const formData = new FormData(form); // Pega o formulário e joga em uma variável 
-    const data = Object.fromEntries(formData); //Se torna em objeto
+    const formData = new FormData(form); 
+    const data = Object.fromEntries(formData); 
     console.log( JSON.stringify(data))
    
     let objectUpdate = {
@@ -123,7 +123,7 @@ function openSubmitButton() {
     });
     if (response.status == 200) {
       alert("Inativado com sucesso!");
-      var myModalEl = document.querySelector("#deleteModal"); //Id
+      var myModalEl = document.querySelector("#deleteModal"); 
       var modal = bootstrap.Modal.getOrCreateInstance(myModalEl);
       modal.hide();
 

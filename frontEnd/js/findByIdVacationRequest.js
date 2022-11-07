@@ -48,7 +48,7 @@ async function findById(){
 
   const form = document.getElementById("vacationsRequest-form");
 function openSubmitButton() {
-    // event.preventDefault();
+    
     var myModal = new bootstrap.Modal(document.getElementById("myModal"));
     var modalToggle = document.getElementById("myModal");
   
@@ -56,8 +56,8 @@ function openSubmitButton() {
   }
 
  async function updateVacation() {
-    const formData = new FormData(form); // Pega o formulário e joga em uma variável 
-    const data = Object.fromEntries(formData); //Se torna em objeto
+    const formData = new FormData(form); 
+    const data = Object.fromEntries(formData); 
     console.log( JSON.stringify(data))
 
     
@@ -82,7 +82,7 @@ function openSubmitButton() {
     });
     if (response.status == 200) {
       alert("Atualizado com sucesso!");
-      var myModalEl = document.querySelector("#myModal"); //Id
+      var myModalEl = document.querySelector("#myModal"); 
       var modal = bootstrap.Modal.getOrCreateInstance(myModalEl);
       modal.hide();
 
@@ -108,7 +108,7 @@ async function canceledVacationsRequest(){
   });
   if (response.status == 200) {
     alert("Inativado com sucesso!");
-    var myModalEl = document.querySelector("#deleteModal"); //Id
+    var myModalEl = document.querySelector("#deleteModal"); 
     var modal = bootstrap.Modal.getOrCreateInstance(myModalEl);
     modal.hide();
 

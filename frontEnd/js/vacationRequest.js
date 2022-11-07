@@ -7,8 +7,8 @@ function openSubmitButton() {
   }
 
 async function msg() {
-    const formData = new FormData(form); // Pega o formulário e joga em uma variável 
-    const data = Object.fromEntries(formData); //Se torna em objeto
+    const formData = new FormData(form); 
+    const data = Object.fromEntries(formData); 
 
     try {
         const response = await fetch("http://localhost:8080/user/vacationsrequest", {
