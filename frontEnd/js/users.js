@@ -1,6 +1,6 @@
 const form = document.getElementById("usuario-form");
 function openSubmitButton() {
-    // event.preventDefault();
+    
     var myModal = new bootstrap.Modal(document.getElementById("myModal"));
     var modalToggle = document.getElementById("myModal");
   
@@ -8,8 +8,8 @@ function openSubmitButton() {
   }
 
 async function msg() {
-    const formData = new FormData(form); // Pega o formulário e joga em uma variável 
-    const data = Object.fromEntries(formData); //Se torna em objeto
+    const formData = new FormData(form); 
+    const data = Object.fromEntries(formData); 
     console.log( JSON.stringify(data))
    
     try {

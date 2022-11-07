@@ -74,7 +74,7 @@ public class UserService {
     }
 
     private void checkAge18(LocalDate birthDate) {
-        LocalDate localDate = birthDate.plusYears(18);//.plusMonths(12).plusDays(365);
+        LocalDate localDate = birthDate.plusYears(18);
         LocalDate now = LocalDate.now();
 
         if (localDate.isAfter(now)) {
@@ -88,7 +88,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public UserResponseDto registerUser(UserRequestDto userRequestDto) throws Exception{
+    public UserResponseDto registerUser(UserRequestDto userRequestDto) throws Exception {
         Optional<User> optionalUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (optionalUser.isPresent()) {
             throw new BadRequest("Email already exists");
@@ -108,7 +108,7 @@ public class UserService {
         return UserResponseDto.convertToUser(userModel);
     }
 
-    public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto){
+    public UserResponseDto changeRegisteredUser(Long id, UserUpdateDto userUpdateDto) {
         User userFound = checkIfTheUserIsActive(id);
         if (userUpdateDto.getHiringDate().isAfter(LocalDate.now())) {
             throw new BadRequest("Hire date is greater than today's date");

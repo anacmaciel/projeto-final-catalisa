@@ -34,7 +34,6 @@ public class ExceptionHandlerGerenciadorDeFerias {
         private String mensagemDoDev;
     }
 
-    //Métodos de tratamento de mensagens de bad request
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
@@ -47,8 +46,6 @@ public class ExceptionHandlerGerenciadorDeFerias {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
-
-    //Métodos de tratamento not found
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFoundException(ObjectNotFoundException e, HttpServletRequest request) {
         StandardError erre = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage(), System.currentTimeMillis());
